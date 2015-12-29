@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Blocks">
+      <UniqueIdentifier>{02D1A938-875F-4C02-9CE9-A7368C52B26E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Hap2">
+      <UniqueIdentifier>{EEDB3A9E-2D8D-47E3-8AE4-00191F4E1F94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Hap2\src">
+      <UniqueIdentifier>{B7D9F21D-9D04-4829-A83A-B9B6F59234B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui">
+      <UniqueIdentifier>{02AB518C-6FE7-4099-9A2F-E64EA491450D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\include">
+      <UniqueIdentifier>{6CDA51B7-A112-4CF3-ADF9-941222DA1C3D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\lib">
+      <UniqueIdentifier>{B7FF0D94-F278-461B-B19D-B93BA19FCD04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\lib\imgui">
+      <UniqueIdentifier>{E9EA39D4-18A7-434F-A817-1CF0937ED7C4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\ImGui\src">
+      <UniqueIdentifier>{8D41ED35-3B36-4EA8-9509-25E3308D079B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodrömm">
+      <UniqueIdentifier>{77E7D783-7BFC-4B97-80E1-B4F065BE73EB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodrömm\include">
+      <UniqueIdentifier>{5E2E771F-E40B-412C-ADAE-5312CCEF559A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Videodrömm\src">
+      <UniqueIdentifier>{E864CB49-B558-454D-8D0D-71C65DE3CBB4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping">
+      <UniqueIdentifier>{AEA99DAC-0D2D-4C98-81F3-4C88E65AB360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping\include">
+      <UniqueIdentifier>{0BEE2F48-1CF3-494E-99CC-E0D9322A3BA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-Warping\src">
+      <UniqueIdentifier>{9CE43633-56CF-4580-BB3F-F2C0861356E3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-WebSocketPP">
+      <UniqueIdentifier>{962B6289-ECA0-415D-9FCA-671B83B80D5B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\Cinder-WebSocketPP\src">
+      <UniqueIdentifier>{D02F6401-D4FA-4FF8-B4CA-BD7B022DFBD0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC">
+      <UniqueIdentifier>{4CD02314-B1A6-4FEA-9100-FE0FC6AF5262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src">
+      <UniqueIdentifier>{1D8424F1-353B-4B07-A27E-226B919375B9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\ip">
+      <UniqueIdentifier>{FEFA8B6F-16B6-4F71-A782-7DA92A4FFD0F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\osc">
+      <UniqueIdentifier>{BDEADA7A-2CF4-4B47-951C-CC6D52980B24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Blocks\OSC\src\ip\win32">
+      <UniqueIdentifier>{3CDF7396-7E48-4176-AA92-CD74C967C3F9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h">
+      <Filter>Blocks\Cinder-Hap2\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\CinderImGui.h">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.h">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\include\imgui_user.inl">
+      <Filter>Blocks\ImGui\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imconfig.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_internal.h">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\src\CinderImGui.cpp">
+      <Filter>Blocks\ImGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_draw.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui\imgui_demo.cpp">
+      <Filter>Blocks\ImGui\lib\imgui</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Warping\include\Warp.h">
+      <Filter>Blocks\Cinder-Warping\include</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\Warp.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpBilinear.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpPerspective.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Warping\src\WarpPerspectiveBilinear.cpp">
+      <Filter>Blocks\Cinder-Warping\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.cpp">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.h">
+      <Filter>Blocks\Cinder-WebSocketPP\src</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscListener.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscSender.cpp">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.cpp">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.cpp">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscArg.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscListener.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscSender.h">
+      <Filter>Blocks\OSC\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\IpEndpointName.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\NetworkingUtils.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\PacketListener.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\TimerListener.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\ip\UdpSocket.h">
+      <Filter>Blocks\OSC\src\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\MessageMappingOscPacketListener.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscException.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscHostEndianness.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscOutboundPacketStream.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPacketListener.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h">
+      <Filter>Blocks\OSC\src\osc</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\NetworkingUtils.cpp">
+      <Filter>Blocks\OSC\src\ip\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\UdpSocket.cpp">
+      <Filter>Blocks\OSC\src\ip\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
