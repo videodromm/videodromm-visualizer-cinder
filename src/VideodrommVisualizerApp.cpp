@@ -1,244 +1,72 @@
-/*
- Copyright (c) 2010-2015, Paul Houx - All rights reserved.
- This code is intended for use with the Cinder C++ library: http://libcinder.org
-
- This file is part of Cinder-Warping.
-
- Cinder-Warping is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- Cinder-Warping is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with Cinder-Warping.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/ImageIo.h"
-#include "cinder/Rand.h"
-
-#include "Warp.h"
+#include "MPEApp.hpp"
+#include "MPEClient.h"
 
 using namespace ci;
 using namespace ci::app;
-using namespace ph::warping;
 using namespace std;
+using namespace mpe;
 
-class VideodrommVisualizerApp : public App {
+// NEXT STEP: Create multiple targets
+// https://github.com/wdlindmeier/Most-Pixels-Ever-Cinder/wiki/MPE-Setup-Tutorial-for-Cinder#3-create-multiple-targets
+
+class VideoDrommVisualizerApp : public App, public MPEApp
+{
 public:
-	static void prepare( Settings *settings );
-
-	void setup() override;
-	void cleanup() override;
-	void update() override;
-	void draw() override;
-
-	void resize() override;
-
-	void mouseMove( MouseEvent event ) override;
-	void mouseDown( MouseEvent event ) override;
-	void mouseDrag( MouseEvent event ) override;
-	void mouseUp( MouseEvent event ) override;
-
-	void keyDown( KeyEvent event ) override;
-	void keyUp( KeyEvent event ) override;
-
-	void updateWindowTitle();
-private:
-	bool			mUseBeginEnd;
-
-	fs::path		mSettings;
-
-	gl::TextureRef	mImage;
-	WarpList		mWarps;
-
-	Area			mSrcArea;
+	void setup();
+    void mpeReset();
+    
+	void update();
+    void mpeFrameUpdate(long serverFrameNumber);
+	
+    void draw();
+    void mpeFrameRender(bool isNewFrame);
+    
+    MPEClientRef mClient;
 };
 
-void VideodrommVisualizerApp::prepare( Settings *settings )
+void VideoDrommVisualizerApp::setup()
 {
-	settings->setWindowSize( 1440, 900 );
+    mClient = MPEClient::create(this);
 }
 
-void VideodrommVisualizerApp::setup()
+void VideoDrommVisualizerApp::mpeReset()
 {
-	mUseBeginEnd = false;
-	updateWindowTitle();
-	disableFrameRate();
-
-	// initialize warps
-	mSettings = getAssetPath( "" ) / "warps.xml";
-	if( fs::exists( mSettings ) ) {
-		// load warp settings from file if one exists
-		mWarps = Warp::readSettings( loadFile( mSettings ) );
-	}
-	else {
-		// otherwise create a warp from scratch
-		mWarps.push_back( WarpBilinear::create() );
-		mWarps.push_back( WarpPerspective::create() );
-		mWarps.push_back( WarpPerspectiveBilinear::create() );
-	}
-
-	// load test image
-	try {
-		mImage = gl::Texture::create( loadImage( loadAsset( "help.png" ) ), 
-									  gl::Texture2d::Format().loadTopDown().mipmap( true ).minFilter( GL_LINEAR_MIPMAP_LINEAR ) );
-
-		mSrcArea = mImage->getBounds();
-
-		// adjust the content size of the warps
-		Warp::setSize( mWarps, mImage->getSize() );
-	}
-	catch( const std::exception &e ) {
-		console() << e.what() << std::endl;
-	}
+    // Reset the state of your app.
+    // This will be called when any client connects.
 }
 
-void VideodrommVisualizerApp::cleanup()
+void VideoDrommVisualizerApp::update()
 {
-	// save warp settings
-	Warp::writeSettings( mWarps, writeFile( mSettings ) );
+    if (!mClient->isConnected() && (getElapsedFrames() % 60) == 0)
+    {
+        mClient->start();
+    }
 }
 
-void VideodrommVisualizerApp::update()
+void VideoDrommVisualizerApp::mpeFrameUpdate(long serverFrameNumber)
 {
-	// there is nothing to update
+    // Your update code.
 }
 
-void VideodrommVisualizerApp::draw()
+void VideoDrommVisualizerApp::draw()
 {
-	// clear the window and set the drawing color to white
-	gl::clear();
-	gl::color( Color::white() );
-
-	if( mImage ) {
-		// iterate over the warps and draw their content
-		for( auto &warp : mWarps ) {
-			// there are two ways you can use the warps:
-			if( mUseBeginEnd ) {
-				// a) issue your draw commands between begin() and end() statements
-				warp->begin();
-
-				// in this demo, we want to draw a specific area of our image,
-				// but if you want to draw the whole image, you can simply use: gl::draw( mImage );
-				gl::draw( mImage, mSrcArea, warp->getBounds() );
-
-				warp->end();
-			}
-			else {
-				// b) simply draw a texture on them (ideal for video)
-
-				// in this demo, we want to draw a specific area of our image,
-				// but if you want to draw the whole image, you can simply use: warp->draw( mImage );
-				warp->draw( mImage, mSrcArea );
-			}
-		}
-	}
+    mClient->draw();
 }
 
-void VideodrommVisualizerApp::resize()
+void VideoDrommVisualizerApp::mpeFrameRender(bool isNewFrame)
 {
-	// tell the warps our window has been resized, so they properly scale up or down
-	Warp::handleResize( mWarps );
+    gl::clear(Color(0.5,0.5,0.5));
+    // Your render code.
 }
 
-void VideodrommVisualizerApp::mouseMove( MouseEvent event )
-{
-	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseMove( mWarps, event ) ) {
-		// let your application perform its mouseMove handling here
-	}
-}
-
-void VideodrommVisualizerApp::mouseDown( MouseEvent event )
-{
-	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDown( mWarps, event ) ) {
-		// let your application perform its mouseDown handling here
-	}
-}
-
-void VideodrommVisualizerApp::mouseDrag( MouseEvent event )
-{
-	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDrag( mWarps, event ) ) {
-		// let your application perform its mouseDrag handling here
-	}
-}
-
-void VideodrommVisualizerApp::mouseUp( MouseEvent event )
-{
-	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseUp( mWarps, event ) ) {
-		// let your application perform its mouseUp handling here
-	}
-}
-
-void VideodrommVisualizerApp::keyDown( KeyEvent event )
-{
-	// pass this key event to the warp editor first
-	if( !Warp::handleKeyDown( mWarps, event ) ) {
-		// warp editor did not handle the key, so handle it here
-		switch( event.getCode() ) {
-			case KeyEvent::KEY_ESCAPE:
-				// quit the application
-				quit();
-				break;
-			case KeyEvent::KEY_f:
-				// toggle full screen
-				setFullScreen( !isFullScreen() );
-				break;
-			case KeyEvent::KEY_v:
-				// toggle vertical sync
-				gl::enableVerticalSync( !gl::isVerticalSyncEnabled() );
-				break;
-			case KeyEvent::KEY_w:
-				// toggle warp edit mode
-				Warp::enableEditMode( !Warp::isEditModeEnabled() );
-				break;
-			case KeyEvent::KEY_a:
-				// toggle drawing a random region of the image
-				if( mSrcArea.getWidth() != mImage->getWidth() || mSrcArea.getHeight() != mImage->getHeight() )
-					mSrcArea = mImage->getBounds();
-				else {
-					int x1 = Rand::randInt( 0, mImage->getWidth() - 150 );
-					int y1 = Rand::randInt( 0, mImage->getHeight() - 150 );
-					int x2 = Rand::randInt( x1 + 150, mImage->getWidth() );
-					int y2 = Rand::randInt( y1 + 150, mImage->getHeight() );
-					mSrcArea = Area( x1, y1, x2, y2 );
-				}
-				break;
-			case KeyEvent::KEY_SPACE:
-				// toggle drawing mode
-				mUseBeginEnd = !mUseBeginEnd;
-				updateWindowTitle();
-				break;
-		}
-	}
-}
-
-void VideodrommVisualizerApp::keyUp( KeyEvent event )
-{
-	// pass this key event to the warp editor first
-	if( !Warp::handleKeyUp( mWarps, event ) ) {
-		// let your application perform its keyUp handling here
-	}
-}
-
-void VideodrommVisualizerApp::updateWindowTitle()
-{
-	if( mUseBeginEnd )
-		getWindow()->setTitle( "Warping Sample - Using begin() and end()" );
-	else
-		getWindow()->setTitle( "Warping Sample - Using draw()" );
-}
-
-CINDER_APP( VideodrommVisualizerApp, RendererGl( RendererGl::Options().msaa( 8 ) ), &VideodrommVisualizerApp::prepare )
+// If you're deploying to iOS, set the Render antialiasing to 0 for a significant
+// performance improvement. This value defaults to 4 (AA_MSAA_4) on iOS and 16 (AA_MSAA_16)
+// on the Desktop.
+#if defined( CINDER_COCOA_TOUCH )
+CINDER_APP( VideoDrommVisualizerApp, RendererGl(RendererGl::AA_NONE) )
+#else
+CINDER_APP( VideoDrommVisualizerApp, RendererGl )
+#endif

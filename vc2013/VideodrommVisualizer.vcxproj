@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{04204322-55E5-4CE0-A9E2-1C572CE31E56}</ProjectGuid>
-    <RootNamespace>VideodrommVisualizer</RootNamespace>
+    <ProjectGuid>{E0D485DA-2FEF-48D1-9D35-1423A4D98259}</ProjectGuid>
+    <RootNamespace>VideoDrommVisualizer</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -79,7 +79,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -110,7 +110,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;"..\..\..\Cinder\include";..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;"..\..\..\Cinder\include";..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -138,7 +138,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\Cinder\include;..\..\..\Cinder\include\asio;..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -171,7 +171,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;"..\..\..\Cinder\include";..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;"..\..\..\Cinder\include";..\..\..\Cinder\blocks\Cinder-Hap2\src;..\..\..\Cinder\blocks\Cinder-Hap2\include\msw;..\..\..\Cinder\blocks\Cinder-ImGui\lib\imgui;..\..\..\Cinder\blocks\Cinder-ImGui\include;..\..\..\Cinder\blocks\Cinder-Spout\include;..\..\..\Cinder\blocks\Cinder-Videodromm\include;..\..\..\Cinder\blocks\Cinder-Videodromm\src;..\..\..\Cinder\blocks\Cinder-Warping\include;..\..\..\Cinder\blocks\Cinder-WebSocketPP\src;..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include;..\..\..\Cinder\blocks\OSC\src;..\..\..\Cinder\blocks\QuickTime\include\msw;..\..\..\Cinder\blocks\QuickTime\include;..\..\..\Cinder\blocks\UnionJack\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32_WINNT=0x0601;_WINDOWS;NOMINMAX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -204,7 +204,30 @@
   <ItemGroup>
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-mt-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-mt-gd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-mt-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-mt-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_chrono-vc120-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-mt-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-mt-gd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-mt-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-mt-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_date_time-vc120-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-mt-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-mt-gd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-mt-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-mt-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_regex-vc120-sgd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-gd-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-s-1_58.lib" />
+    <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-sgd-1_58.lib" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
@@ -220,6 +243,12 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\MPEApp.hpp" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\MPEClient.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\MPEMessageHandler.hpp" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\MPEProtocol.hpp" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\TCPAsyncClient.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\TCPClient.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscArg.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\OscListener.h" />
@@ -238,9 +267,10 @@
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscPrintReceivedElements.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
+    <ClCompile Include="..\src\VideoDrommVisualizerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-ImGui\src\CinderImGui.cpp" />
@@ -254,6 +284,9 @@
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketClient.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketConnection.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-WebSocketPP\src\WebSocketServer.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\src\MPEClient.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\src\TCPAsyncClient.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\src\TCPClient.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscBundle.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscListener.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\OscMessage.cpp" />
@@ -265,6 +298,7 @@
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\NetworkingUtils.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\OSC\src\ip\win32\UdpSocket.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
