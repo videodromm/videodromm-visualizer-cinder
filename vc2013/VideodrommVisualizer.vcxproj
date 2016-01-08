@@ -230,6 +230,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDLog.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDSettings.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUtils.h" />
+    <ClInclude Include="..\include\AppConsole.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h" />
@@ -268,8 +272,13 @@
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscReceivedElements.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\osc\OscTypes.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h" />
+    <ClInclude Include="..\include\VideoDrommVisualizerApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDLog.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDSettings.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUtils.cpp" />
+    <ClCompile Include="..\src\AppConsole.cpp" />
     <ClCompile Include="..\src\VideoDrommVisualizerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />
