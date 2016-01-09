@@ -2,7 +2,8 @@
 
 void VideoDrommVisualizerApp::prepareSettings(Settings *settings)
 {
-	
+	settings->setBorderless();
+	//settings->setResizable(false);
 }
 void VideoDrommVisualizerApp::setup()
 {
@@ -29,14 +30,25 @@ void VideoDrommVisualizerApp::setup()
 	mClient = MPEClient::create(this, USE_THREADED);
 
 	// imgui
+	margin = 3;
+	inBetween = 3;
+	// mPreviewFboWidth 80 mPreviewFboHeight 60 margin 10 inBetween 15 mPreviewWidth = 160;mPreviewHeight = 120;
+	w = mVDSettings->mPreviewFboWidth + margin;
+	h = mVDSettings->mPreviewFboHeight * 2.3;
+	largeW = (mVDSettings->mPreviewFboWidth + margin) * 4;
+	largeH = (mVDSettings->mPreviewFboHeight + margin) * 5;
+	largePreviewW = mVDSettings->mPreviewWidth + margin;
+	largePreviewH = (mVDSettings->mPreviewHeight + margin) * 2.4;
+	displayHeight = mVDSettings->mMainDisplayHeight - 50;
+
 	showConsole = true;
-	ui::initialize(ui::Options().autoRender(false));
+	ui::initialize();
 	updateWindowTitle();
 	// initialize warps
-	mSettings = getAssetPath("") / "warps.xml";
-	if (fs::exists(mSettings)) {
+	mWarpSettings = getAssetPath("") / "warps.xml";
+	if (fs::exists(mWarpSettings)) {
 		// load warp settings from file if one exists
-		mWarps = Warp::readSettings(loadFile(mSettings));
+		mWarps = Warp::readSettings(loadFile(mWarpSettings));
 	}
 	else {
 		// otherwise create a warp from scratch
@@ -58,6 +70,11 @@ void VideoDrommVisualizerApp::setup()
 	catch (const std::exception &e) {
 		console() << e.what() << std::endl;
 	}
+	int w = mVDUtils->getWindowsResolution();
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+	// tempo init
+	mVDUtils->tapTempo();
 	// needed?
 	mMesh = gl::VboMesh::create(geom::Rect());
 }
@@ -124,8 +141,6 @@ void VideoDrommVisualizerApp::draw()
 	}
 	gl::disableAlphaBlending();
 	//imgui
-	ui::NewFrame();
-
 	gl::setMatricesWindow(getWindowSize());
 	xPos = margin;
 	yPos = margin + 30;
@@ -141,7 +156,7 @@ void VideoDrommVisualizerApp::draw()
 			mConsole->AddLog(mVDSettings->mMsg.c_str());
 		}
 	}
-	gl::draw(mMesh);
+	//gl::draw(mMesh);
 
 }
 
@@ -236,7 +251,7 @@ void VideoDrommVisualizerApp::updateWindowTitle()
 void VideoDrommVisualizerApp::cleanup()
 {
 	// save warp settings
-	Warp::writeSettings(mWarps, writeFile(mSettings));
+	Warp::writeSettings(mWarps, writeFile(mWarpSettings));
 	CI_LOG_V("shutdown");
 
 	// save warp settings
