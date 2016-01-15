@@ -11,7 +11,6 @@ void VideoDrommVisualizerApp::setup()
 	mVDSettings = VDSettings::create();
 	mVDSettings->mLiveCode = false;
 	mVDSettings->mRenderThumbs = false;
-	loadShader(getAssetPath("default.fs"));
 	// utils
 	mVDUtils = VDUtils::create(mVDSettings);
 
@@ -22,6 +21,7 @@ void VideoDrommVisualizerApp::setup()
 	mVDSettings->mRenderResoXY = vec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
 	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);
 
+	loadShader(getAssetPath("default.fs"));
 	// instanciate the console class
 	mConsole = AppConsole::create(mVDSettings, mVDUtils);
 
@@ -88,13 +88,14 @@ void VideoDrommVisualizerApp::mpeReset()
 
 void VideoDrommVisualizerApp::update()
 {
+	mVDSettings->iFps = getAverageFps();
+	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	updateWindowTitle();
+
     if (!mClient->isConnected() && (getElapsedFrames() % 60) == 0)
     {
         mClient->start();
     }
-	mVDSettings->iFps = getAverageFps();
-	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-	updateWindowTitle();
 	if (mVDSettings->iGreyScale)
 	{
 		mVDSettings->controlValues[1] = mVDSettings->controlValues[2] = mVDSettings->controlValues[3];
