@@ -64,6 +64,7 @@ public:
 	void						draw();
 	void						mpeFrameRender(bool isNewFrame);
 
+	// Most Pixels Ever
 	MPEClientRef				mClient;
 	long						mServerFramesProcessed;
 	// Settings

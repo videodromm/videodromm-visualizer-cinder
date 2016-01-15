@@ -9,7 +9,7 @@ void VideoDrommVisualizerApp::setup()
 {
 	// parameters
 	mVDSettings = VDSettings::create();
-	mVDSettings->mLiveCode = true;
+	mVDSettings->mLiveCode = false;
 	mVDSettings->mRenderThumbs = false;
 	loadShader(getAssetPath("default.fs"));
 	// utils
@@ -94,6 +94,7 @@ void VideoDrommVisualizerApp::update()
     }
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	updateWindowTitle();
 	if (mVDSettings->iGreyScale)
 	{
 		mVDSettings->controlValues[1] = mVDSettings->controlValues[2] = mVDSettings->controlValues[3];
