@@ -24,7 +24,7 @@
 // Generally Threaded is the way to go, but if find your app crashing
 // because you're making GL calls on a different thread, use the non-threaded client.
 // Threaded is used by default. This switch is for demo purposes.
-#define USE_THREADED  1
+#define USE_THREADED  0
 
 
 using namespace ci;

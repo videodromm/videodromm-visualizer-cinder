@@ -228,7 +228,9 @@
     <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-s-1_58.lib" />
     <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-sgd-1_58.lib" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Xml Include="..\..\assets\settings.xml" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDLog.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDSettings.h" />

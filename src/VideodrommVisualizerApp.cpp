@@ -52,8 +52,6 @@ void VideoDrommVisualizerApp::setup()
 	}
 	else {
 		// otherwise create a warp from scratch
-		mWarps.push_back(WarpBilinear::create());
-		mWarps.push_back(WarpPerspective::create());
 		mWarps.push_back(WarpPerspectiveBilinear::create());
 	}
 

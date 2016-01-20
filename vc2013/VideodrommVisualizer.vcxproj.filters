@@ -97,6 +97,9 @@
     <Filter Include="Blocks\Videodromm\lib">
       <UniqueIdentifier>{85db62ec-48da-4d5b-9d26-ed974b14605d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{a8bb2e7a-ca80-404c-a533-e071c1abe6e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideoDrommVisualizerApp.cpp">
@@ -408,5 +411,10 @@
     <Library Include="..\..\..\Cinder\blocks\Cinder-Videodromm\lib\libboost_thread-vc120-mt-sgd-1_58.lib">
       <Filter>Blocks\Videodromm\lib</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\assets\settings.xml">
+      <Filter>assets</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
