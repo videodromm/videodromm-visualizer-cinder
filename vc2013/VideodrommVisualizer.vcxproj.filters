@@ -97,6 +97,15 @@
     <Filter Include="Blocks\UnionJack\src">
       <UniqueIdentifier>{198CB51D-F90C-49A1-8147-8D232229138D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{9d0a049c-9e79-4c1e-bdca-990547860369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="release">
+      <UniqueIdentifier>{f476fc06-1843-4c16-92ff-e6947af028cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{c69525c9-ee5d-4e44-acbf-5261c20b994c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -278,10 +287,24 @@
     <ClInclude Include="..\include\Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\VideodrommVisualizerApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\assets\settings.xml">
+      <Filter>assets</Filter>
+    </Xml>
+    <Xml Include="..\assets\warps.xml">
+      <Filter>assets</Filter>
+    </Xml>
+    <Xml Include="Debug\VDSettings.xml">
+      <Filter>debug</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

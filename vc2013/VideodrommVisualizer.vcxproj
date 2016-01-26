@@ -64,7 +64,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;cinder-$(PlatformToolset)_d.lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -95,7 +95,7 @@
       <AdditionalIncludeDirectories>"..\..\..\Cinder\include";..\include</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;cinder-$(PlatformToolset).lib;OpenGL32.lib;%(AdditionalDependencies);..\..\..\Cinder\blocks\Cinder-Spout\lib\Spout2.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\CVClient.lib;..\..\..\Cinder\blocks\QuickTime\lib\msw\x86\QTMLClient.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"..\..\..\Cinder\lib\msw\$(PlatformTarget)";..\..\..\Cinder\blocks\Cinder-Videodromm\lib;..\..\..\Cinder\blocks\Cinder-WebSocketPP\lib\msw</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
@@ -114,7 +114,11 @@
   <ItemGroup>
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Xml Include="..\assets\settings.xml" />
+    <Xml Include="..\assets\warps.xml" />
+    <Xml Include="Debug\VDSettings.xml" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
@@ -147,6 +151,7 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Most-Pixels-Ever-Cinder\include\TCPClient.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\OSC\src\Osc.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\UnionJack\include\UnionJack.h" />
+    <ClInclude Include="..\include\VideodrommVisualizerApp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
