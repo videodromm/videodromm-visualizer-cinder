@@ -26,6 +26,8 @@ void VideodrommVisualizerApp::setup()
 	mVDUtils = VDUtils::create(mVDSettings);
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings);
+	// Animation
+	mVDAnimation = VDAnimation::create(mVDSettings);
 
 	updateWindowTitle();
 	fpb = 16.0f;
@@ -92,8 +94,8 @@ void VideodrommVisualizerApp::setup()
 
 	try {
 		mShader = ci::gl::GlslProg::create(
-			ci::app::loadAsset("vert.glsl"),
-			ci::app::loadAsset("frag.glsl")
+			ci::app::loadAsset("land.vert"),
+			ci::app::loadAsset("land.frag")
 			);
 	}
 	catch (gl::GlslProgCompileExc &exc) {
@@ -107,7 +109,7 @@ void VideodrommVisualizerApp::setup()
 	/*g_Width = FBO_WIDTH;
 	g_Height = FBO_HEIGHT;
 	if (!bInitialized) {
-	strcpy_s(SenderName, "Batchass UnionJack Spout Sender"); // we have to set a sender name first
+	strcpy_s(SenderName, "Videodrömm Spout Sender"); // we have to set a sender name first
 	}
 	spoutTexture = gl::Texture::create(g_Width, g_Height);*/
 	// load image
@@ -236,7 +238,7 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 		break;
 
 	default:
-		gl::clear(mBlack, true);
+		gl::clear(mVDAnimation->getBackgroundColor(), true);//mBlack
 		break;
 	}
 
@@ -405,7 +407,8 @@ void VideodrommVisualizerApp::keyDown( KeyEvent event )
 				if (mMovie) mMovie->play();
 				break;
 			case KeyEvent::KEY_s:
-				if (mMovie) mMovie->stop();
+				//if (mMovie) mMovie->stop();
+				mVDAnimation->save();
 				break;
 			case KeyEvent::KEY_SPACE:
 				if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();

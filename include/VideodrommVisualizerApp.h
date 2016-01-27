@@ -16,6 +16,8 @@
 #include "VDUtils.h"
 // Message router
 #include "VDRouter.h"
+// Animation
+#include "VDAnimation.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -66,6 +68,8 @@ private:
 	VDUtilsRef					mVDUtils;
 	// Message router
 	VDRouterRef					mVDRouter;
+	// Animation
+	VDAnimationRef				mVDAnimation;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
