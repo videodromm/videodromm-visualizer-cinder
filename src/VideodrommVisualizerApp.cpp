@@ -66,9 +66,7 @@ void VideodrommVisualizerApp::setup()
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	// initialize warps
-	mSettings = getAssetPath( "" ) / "warps.xml";
-	// initialize warps
-	mSettings = getAssetPath("") / "warps.xml";
+	mSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
 	if (fs::exists(mSettings)) {
 		// load warp settings from file if one exists
 		mWarps = Warp::readSettings(loadFile(mSettings));
@@ -84,7 +82,7 @@ void VideodrommVisualizerApp::setup()
 	Warp::setSize(mWarps, mFbo->getSize());
 	// lines
 	try {
-		mTexture = gl::Texture::create(loadImage(loadAsset("mandala1.png")));
+		mTexture = gl::Texture::create(loadImage(loadAsset("logo/videodromm-logo.png")));
 		mTexture->bind(0);
 	}
 	catch (...) {
@@ -114,7 +112,7 @@ void VideodrommVisualizerApp::setup()
 	spoutTexture = gl::Texture::create(g_Width, g_Height);*/
 	// load image
 	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("2.jpg")),
+		mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
 			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
 		mSrcArea = mImage->getBounds();
@@ -216,6 +214,12 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
 	gl::ScopedFramebuffer fbScp(mFbo);
 	// clear out the FBO with white or black
+	/*if (std::find(vector.begin(), vector.end(), mVDSettings->iBeat) != vector.end()){
+		// item found
+	}
+	else {
+
+	}*/
 	switch (mVDSettings->iBeat)
 	{
 	case 80:
