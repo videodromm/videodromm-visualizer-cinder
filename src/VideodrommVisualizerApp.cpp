@@ -365,7 +365,7 @@ void VideodrommVisualizerApp::draw()
 			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
 		}
 		else if (i == 1) {
-			warp->draw(mVDImageSequence->getCurrentSequenceTexture(1), mFbo->getBounds());
+			warp->draw(mVDImageSequence->getCurrentSequenceTexture(1), mVDImageSequence->getCurrentSequenceTexture(1)->getBounds());
 		}
 		else {
 			warp->draw(mImage, mSrcArea);
