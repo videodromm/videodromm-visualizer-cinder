@@ -28,6 +28,8 @@ void VideodrommVisualizerApp::setup()
 	mVDRouter = VDRouter::create(mVDSettings);
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings);
+	// Image sequence
+	mVDImageSequence = VDImageSequence::create(mVDSettings);
 
 	updateWindowTitle();
 	fpb = 16.0f;
@@ -162,7 +164,42 @@ void VideodrommVisualizerApp::buildMeshes()
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
-	loadMovieFile(event.getFile(0));
+	int index = 1;
+	string ext = "";
+	// use the last of the dropped files
+	boost::filesystem::path mPath = event.getFile(event.getNumFiles() - 1);
+	string mFile = mPath.string();
+	int dotIndex = mFile.find_last_of(".");
+	int slashIndex = mFile.find_last_of("\\");
+
+	if (dotIndex != std::string::npos && dotIndex > slashIndex) ext = mFile.substr(mFile.find_last_of(".") + 1);
+
+	if (ext == "wav" || ext == "mp3")
+	{
+	}
+	else if (ext == "png" || ext == "jpg")
+	{
+	}
+	else if (ext == "glsl")
+	{
+	}
+	else if (ext == "xml")
+	{
+	}
+	else if (ext == "mov")
+	{
+		loadMovieFile(mFile);
+	}
+	else if (ext == "txt")
+	{
+	}
+	else if (ext == "")
+	{
+		// try loading image sequence from dir
+		mVDImageSequence->createFromDir(mFile + "/", 0);// TODO index);
+		mVDImageSequence->playSequence(0);
+	}
+	
 }
 void VideodrommVisualizerApp::loadMovieFile(const fs::path &moviePath)
 {
@@ -192,6 +229,7 @@ void VideodrommVisualizerApp::update()
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
+	mVDImageSequence->update();
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
@@ -325,6 +363,9 @@ void VideodrommVisualizerApp::draw()
 	for (auto &warp : mWarps) {
 		if (i == 0) {
 			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
+		}
+		else if (i == 1) {
+			warp->draw(mVDImageSequence->getCurrentSequenceTexture(1), mFbo->getBounds());
 		}
 		else {
 			warp->draw(mImage, mSrcArea);

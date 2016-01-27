@@ -18,6 +18,8 @@
 #include "VDRouter.h"
 // Animation
 #include "VDAnimation.h"
+// Image sequence
+#include "VDImageSequence.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -70,6 +72,8 @@ private:
 	VDRouterRef					mVDRouter;
 	// Animation
 	VDAnimationRef				mVDAnimation;
+	// Image sequence
+	VDImageSequenceRef			mVDImageSequence;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
