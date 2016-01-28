@@ -472,7 +472,7 @@ void VideodrommVisualizerApp::keyUp( KeyEvent event )
 
 void VideodrommVisualizerApp::updateWindowTitle()
 {
-	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " HapPlayer");
+	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " Videodrömm");
 
 }
 
