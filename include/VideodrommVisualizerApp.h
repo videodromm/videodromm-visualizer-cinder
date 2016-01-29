@@ -8,10 +8,12 @@
 #include "Resources.h"
 #include "MovieHap.h"
 
-// warping
+// Warping
 #include "Warp.h"
-// parameters
+// Settings
 #include "VDSettings.h"
+// Session
+#include "VDSession.h"
 // Utils
 #include "VDUtils.h"
 // Message router
@@ -66,6 +68,8 @@ private:
 
 	// Settings
 	VDSettingsRef				mVDSettings;
+	// Session
+	VDSessionRef				mVDSession;
 	// Utils
 	VDUtilsRef					mVDUtils;
 	// Message router

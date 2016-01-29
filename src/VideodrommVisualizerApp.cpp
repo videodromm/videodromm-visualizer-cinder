@@ -19,9 +19,12 @@ void VideodrommVisualizerApp::prepare( Settings *settings )
 
 void VideodrommVisualizerApp::setup()
 {
+	// Settings
 	mVDSettings = VDSettings::create();
 	mVDSettings->mLiveCode = false;
 	mVDSettings->mRenderThumbs = false;
+	// Session
+	mVDSession = VDSession::create(mVDSettings);
 	// utils
 	mVDUtils = VDUtils::create(mVDSettings);
 	// Message router
