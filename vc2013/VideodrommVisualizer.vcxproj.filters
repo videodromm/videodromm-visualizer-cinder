@@ -328,4 +328,15 @@
       <Filter>debug</Filter>
     </Xml>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\assets\land.frag">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\..\assets\land.vert">
+      <Filter>assets</Filter>
+    </None>
+    <None Include="..\..\assets\live_params.json">
+      <Filter>assets</Filter>
+    </None>
+  </ItemGroup>
 </Project>

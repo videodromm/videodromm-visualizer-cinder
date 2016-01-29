@@ -119,7 +119,11 @@
       <SubType>Designer</SubType>
     </Xml>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="..\..\assets\land.frag" />
+    <None Include="..\..\assets\land.vert" />
+    <None Include="..\..\assets\live_params.json" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\LiveParam.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDAnimation.h" />
