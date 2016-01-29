@@ -73,7 +73,7 @@ private:
 	// Animation
 	VDAnimationRef				mVDAnimation;
 	// Image sequence
-	VDImageSequenceRef			mVDImageSequence;
+	vector<VDImageSequenceRef>	mVDImageSequences;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;

@@ -29,7 +29,7 @@ void VideodrommVisualizerApp::setup()
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings);
 	// Image sequence
-	mVDImageSequence = VDImageSequence::create(mVDSettings);
+	mVDImageSequences.push_back( VDImageSequence::create(mVDSettings, "C:\\Users\\bruce\\Dropbox\\assets\\batchass\\mandalas\\", 0));
 
 	updateWindowTitle();
 	fpb = 16.0f;
@@ -196,8 +196,8 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	else if (ext == "")
 	{
 		// try loading image sequence from dir
-		mVDImageSequence->createFromDir(mFile + "/", 0);// TODO index);
-		mVDImageSequence->playSequence(0);
+		//mVDImageSequence->createFromDir(mFile + "/", 0);// TODO index);
+		//mVDImageSequence->playSequence(0);
 	}
 	
 }
@@ -229,7 +229,11 @@ void VideodrommVisualizerApp::update()
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDRouter->update();
-	mVDImageSequence->update();
+	for (auto& seq : mVDImageSequences) {
+
+		//((VDImageSequenceRef)seq)->update();
+		seq->update();
+	}
 	updateWindowTitle();
 	//float scale = math<float>::clamp(mShip.mPos.z, 0.2, 1.0);
 	float scale = 1.0f;
@@ -364,8 +368,8 @@ void VideodrommVisualizerApp::draw()
 		if (i == 0) {
 			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
 		}
-		else if (i == 1) {
-			warp->draw(mVDImageSequence->getCurrentSequenceTexture(1), mVDImageSequence->getCurrentSequenceTexture(1)->getBounds());
+		else if (i == 1 && mVDImageSequences[0]->isValid()) {
+			warp->draw(mVDImageSequences[0]->getCurrentSequenceTexture(), mVDImageSequences[0]->getCurrentSequenceTexture()->getBounds());
 		}
 		else {
 			warp->draw(mImage, mSrcArea);
