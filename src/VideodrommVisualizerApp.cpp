@@ -12,27 +12,31 @@ fps = 142 / 60 * 4 = 9.46
 */
 
 
-void VideodrommVisualizerApp::prepare( Settings *settings )
+void VideodrommVisualizerApp::prepare(Settings *settings)
 {
-	settings->setWindowSize( 1440, 900 );
+	settings->setWindowSize(1440, 900);
 }
 
 void VideodrommVisualizerApp::setup()
 {
+	// Log
+	mVDLog = VDLog::create();
+	CI_LOG_V("Visualizer");
 	// Settings
 	mVDSettings = VDSettings::create();
 	mVDSettings->mLiveCode = false;
 	mVDSettings->mRenderThumbs = false;
 	// Session
 	mVDSession = VDSession::create(mVDSettings);
-	// utils
+	// Utils
 	mVDUtils = VDUtils::create(mVDSettings);
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings);
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings);
 	// Image sequence
-	mVDImageSequences.push_back( VDImageSequence::create(mVDSettings, "C:\\Users\\bruce\\Dropbox\\assets\\batchass\\mandalas\\", 0));
+	CI_LOG_V("Assets folder: " + mVDUtils->getPath("").string());
+	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDUtils->getPath("mandalas").string(), 0));
 
 	updateWindowTitle();
 	fpb = 16.0f;
@@ -202,7 +206,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 		//mVDImageSequence->createFromDir(mFile + "/", 0);// TODO index);
 		//mVDImageSequence->playSequence(0);
 	}
-	
+
 }
 void VideodrommVisualizerApp::loadMovieFile(const fs::path &moviePath)
 {
@@ -224,7 +228,7 @@ void VideodrommVisualizerApp::loadMovieFile(const fs::path &moviePath)
 void VideodrommVisualizerApp::cleanup()
 {
 	// save warp settings
-	Warp::writeSettings( mWarps, writeFile( mSettings ) );
+	Warp::writeSettings(mWarps, writeFile(mSettings));
 }
 
 void VideodrommVisualizerApp::update()
@@ -263,10 +267,10 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	// clear out the FBO with white or black
 	/*if (std::find(vector.begin(), vector.end(), mVDSettings->iBeat) != vector.end()){
 		// item found
-	}
-	else {
+		}
+		else {
 
-	}*/
+		}*/
 	switch (mVDSettings->iBeat)
 	{
 	case 80:
@@ -384,95 +388,95 @@ void VideodrommVisualizerApp::draw()
 void VideodrommVisualizerApp::resize()
 {
 	// tell the warps our window has been resized, so they properly scale up or down
-	Warp::handleResize( mWarps );
+	Warp::handleResize(mWarps);
 }
 
-void VideodrommVisualizerApp::mouseMove( MouseEvent event )
+void VideodrommVisualizerApp::mouseMove(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseMove( mWarps, event ) ) {
+	if (!Warp::handleMouseMove(mWarps, event)) {
 		// let your application perform its mouseMove handling here
 	}
 }
 
-void VideodrommVisualizerApp::mouseDown( MouseEvent event )
+void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDown( mWarps, event ) ) {
+	if (!Warp::handleMouseDown(mWarps, event)) {
 		// let your application perform its mouseDown handling here
 	}
 }
 
-void VideodrommVisualizerApp::mouseDrag( MouseEvent event )
+void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseDrag( mWarps, event ) ) {
+	if (!Warp::handleMouseDrag(mWarps, event)) {
 		// let your application perform its mouseDrag handling here
 	}
 }
 
-void VideodrommVisualizerApp::mouseUp( MouseEvent event )
+void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 {
 	// pass this mouse event to the warp editor first
-	if( !Warp::handleMouseUp( mWarps, event ) ) {
+	if (!Warp::handleMouseUp(mWarps, event)) {
 		// let your application perform its mouseUp handling here
 	}
 }
 
-void VideodrommVisualizerApp::keyDown( KeyEvent event )
+void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
 	fs::path moviePath;
 
 	// pass this key event to the warp editor first
-	if( !Warp::handleKeyDown( mWarps, event ) ) {
+	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
-		switch( event.getCode() ) {
-			case KeyEvent::KEY_ESCAPE:
-				// quit the application
-				quit();
-				break;
-			case KeyEvent::KEY_f:
-				// toggle full screen
-				setFullScreen( !isFullScreen() );
-				break;
-			case KeyEvent::KEY_v:
-				// toggle vertical sync
-				gl::enableVerticalSync( !gl::isVerticalSyncEnabled() );
-				break;
-			case KeyEvent::KEY_w:
-				// toggle warp edit mode
-				Warp::enableEditMode( !Warp::isEditModeEnabled() );
-				break;
-			case KeyEvent::KEY_o:
-				moviePath = getOpenFilePath();
-				if (!moviePath.empty())
-					loadMovieFile(moviePath);
-				break;
-			case KeyEvent::KEY_r:
-				mMovie.reset();
-				break;
-			case KeyEvent::KEY_p:
-				if (mMovie) mMovie->play();
-				break;
-			case KeyEvent::KEY_s:
-				//if (mMovie) mMovie->stop();
-				mVDAnimation->save();
-				break;
-			case KeyEvent::KEY_SPACE:
-				if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
-				break;
-			case KeyEvent::KEY_l:
-				mLoopVideo = !mLoopVideo;
-				if (mMovie) mMovie->setLoop(mLoopVideo);
-				break;
+		switch (event.getCode()) {
+		case KeyEvent::KEY_ESCAPE:
+			// quit the application
+			quit();
+			break;
+		case KeyEvent::KEY_f:
+			// toggle full screen
+			setFullScreen(!isFullScreen());
+			break;
+		case KeyEvent::KEY_v:
+			// toggle vertical sync
+			gl::enableVerticalSync(!gl::isVerticalSyncEnabled());
+			break;
+		case KeyEvent::KEY_w:
+			// toggle warp edit mode
+			Warp::enableEditMode(!Warp::isEditModeEnabled());
+			break;
+		case KeyEvent::KEY_o:
+			moviePath = getOpenFilePath();
+			if (!moviePath.empty())
+				loadMovieFile(moviePath);
+			break;
+		case KeyEvent::KEY_r:
+			mMovie.reset();
+			break;
+		case KeyEvent::KEY_p:
+			if (mMovie) mMovie->play();
+			break;
+		case KeyEvent::KEY_s:
+			//if (mMovie) mMovie->stop();
+			mVDAnimation->save();
+			break;
+		case KeyEvent::KEY_SPACE:
+			if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
+			break;
+		case KeyEvent::KEY_l:
+			mLoopVideo = !mLoopVideo;
+			if (mMovie) mMovie->setLoop(mLoopVideo);
+			break;
 		}
 	}
 }
 
-void VideodrommVisualizerApp::keyUp( KeyEvent event )
+void VideodrommVisualizerApp::keyUp(KeyEvent event)
 {
 	// pass this key event to the warp editor first
-	if( !Warp::handleKeyUp( mWarps, event ) ) {
+	if (!Warp::handleKeyUp(mWarps, event)) {
 		// let your application perform its keyUp handling here
 	}
 }
@@ -483,4 +487,4 @@ void VideodrommVisualizerApp::updateWindowTitle()
 
 }
 
-CINDER_APP( VideodrommVisualizerApp, RendererGl( RendererGl::Options().msaa( 8 ) ), &VideodrommVisualizerApp::prepare )
+CINDER_APP(VideodrommVisualizerApp, RendererGl(RendererGl::Options().msaa(8)), &VideodrommVisualizerApp::prepare)

@@ -14,6 +14,8 @@
 #include "VDSettings.h"
 // Session
 #include "VDSession.h"
+// Log
+#include "VDLog.h"
 // Utils
 #include "VDUtils.h"
 // Message router
@@ -70,6 +72,8 @@ private:
 	VDSettingsRef				mVDSettings;
 	// Session
 	VDSessionRef				mVDSession;
+	// Log
+	VDLogRef					mVDLog;
 	// Utils
 	VDUtilsRef					mVDUtils;
 	// Message router
