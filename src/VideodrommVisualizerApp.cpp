@@ -460,6 +460,20 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 		case KeyEvent::KEY_p:
 			if (mMovie) mMovie->play();
 			break;
+		case KeyEvent::KEY_LEFT:
+			mVDImageSequences[0]->pauseSequence();
+			mVDSettings->iBeat--;
+			// Seek to a new position in the sequence
+			mImageSequencePosition = mVDImageSequences[0]->getPlayheadPosition();
+			mVDImageSequences[0]->setPlayheadPosition(--mImageSequencePosition);
+			break;
+		case KeyEvent::KEY_RIGHT:
+			mVDImageSequences[0]->pauseSequence();
+			mVDSettings->iBeat++;
+			// Seek to a new position in the sequence
+			mImageSequencePosition = mVDImageSequences[0]->getPlayheadPosition();
+			mVDImageSequences[0]->setPlayheadPosition(++mImageSequencePosition);
+			break;
 		case KeyEvent::KEY_s:
 			//if (mMovie) mMovie->stop();
 			mVDAnimation->save();
