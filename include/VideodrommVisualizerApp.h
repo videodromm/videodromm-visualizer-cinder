@@ -6,7 +6,6 @@
 #include "cinder/Rand.h"
 #include "cinder/gl/Fbo.h"
 #include "Resources.h"
-#include "MovieHap.h"
 
 // Warping
 #include "Warp.h"
@@ -28,6 +27,8 @@
 #include "UnionJack.h"
 // spout
 #include "spout.h"
+// hap codec movie
+#include "MovieHap.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -57,16 +58,6 @@ public:
 
 	void updateWindowTitle();
 private:
-	void loadMovieFile(const fs::path &path);
-
-	qtime::MovieGlHapRef		mMovie;
-
-	fs::path					mSettings;
-
-	gl::TextureRef				mImage;
-	WarpList					mWarps;
-
-	Area						mSrcArea;
 
 	// Settings
 	VDSettingsRef				mVDSettings;
@@ -94,7 +85,7 @@ private:
 	Color						mRed = Color8u(240, 0, 0);
 	bool						mHorizontalAnimation;
 	map<int, bool>				mIndexes;
-	// track 
+	// tempo 
 	float						bpm;
 	float						fpb;
 	// fbo
@@ -114,5 +105,14 @@ private:
 	CameraPersp					mCamera;
 	mat4						mTextureMatrix;
 
+	// movie
+	qtime::MovieGlHapRef		mMovie;
+	void loadMovieFile(const fs::path &path);
 	bool						mLoopVideo;
+	// warping
+	gl::TextureRef				mImage;
+	WarpList					mWarps;
+	Area						mSrcArea;
+	fs::path					mSettings;
+
 };

@@ -44,6 +44,7 @@ void VideodrommVisualizerApp::setup()
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
 
+	// movie
 	mLoopVideo = false;
 	int w = mVDUtils->getWindowsResolution();
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
@@ -235,6 +236,7 @@ void VideodrommVisualizerApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	mVDUtils->update();
 	mVDRouter->update();
 	for (auto& seq : mVDImageSequences) {
 
