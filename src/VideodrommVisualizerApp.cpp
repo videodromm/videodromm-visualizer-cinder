@@ -36,6 +36,7 @@ void VideodrommVisualizerApp::setup()
 	mVDAnimation = VDAnimation::create(mVDSettings);
 	// Image sequence
 	CI_LOG_V("Assets folder: " + mVDUtils->getPath("").string());
+	//CI_LOG_V("Image sequence folder: " + mVDUtils->getPath(mVDAnimation->m).string());
 	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDUtils->getPath("mandalas").string(), 0));
 
 	updateWindowTitle();
@@ -238,6 +239,7 @@ void VideodrommVisualizerApp::update()
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDUtils->update();
 	mVDRouter->update();
+	mVDAnimation->update();
 	for (auto& seq : mVDImageSequences) {
 
 		//((VDImageSequenceRef)seq)->update();
