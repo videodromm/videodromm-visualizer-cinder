@@ -37,7 +37,7 @@ void VideodrommVisualizerApp::setup()
 	// Image sequence
 	CI_LOG_V("Assets folder: " + mVDUtils->getPath("").string());
 	//CI_LOG_V("Image sequence folder: " + mVDUtils->getPath(mVDAnimation->m).string());
-	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDUtils->getPath("mandalas").string(), 0));
+	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDUtils->getPath("mandalas").string()));
 
 	updateWindowTitle();
 	fpb = 16.0f;
@@ -45,8 +45,6 @@ void VideodrommVisualizerApp::setup()
 	float fps = bpm / 60.0f * fpb;
 	setFrameRate(fps);
 
-	// movie
-	mLoopVideo = false;
 	int w = mVDUtils->getWindowsResolution();
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
 	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
@@ -197,7 +195,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	}
 	else if (ext == "mov")
 	{
-		loadMovieFile(mFile);
+		mVDHapMovies.push_back(VDHapMovie::create(mVDSettings, mFile));
 	}
 	else if (ext == "txt")
 	{
@@ -210,23 +208,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	}
 
 }
-void VideodrommVisualizerApp::loadMovieFile(const fs::path &moviePath)
-{
-	try {
-		mMovie.reset();
-		// load up the movie, set it to loop, and begin playing
-		mMovie = qtime::MovieGlHap::create(moviePath);
-		mLoopVideo = (mMovie->getDuration() < 30.0f);
-		mMovie->setLoop(mLoopVideo);
-		mMovie->play();
-	}
-	catch (ci::Exception &e)
-	{
-		console() << string(e.what()) << std::endl;
-		console() << "Unable to load the movie." << std::endl;
-	}
 
-}
 void VideodrommVisualizerApp::cleanup()
 {
 	// save warp settings
@@ -257,7 +239,10 @@ void VideodrommVisualizerApp::update()
 	mCamera.setPerspective(40.0f, 1.0f, 0.5f, 3.0f);
 	//mCamera.lookAt(vec3(0.0f, 1.5f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
-	if (mVDSettings->iBeat == 303) loadMovieFile(getAssetPath("") / "pupilles1024.hap.mov");
+	if (mVDSettings->iBeat == 303) {
+		fs::path moviePath = getAssetPath("") / "pupilles1024.hap.mov";
+		mVDHapMovies.push_back(VDHapMovie::create(mVDSettings,  moviePath.string()));
+	}
 	// render into our FBO
 	renderSceneToFbo();
 }
@@ -330,10 +315,10 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 		gl::color(Color::white());
 	}
 	else {
-		if (mMovie) {
-			if (mMovie->isPlaying()) mMovie->draw();
+		/*if (mVDHapMovies.size()>0) {
+			if (mVDHapMovies[0]->isPlaying()) mVDHapMovies[0]->draw();
 		}
-		else {
+		else {*/
 
 			gl::ScopedMatrices matrixScope;
 			gl::setMatrices(mCamera);
@@ -357,7 +342,7 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 				gl::color(mBlue);
 				mLineBatch->draw(i * indiciesInLine, indiciesInLine);
 			}
-		}
+		//}
 	}
 
 }
@@ -429,8 +414,6 @@ void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-	fs::path moviePath;
-
 	// pass this key event to the warp editor first
 	if (!Warp::handleKeyDown(mWarps, event)) {
 		// warp editor did not handle the key, so handle it here
@@ -451,14 +434,6 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			// toggle warp edit mode
 			Warp::enableEditMode(!Warp::isEditModeEnabled());
 			break;
-		case KeyEvent::KEY_o:
-			moviePath = getOpenFilePath();
-			if (!moviePath.empty())
-				loadMovieFile(moviePath);
-			break;
-		case KeyEvent::KEY_r:
-			mMovie.reset();
-			break;
 		case KeyEvent::KEY_p:
 			if (mMovie) mMovie->play();
 			break;
@@ -477,7 +452,6 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			mVDImageSequences[0]->setPlayheadPosition(++mImageSequencePosition);
 			break;
 		case KeyEvent::KEY_s:
-			//if (mMovie) mMovie->stop();
 			mVDAnimation->save();
 			break;
 		case KeyEvent::KEY_SPACE:

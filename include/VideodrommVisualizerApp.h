@@ -23,12 +23,12 @@
 #include "VDAnimation.h"
 // Image sequence
 #include "VDImageSequence.h"
+// Hap Movie
+#include "VDHapMovie.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
 #include "spout.h"
-// hap codec movie
-#include "MovieHap.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -74,6 +74,8 @@ private:
 	// Image sequence
 	vector<VDImageSequenceRef>	mVDImageSequences;
 	int							mImageSequencePosition;
+	// Hap movies
+	vector<VDHapMovieRef>		mVDHapMovies;
 	// UnionJack
 	vector<UnionJack>			mDisplays;
 	std::string					str;
@@ -107,9 +109,6 @@ private:
 	mat4						mTextureMatrix;
 
 	// movie
-	qtime::MovieGlHapRef		mMovie;
-	void loadMovieFile(const fs::path &path);
-	bool						mLoopVideo;
 	// warping
 	gl::TextureRef				mImage;
 	WarpList					mWarps;
