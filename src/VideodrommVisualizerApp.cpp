@@ -435,7 +435,7 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			Warp::enableEditMode(!Warp::isEditModeEnabled());
 			break;
 		case KeyEvent::KEY_p:
-			if (mMovie) mMovie->play();
+			//if (mMovie) mMovie->play();
 			break;
 		case KeyEvent::KEY_LEFT:
 			mVDImageSequences[0]->pauseSequence();
@@ -455,11 +455,11 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			mVDAnimation->save();
 			break;
 		case KeyEvent::KEY_SPACE:
-			if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
+			//if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play();
 			break;
 		case KeyEvent::KEY_l:
-			mLoopVideo = !mLoopVideo;
-			if (mMovie) mMovie->setLoop(mLoopVideo);
+			//mLoopVideo = !mLoopVideo;
+			//if (mMovie) mMovie->setLoop(mLoopVideo);
 			break;
 		}
 	}
