@@ -30,20 +30,17 @@ void VideodrommVisualizerApp::setup()
 	mVDSession = VDSession::create(mVDSettings);
 	// Utils
 	mVDUtils = VDUtils::create(mVDSettings);
-	// Message router
-	mVDRouter = VDRouter::create(mVDSettings);
 	// Animation
-	mVDAnimation = VDAnimation::create(mVDSettings);
+	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
+	// Message router
+	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Image sequence
 	CI_LOG_V("Assets folder: " + mVDUtils->getPath("").string());
 	//CI_LOG_V("Image sequence folder: " + mVDUtils->getPath(mVDAnimation->m).string());
-	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDUtils->getPath("mandalas").string()));
+	mVDImageSequences.push_back(VDImageSequence::create(mVDSettings, mVDAnimation, mVDUtils->getPath("mandalas").string()));
 
 	updateWindowTitle();
-	fpb = 16.0f;
-	bpm = 142.0f;
-	float fps = bpm / 60.0f * fpb;
-	setFrameRate(fps);
+
 
 	int w = mVDUtils->getWindowsResolution();
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
@@ -123,7 +120,7 @@ void VideodrommVisualizerApp::setup()
 	spoutTexture = gl::Texture::create(g_Width, g_Height);*/
 	// load image
 	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
+		mImage = gl::Texture::create(loadImage(loadAsset("iam.jpg")),
 			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
 
 		mSrcArea = mImage->getBounds();
@@ -134,6 +131,7 @@ void VideodrommVisualizerApp::setup()
 	catch (const std::exception &e) {
 		console() << e.what() << std::endl;
 	}
+	setFrameRate(mVDSession->getTargetFps());
 	buildMeshes();
 }
 void VideodrommVisualizerApp::buildMeshes()
@@ -219,9 +217,8 @@ void VideodrommVisualizerApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-	mVDUtils->update();
-	mVDRouter->update();
 	mVDAnimation->update();
+	mVDRouter->update();
 	for (auto& seq : mVDImageSequences) {
 
 		//((VDImageSequenceRef)seq)->update();
@@ -241,7 +238,7 @@ void VideodrommVisualizerApp::update()
 	mCamera.lookAt(vec3(0.0f, 2.0f, 1.0f), vec3(0.0, 0.1, 0.0), vec3(0, 1, 0));
 	if (mVDSettings->iBeat == 303) {
 		fs::path moviePath = getAssetPath("") / "pupilles1024.hap.mov";
-		mVDHapMovies.push_back(VDHapMovie::create(mVDSettings,  moviePath.string()));
+		mVDHapMovies.push_back(VDHapMovie::create(mVDSettings, moviePath.string()));
 	}
 	// render into our FBO
 	renderSceneToFbo();
@@ -317,31 +314,31 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	else {
 		/*if (mVDHapMovies.size()>0) {
 			if (mVDHapMovies[0]->isPlaying()) mVDHapMovies[0]->draw();
-		}
-		else {*/
-
-			gl::ScopedMatrices matrixScope;
-			gl::setMatrices(mCamera);
-
-			gl::ScopedDepth depthScope(true);
-
-			mShader->uniform("textureMatrix", mTextureMatrix);
-
-			// Center the model
-			gl::translate(-0.5, 0.0, -0.5);
-
-			unsigned int indiciesInLine = mPoints;
-			unsigned int indiciesInMask = mPoints * 2;
-			// Draw front to back to take advantage of the depth buffer.
-			for (int i = mLines - 1; i >= 0; --i) {
-				gl::color(mBlack);
-				// Draw masks with alternating colors for debugging
-				// gl::color( Color::gray( i % 2 == 1 ? 0.5 : 0.25) );
-				mMaskBatch->draw(i * indiciesInMask, indiciesInMask);
-
-				gl::color(mBlue);
-				mLineBatch->draw(i * indiciesInLine, indiciesInLine);
 			}
+			else {*/
+
+		gl::ScopedMatrices matrixScope;
+		gl::setMatrices(mCamera);
+
+		gl::ScopedDepth depthScope(true);
+
+		mShader->uniform("textureMatrix", mTextureMatrix);
+
+		// Center the model
+		gl::translate(-0.5, 0.0, -0.5);
+
+		unsigned int indiciesInLine = mPoints;
+		unsigned int indiciesInMask = mPoints * 2;
+		// Draw front to back to take advantage of the depth buffer.
+		for (int i = mLines - 1; i >= 0; --i) {
+			gl::color(mBlack);
+			// Draw masks with alternating colors for debugging
+			// gl::color( Color::gray( i % 2 == 1 ? 0.5 : 0.25) );
+			mMaskBatch->draw(i * indiciesInMask, indiciesInMask);
+
+			gl::color(mBlue);
+			mLineBatch->draw(i * indiciesInLine, indiciesInLine);
+		}
 		//}
 	}
 
@@ -362,14 +359,18 @@ void VideodrommVisualizerApp::draw()
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {
 		if (i == 0) {
-			warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
+			if (mVDSettings->controlValues[41]) {
+				//warp->draw(mFbo->getColorTexture(), mFbo->getBounds());
+				//warp->draw(mImage, mSrcArea);
+				if (i == 1 && mVDImageSequences[0]->isValid()) {
+					warp->draw(mVDImageSequences[0]->getTexture(), mVDImageSequences[0]->getTexture()->getBounds());
+				}
+			}
 		}
-		else if (i == 1 && mVDImageSequences[0]->isValid()) {
-			warp->draw(mVDImageSequences[0]->getCurrentSequenceTexture(), mVDImageSequences[0]->getCurrentSequenceTexture()->getBounds());
+		else if (mVDImageSequences[0]->isValid()) {
+			warp->draw(mVDImageSequences[0]->getTexture(), mVDImageSequences[0]->getTexture()->getBounds());
 		}
-		else {
-			warp->draw(mImage, mSrcArea);
-		}
+
 		i++;
 	}
 }

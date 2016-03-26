@@ -89,8 +89,8 @@ private:
 	bool						mHorizontalAnimation;
 	map<int, bool>				mIndexes;
 	// tempo 
-	float						bpm;
-	float						fpb;
+	//float						bpm;
+	//float						fpb;
 	// fbo
 	void						renderSceneToFbo();
 	gl::FboRef					mFbo;
