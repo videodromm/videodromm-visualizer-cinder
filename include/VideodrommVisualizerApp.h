@@ -1,12 +1,12 @@
+
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "cinder/gl/Texture.h"
-#include "cinder/ImageIo.h"
-#include "cinder/Rand.h"
-#include "cinder/gl/Fbo.h"
-#include "Resources.h"
 
+// window manager
+//#include "WindowMngr.h"
+// UserInterface
+#include "CinderImGui.h"
 // Warping
 #include "Warp.h"
 // Settings
@@ -21,32 +21,46 @@
 #include "VDRouter.h"
 // Animation
 #include "VDAnimation.h"
-// Image sequence
-#include "VDImageSequence.h"
-// Hap Movie
-#include "VDHapMovie.h"
+// Textures
+//#include "VDTextures.h"
+// Shaders
+//#include "VDShaders.h"
+// fbo
+//#include "VDFbo.h"
+// Audio
+#include "VDAudio.h"
+// fbo
+//#include "VDFbo.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
 #include "spout.h"
+// hap codec movie
+#include "MovieHap.h"
+// Mix
+#include "VDMix.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace ph::warping;
-using namespace std;
 using namespace VideoDromm;
 
-class VideodrommVisualizerApp : public App {
+#define IM_ARRAYSIZE(_ARR)			((int)(sizeof(_ARR)/sizeof(*_ARR)))
+
+class VideodrommVisualizerApp : public App
+{
 public:
 	static void prepare(Settings *settings);
 
 	void setup() override;
 	void cleanup() override;
-	void update() override;
+	void update();
 	void draw() override;
-	void fileDrop(FileDropEvent event) override;
 
-	void resize() override;
+	void saveThumb();
+	void fileDrop(FileDropEvent event) override;
+	//void resize() override;
+	void resizeWindow();
 
 	void mouseMove(MouseEvent event) override;
 	void mouseDown(MouseEvent event) override;
@@ -58,7 +72,6 @@ public:
 
 	void updateWindowTitle();
 private:
-
 	// Settings
 	VDSettingsRef				mVDSettings;
 	// Session
@@ -71,48 +84,70 @@ private:
 	VDRouterRef					mVDRouter;
 	// Animation
 	VDAnimationRef				mVDAnimation;
+	// Mix
+	VDMixList					mMixes;
+	fs::path					mMixesFilepath;
 	// Image sequence
-	vector<VDImageSequenceRef>	mVDImageSequences;
-	int							mImageSequencePosition;
-	// Hap movies
-	vector<VDHapMovieRef>		mVDHapMovies;
-	// UnionJack
-	vector<UnionJack>			mDisplays;
-	std::string					str;
-	std::string					targetStr;
-	int							strSize;
-	void						shift_left(std::size_t offset, std::size_t X);
-	Color						mBlack = Color::black();
-	Color						mBlue = Color8u(66, 161, 235);
-	Color						mDarkBlue = Color8u::hex(0x1A3E5A);
-	Color						mRed = Color8u(240, 0, 0);
-	bool						mHorizontalAnimation;
-	map<int, bool>				mIndexes;
-	// tempo 
-	//float						bpm;
-	//float						fpb;
-	// fbo
-	void						renderSceneToFbo();
-	gl::FboRef					mFbo;
-	static const int			FBO_WIDTH = 640, FBO_HEIGHT = 480;
-	// lines
-	void						buildMeshes();
-	unsigned int				mPoints = 50;
-	unsigned int				mLines = 50;
-	bool						mShowHud;
-	gl::BatchRef				mLineBatch;
-	gl::BatchRef				mMaskBatch;
+	//vector<VDImageSequenceRef>	mVDImageSequences;
+	//int							mImageSequencePosition;
+	// Audio
+	VDAudioRef					mVDAudio;
+	// Shaders
+	//VDShadersRef				mVDShaders;
+	// Textures
+	//VDTexturesRef				mVDTextures;
+	//int							imgSeqFboIndex;
+	// Fbos
+	//vector<VDFboRef>			mVDFbos;
+	// window mgmt
+	//WindowRef					mMainWindow;
+	//WindowRef					mRenderWindow;
+	bool						mIsResizing;
+	//void						createRenderWindow();
+	//void						deleteRenderWindows();
+	//vector<WindowMngr>			allRenderWindows;
+	// imgui
+	float						color[4];
+	float						backcolor[4];
+	int							playheadPositions[12];
+	int							speeds[12];
+	// mPreviewFboWidth 80 mPreviewFboHeight 60 margin 10 inBetween 15
+	int							w;
+	int							h;
+	int							displayHeight;
+	int							xPos;
+	int							yPos;
+	int							yPosRow1;
+	int							yPosRow2;
+	int							yPosRow3;
+	int							largeW;
+	int							largeH;
+	int							largePreviewW;
+	int							largePreviewH;
+	int							margin;
+	int							inBetween;
 
-	gl::TextureRef				mTexture;
-	gl::GlslProgRef				mShader;
-	CameraPersp					mCamera;
-	mat4						mTextureMatrix;
+	float						f = 0.0f;
+	char						buf[64];
 
+	bool						mouseGlobal;
 	// movie
+	qtime::MovieGlHapRef		mMovie;
+	void loadMovieFile(const fs::path &path);
+	bool						mLoopVideo;
 	// warping
 	gl::TextureRef				mImage;
 	WarpList					mWarps;
-	Area						mSrcArea;
-	fs::path					mSettings;
-
+	string						fileWarpsName;
+	//Area						mSrcArea;
+	fs::path					mWarpSettings;
+	// fbo
+	void						renderSceneToFbo();
+	gl::FboRef					mRenderFbo;
+	void						renderUIToFbo();
+	gl::FboRef					mUIFbo;
+	bool						mFadeInDelay;
+	// timeline
+	Anim<float>					mSaveThumbTimer;
+	bool						removeUI;
 };
