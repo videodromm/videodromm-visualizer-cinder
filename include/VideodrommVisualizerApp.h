@@ -21,14 +21,6 @@
 #include "VDRouter.h"
 // Animation
 #include "VDAnimation.h"
-// Textures
-//#include "VDTextures.h"
-// Shaders
-//#include "VDShaders.h"
-// fbo
-//#include "VDFbo.h"
-// Audio
-#include "VDAudio.h"
 // fbo
 //#include "VDFbo.h"
 // UnionJack
@@ -87,21 +79,6 @@ private:
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
-	// Image sequence
-	//vector<VDImageSequenceRef>	mVDImageSequences;
-	//int							mImageSequencePosition;
-	// Audio
-	VDAudioRef					mVDAudio;
-	// Shaders
-	//VDShadersRef				mVDShaders;
-	// Textures
-	//VDTexturesRef				mVDTextures;
-	//int							imgSeqFboIndex;
-	// Fbos
-	//vector<VDFboRef>			mVDFbos;
-	// window mgmt
-	//WindowRef					mMainWindow;
-	//WindowRef					mRenderWindow;
 	bool						mIsResizing;
 	//void						createRenderWindow();
 	//void						deleteRenderWindows();

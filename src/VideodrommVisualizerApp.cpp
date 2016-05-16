@@ -51,8 +51,6 @@ void VideodrommVisualizerApp::setup()
 	CI_LOG_V("Assets folder: " + mVDUtils->getPath("").string());
 	string imgSeqPath = mVDSession->getImageSequencePath();
 
-	// Audio
-	mVDAudio = VDAudio::create(mVDSettings);
 	// Mix
 	mMixesFilepath = getAssetPath("") / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
@@ -332,8 +330,6 @@ void VideodrommVisualizerApp::update()
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDAnimation->update();
 
-	//mVDTextures->update();
-	mVDAudio->update();
 	mVDRouter->update();
 	updateWindowTitle();
 
@@ -534,8 +530,8 @@ void VideodrommVisualizerApp::renderUIToFbo()
 
 		ui::SliderFloat("mult x", &mVDSettings->controlValues[13], 0.01f, 10.0f);
 		ui::SameLine();
-		ImGui::PlotHistogram("Histogram", mVDAudio->getSmallSpectrum(), 7, 0, NULL, 0.0f, 255.0f, ImVec2(0, 30));
-		ui::SameLine();
+		//ImGui::PlotHistogram("Histogram", mMixes[0]->getSmallSpectrum(), 7, 0, NULL, 0.0f, 255.0f, ImVec2(0, 30));
+		//ui::SameLine();
 
 		if (mVDSettings->maxVolume > 240.0) ui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
 		ui::PlotLines("Volume", &timeValues.front(), (int)timeValues.size(), timeValues_offset, toString(mVDUtils->formatFloat(mVDSettings->maxVolume)).c_str(), 0.0f, 255.0f, ImVec2(0, 30));
