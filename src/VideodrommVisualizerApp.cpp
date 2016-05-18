@@ -26,12 +26,13 @@ fpb = frames per beat
 fpb = 4, bpm = 142
 fps = 142 / 60 * 4 = 9.46
 */
-void VideodrommVisualizerApp::prepare(Settings *settings)
-{
+void VideodrommVisualizerApp::prepare(Settings *settings) {
 	settings->setWindowSize(1024, 768);
 }
-void VideodrommVisualizerApp::setup()
-{
+void VideodrommVisualizerApp::setup() {
+	// maximize fps
+	disableFrameRate();
+	gl::enableVerticalSync(false);
 	// Log
 	mVDLog = VDLog::create();
 	CI_LOG_V("Controller");
@@ -61,12 +62,6 @@ void VideodrommVisualizerApp::setup()
 		// otherwise create a texture from scratch
 		mMixes.push_back(VDMix::create());
 	}
-	// Shaders
-	//mVDShaders = VDShaders::create(mVDSettings);
-	// Textures
-	//mVDTextures = VDTextures::create(mVDSettings, mVDShaders, mVDAnimation);
-	// try loading image sequence from dir
-	//imgSeqFboIndex = mMixes[0]->loadImageSequence(1, mVDSession->getImageSequencePath());
 
 	setFrameRate(mVDSession->getTargetFps());
 	mFadeInDelay = true;
@@ -134,26 +129,18 @@ void VideodrommVisualizerApp::setup()
 	removeUI = false;
 	static float f = 0.0f;
 	// mouse cursor
-	if (mVDSettings->mCursorVisible)
-	{
+	if (mVDSettings->mCursorVisible) {
 		hideCursor();
-	}
-	else
-	{
+	} else {
 		showCursor();
 	}
 	mVDAnimation->tapTempo();
 
 	mVDUtils->getWindowsResolution();
 
-	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
-	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
-
-
 }
 
-void VideodrommVisualizerApp::cleanup()
-{
+void VideodrommVisualizerApp::cleanup() {
 	CI_LOG_V("shutdown");
 	// save warp settings
 	Warp::writeSettings(mWarps, writeFile(mWarpSettings));
@@ -163,15 +150,15 @@ void VideodrommVisualizerApp::cleanup()
 	quit();
 }
 
-void VideodrommVisualizerApp::resizeWindow()
-{
+void VideodrommVisualizerApp::resizeWindow() {
 	mIsResizing = true;
 	// disconnect ui window and io events callbacks
 	ui::disconnectWindow(getWindow());
 
 	// tell the warps our window has been resized, so they properly scale up or down
 	Warp::handleResize(mWarps);
-
+	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
+	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
 }
 
 void VideodrommVisualizerApp::mouseMove(MouseEvent event)
