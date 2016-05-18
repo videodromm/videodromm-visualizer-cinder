@@ -133,6 +133,9 @@
     <Filter Include="Blocks\UnionJack\src">
       <UniqueIdentifier>{1AC63F76-EC6C-4323-8BC5-62EB7E50BD12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{b1fc0932-6b32-4a17-9f58-d064bed1650b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -346,5 +349,10 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Debug\VDSettings.xml">
+      <Filter>debug</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
