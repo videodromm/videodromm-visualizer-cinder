@@ -336,6 +336,9 @@
     <ClCompile Include="..\..\..\Cinder\blocks\UnionJack\src\UnionJack.cpp">
       <Filter>Blocks\UnionJack\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\src\VDShaders.cpp">
+      <Filter>Blocks\Videodromm-Fbos\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="..\include\VideodrommVisualizerApp.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\include\VDShaders.h">
+      <Filter>Blocks\Videodromm-Fbos\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

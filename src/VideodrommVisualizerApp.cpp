@@ -409,12 +409,12 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	if (mMovie) {
 		if (mMovie->isPlaying()) mMovie->draw();
 	}
-	gl::draw(mMixes[0]->getRightFboTexture(), Rectf(0, 0, 128, 128));
+	/*gl::draw(mMixes[0]->getRightFboTexture(), Rectf(0, 0, 128, 128));
 	gl::draw(mMixes[0]->getLeftFboTexture(), Rectf(128, 0, 256, 128));
 	gl::draw(mMixes[0]->getFboTexture(0), Rectf(256, 0, 384, 128));
 	gl::draw(mMixes[0]->getFboTexture(1), Rectf(384, 0, 512, 128));
 	gl::draw(mMixes[0]->getFboInputTexture(0, 0), Rectf(0, 128, 128, 256));
-	gl::draw(mMixes[0]->getTexture(), Rectf(128, 128, 256, 256));
+	gl::draw(mMixes[0]->getTexture(), Rectf(128, 128, 256, 256));*/
 
 
 	int i = 0;
