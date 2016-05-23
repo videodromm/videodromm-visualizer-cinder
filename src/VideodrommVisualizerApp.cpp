@@ -318,6 +318,12 @@ void VideodrommVisualizerApp::update()
 	mVDAnimation->update();
 
 	mVDRouter->update();
+
+	// check if a shader has been received from websockets
+	if (mVDSettings->mShaderToLoad != "") {
+		mMixes[0]->loadFboFragmentShader(mVDSettings->mShaderToLoad);
+	}
+
 	updateWindowTitle();
 
 	renderSceneToFbo();
@@ -346,7 +352,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	}
 	else if (ext == "glsl")
 	{
-		int rtn = mMixes[0]->loadFboFragmentShader(mFile, true);//right = true
+		int rtn = mMixes[0]->loadFboFragmentShader(mFile);
 		
 		if (rtn > -1 )
 		{
@@ -1449,6 +1455,7 @@ void VideodrommVisualizerApp::draw()
 
 	//gl::clear(Color::black());
 	gl::draw(mRenderFbo->getColorTexture());
+	/* TODO check for single screen
 	if (mFadeInDelay) {
 		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
 			mFadeInDelay = false;
@@ -1457,7 +1464,7 @@ void VideodrommVisualizerApp::draw()
 			setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
 			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
 		}
-	}
+	}*/
 	//imgui
 	if (removeUI || Warp::isEditModeEnabled())
 	{
