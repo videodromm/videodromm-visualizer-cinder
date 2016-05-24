@@ -438,7 +438,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 	gl::setMatricesWindow(500, 400);
 	// imgui
 	static int currentWindowRow1 = 0;
-	static int currentWindowRow2 = 0;
+	static int currentWindowRow2 = 1;
 	static int currentWindowRow3 = 0;
 
 	xPos = margin;
@@ -1058,7 +1058,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		{
 			ui::SetNextWindowSize(ImVec2(w, h));
 			ui::SetNextWindowPos(ImVec2((i * (w + inBetween)) + margin, yPosRow2));
-			ui::Begin(mMixes[0]->getFboName(i).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			ui::Begin(mMixes[0]->getFboLabel(i).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
 			{
 
 				//ui::PushID(i);
