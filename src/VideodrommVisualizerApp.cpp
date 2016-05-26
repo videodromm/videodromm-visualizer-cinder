@@ -331,7 +331,7 @@ void VideodrommVisualizerApp::update()
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
-	int index = 1;
+	int index = (int)(event.getX() / (margin + w));
 	string ext = "";
 	// use the last of the dropped files
 	boost::filesystem::path mPath = event.getFile(event.getNumFiles() - 1);
@@ -353,7 +353,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	}
 	else if (ext == "glsl")
 	{
-		int rtn = mMixes[0]->loadFboFragmentShader(mFile);
+		int rtn = mMixes[0]->loadFboFragmentShader(mFile, index);
 		
 		if (rtn > -1 )
 		{
@@ -1062,8 +1062,20 @@ void VideodrommVisualizerApp::renderUIToFbo()
 			ui::Begin(mMixes[0]->getFboLabel(i).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
 			{
 
-				//ui::PushID(i);
+				ui::PushID(i);
 				ui::Image((void*)mMixes[0]->getFboTexture(i)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				for (unsigned int t = 0; t < mMixes[0]->getInputTexturesCount(i); t++) {
+					ui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(t / 7.0f, 0.6f, 0.6f));
+					ui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(t / 7.0f, 0.7f, 0.7f));
+					ui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(t / 7.0f, 0.8f, 0.8f));
+
+					sprintf_s(buf, "%d##fboit%d%d", t, i, t);
+					if (ui::Button(buf)) mMixes[0]->setFboInputTexture(i, t);
+					if (ui::IsItemHovered()) ui::SetTooltip("Set input texture");
+					ui::SameLine();
+					ui::PopStyleColor(3);
+
+				}
 				/*ui::PushStyleColor(ImGuiCol_Button, ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
 				ui::PushStyleColor(ImGuiCol_ButtonHovered, ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
 				ui::PushStyleColor(ImGuiCol_ButtonActive, ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
@@ -1072,8 +1084,8 @@ void VideodrommVisualizerApp::renderUIToFbo()
 				if (ui::Button(buf)) mVDTextures->flipFboV(i);
 				if (ui::IsItemHovered()) ui::SetTooltip("Flip vertically");
 
-				ui::PopStyleColor(3);
-				ui::PopID();*/
+				ui::PopStyleColor(3);*/
+				ui::PopID();
 			}
 			ui::End();
 		}
