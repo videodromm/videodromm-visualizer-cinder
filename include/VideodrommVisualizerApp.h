@@ -22,9 +22,7 @@
 // Animation
 #include "VDAnimation.h"
 // UnionJack
-#include "UnionJack.h"
-// spout
-#include "spout.h"
+//#include "UnionJack.h"
 // hap codec movie
 #include "MovieHap.h"
 // Mix
