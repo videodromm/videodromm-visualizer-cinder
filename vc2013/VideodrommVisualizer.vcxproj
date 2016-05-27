@@ -120,6 +120,9 @@
   <ItemGroup />
   <ItemGroup>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\include\VDShaders.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUI.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIFbos.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUITextures.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h" />
@@ -157,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\src\VDShaders.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUI.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIFbos.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUITextures.cpp" />
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />

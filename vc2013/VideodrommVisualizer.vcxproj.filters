@@ -339,6 +339,15 @@
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\src\VDShaders.cpp">
       <Filter>Blocks\Videodromm-Fbos\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUI.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIFbos.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUITextures.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -349,6 +358,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-Fbos\include\VDShaders.h">
       <Filter>Blocks\Videodromm-Fbos\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUI.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIFbos.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUITextures.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

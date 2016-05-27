@@ -21,8 +21,6 @@
 #include "VDRouter.h"
 // Animation
 #include "VDAnimation.h"
-// fbo
-//#include "VDFbo.h"
 // UnionJack
 #include "UnionJack.h"
 // spout
@@ -31,6 +29,8 @@
 #include "MovieHap.h"
 // Mix
 #include "VDMix.h"
+// UI
+#include "VDUI.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -76,6 +76,9 @@ private:
 	VDRouterRef					mVDRouter;
 	// Animation
 	VDAnimationRef				mVDAnimation;
+	// UI
+	VDUIRef						mVDUI;
+	void						showVDUI(unsigned int window);
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
