@@ -392,7 +392,6 @@ void VideodrommVisualizerApp::renderUIToFbo()
 	static int currentWindowRow3 = 0;
 
 	xPos = margin;
-	const char* warpInputs[] = { "mix", "left", "right", "warp1", "warp2", "preview", "abp", "live", "w8", "w9", "w10", "w11", "w12", "w13", "w14", "w15" };
 
 #pragma region Info
 

@@ -45,7 +45,6 @@ public:
 
 	void saveThumb();
 	void fileDrop(FileDropEvent event) override;
-	//void resize() override;
 	void resizeWindow();
 
 	void mouseMove(MouseEvent event) override;
