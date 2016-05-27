@@ -111,8 +111,6 @@ void VideodrommVisualizerApp::setup() {
 	Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));
 
 	mSaveThumbTimer = 0.0f;
-	// movie
-	mLoopVideo = false;
 
 	// imgui
 	margin = 3;
@@ -213,21 +211,6 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 				// toggle warp edit mode
 				Warp::enableEditMode(!Warp::isEditModeEnabled());
 				break;
-			case KeyEvent::KEY_o:
-				moviePath = getOpenFilePath();
-				if (!moviePath.empty())
-					loadMovieFile(moviePath);
-				break;
-			case KeyEvent::KEY_r:
-				if (mMovie) mMovie.reset();
-				break;
-			case KeyEvent::KEY_p:
-				if (mMovie) mMovie->play();
-				/*for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-				{
-				(mVDTextures->getInputTexture(i)->playSequence();
-				}*/
-				break;
 			case KeyEvent::KEY_LEFT:
 				//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
 				//{
@@ -248,13 +231,8 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 				//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
 				//}
 				break;
-			case KeyEvent::KEY_SPACE:
-				if (mMovie) { if (mMovie->isPlaying()) mMovie->stop(); else mMovie->play(); }
-				break;
 			case KeyEvent::KEY_l:
 				mVDAnimation->load();
-				mLoopVideo = !mLoopVideo;
-				if (mMovie) mMovie->setLoop(mLoopVideo);
 				break;
 			case KeyEvent::KEY_c:
 				// mouse cursor
@@ -294,23 +272,6 @@ void VideodrommVisualizerApp::keyUp(KeyEvent event)
 			// Animation did not handle the key, so handle it here
 		}
 	}
-}
-void VideodrommVisualizerApp::loadMovieFile(const fs::path &moviePath)
-{
-	try {
-		mMovie.reset();
-		// load up the movie, set it to loop, and begin playing
-		mMovie = qtime::MovieGlHap::create(moviePath);
-		mLoopVideo = (mMovie->getDuration() < 30.0f);
-		mMovie->setLoop(mLoopVideo);
-		mMovie->play();
-	}
-	catch (ci::Exception &e)
-	{
-		console() << string(e.what()) << std::endl;
-		console() << "Unable to load the movie." << std::endl;
-	}
-
 }
 void VideodrommVisualizerApp::update()
 {
@@ -369,7 +330,6 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	}
 	else if (ext == "mov")
 	{
-		loadMovieFile(mFile);
 	}
 	else if (ext == "txt")
 	{
@@ -407,17 +367,6 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	gl::clear(Color::black());
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mRenderFbo->getSize());
-	if (mMovie) {
-		if (mMovie->isPlaying()) mMovie->draw();
-	}
-	/*gl::draw(mMixes[0]->getRightFboTexture(), Rectf(0, 0, 128, 128));
-	gl::draw(mMixes[0]->getLeftFboTexture(), Rectf(128, 0, 256, 128));
-	gl::draw(mMixes[0]->getFboTexture(0), Rectf(256, 0, 384, 128));
-	gl::draw(mMixes[0]->getFboTexture(1), Rectf(384, 0, 512, 128));
-	gl::draw(mMixes[0]->getFboInputTexture(0, 0), Rectf(0, 128, 128, 256));
-	gl::draw(mMixes[0]->getTexture(), Rectf(128, 128, 256, 256));*/
-
-
 	int i = 0;
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {

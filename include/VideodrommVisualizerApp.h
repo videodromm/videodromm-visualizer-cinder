@@ -21,10 +21,6 @@
 #include "VDRouter.h"
 // Animation
 #include "VDAnimation.h"
-// UnionJack
-//#include "UnionJack.h"
-// hap codec movie
-#include "MovieHap.h"
 // Mix
 #include "VDMix.h"
 // UI
@@ -109,10 +105,6 @@ private:
 	char						buf[64];
 
 	bool						mouseGlobal;
-	// movie
-	qtime::MovieGlHapRef		mMovie;
-	void loadMovieFile(const fs::path &path);
-	bool						mLoopVideo;
 	// warping
 	gl::TextureRef				mImage;
 	WarpList					mWarps;
