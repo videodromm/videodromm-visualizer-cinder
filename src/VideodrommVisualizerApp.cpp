@@ -1064,7 +1064,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 	case 1:
 		// Midi
 		mVDSettings->mRenderThumbs = false;
-
+#if defined( CINDER_MSW )
 #pragma region MIDI
 
 		ui::SetNextWindowSize(ImVec2(largePreviewW + 20, largePreviewH), ImGuiSetCond_Once);
@@ -1115,6 +1115,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 
 
 #pragma endregion MIDI
+#endif
 		break;
 	case 2:
 		// Channels
