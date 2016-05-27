@@ -1147,7 +1147,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 				}
 				ui::NextColumn();
 				ui::PopStyleColor(3);
-				ui::Text("%s", mMixes[0]->getInputTextureName(0, mVDSettings->iChannels[i]));
+				ui::Text("%s", mMixes[0]->getInputTextureName(0, mVDSettings->iChannels[i]).c_str());
 				ui::NextColumn();
 			}
 			ui::Columns(1);
