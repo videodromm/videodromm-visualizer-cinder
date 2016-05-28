@@ -310,17 +310,16 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 		if (index < 1) index = 1;
 		if (index > 3) index = 3;
 		//mTextures->loadImageFile(mParameterBag->currentSelectedIndex, mFile);
-		mMixes[0]->loadImageFile(mFile, 0, 0, true);
+		mMixes[0]->loadImageFile(mFile, index, true);
 	}
 	else if (ext == "glsl")
 	{
-		int rtn = mMixes[0]->loadFboFragmentShader(mFile, index);
-		
+		if (index > mMixes[0]->getFboCount() - 1) index = mMixes[0]->getFboCount() - 1;
+		int rtn = mMixes[0]->loadFboFragmentShader(mFile, index);		
 		if (rtn > -1 )
 		{
 			// reset zoom
 			mVDAnimation->controlValues[22] = 1.0f;
-
 			// save thumb
 			timeline().apply(&mSaveThumbTimer, 1.0f, 1.0f).finishFn([&]{ saveThumb(); });
 		}
@@ -1147,7 +1146,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 				}
 				ui::NextColumn();
 				ui::PopStyleColor(3);
-				ui::Text("%s", mMixes[0]->getInputTextureName(0, mVDSettings->iChannels[i]).c_str());
+				//ui::Text("%s", mMixes[0]->getInputTextureName(0, mVDSettings->iChannels[i]).c_str());
 				ui::NextColumn();
 			}
 			ui::Columns(1);
