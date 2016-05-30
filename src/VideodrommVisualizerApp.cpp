@@ -61,7 +61,7 @@ void VideodrommVisualizerApp::setup() {
 	mVDAnimation->tapTempo();
 
 	// UI
-	mVDUI = VDUI::create(mVDSettings, mMixes[0]);
+	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
 
 	setFrameRate(mVDSession->getTargetFps());
 	mFadeInDelay = true;
