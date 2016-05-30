@@ -284,7 +284,7 @@ void VideodrommVisualizerApp::update()
 
 	// check if a shader has been received from websockets
 	if (mVDSettings->mShaderToLoad != "") {
-		mMixes[0]->loadFboFragmentShader(mVDSettings->mShaderToLoad);
+		mMixes[0]->loadFboFragmentShader(mVDSettings->mShaderToLoad, 1);
 	}
 
 	updateWindowTitle();
