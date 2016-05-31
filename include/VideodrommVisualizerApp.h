@@ -71,7 +71,7 @@ private:
 	VDAnimationRef				mVDAnimation;
 	// UI
 	VDUIRef						mVDUI;
-	void						showVDUI(unsigned int window);
+	void						showVDUI(unsigned int fps);
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
