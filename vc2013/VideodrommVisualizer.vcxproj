@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Debug\VDSettings.xml" />
+    <Xml Include="Release\VDSettings.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -124,11 +125,15 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIAnimation.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIAudio.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIBlend.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIChannels.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIColor.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIFbos.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIMidi.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIMouse.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIOsc.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUITempo.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUITextures.h" />
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIWebsockets.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h" />
@@ -170,11 +175,15 @@
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIAnimation.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIAudio.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIBlend.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIChannels.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIColor.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIFbos.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIMidi.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIMouse.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIOsc.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUITempo.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUITextures.cpp" />
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIWebsockets.cpp" />
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />

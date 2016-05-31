@@ -136,6 +136,9 @@
     <Filter Include="debug">
       <UniqueIdentifier>{b1fc0932-6b32-4a17-9f58-d064bed1650b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="release">
+      <UniqueIdentifier>{2e426295-c664-4ec6-8c4e-4646256a68c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -366,6 +369,18 @@
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUITempo.cpp">
       <Filter>Blocks\Videodromm-UI\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIChannels.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIMouse.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIOsc.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\src\VDUIWebsockets.cpp">
+      <Filter>Blocks\Videodromm-UI\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
@@ -404,6 +419,18 @@
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUITempo.h">
       <Filter>Blocks\Videodromm-UI\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIChannels.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIMouse.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIOsc.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm-UI\include\VDUIWebsockets.h">
+      <Filter>Blocks\Videodromm-UI\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resources.rc">
@@ -413,6 +440,9 @@
   <ItemGroup>
     <Xml Include="Debug\VDSettings.xml">
       <Filter>debug</Filter>
+    </Xml>
+    <Xml Include="Release\VDSettings.xml">
+      <Filter>release</Filter>
     </Xml>
   </ItemGroup>
 </Project>
