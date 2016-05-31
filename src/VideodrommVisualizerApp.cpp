@@ -136,11 +136,11 @@ void VideodrommVisualizerApp::setup() {
 
 void VideodrommVisualizerApp::cleanup() {
 	CI_LOG_V("shutdown");
+	ui::Shutdown();
 	// save warp settings
 	Warp::writeSettings(mWarps, writeFile(mWarpSettings));
 	mVDSettings->save();
 	mVDSession->save();
-	ui::Shutdown();
 	quit();
 }
 
@@ -633,7 +633,7 @@ void VideodrommVisualizerApp::draw()
 		style.FramePadding = ImVec2(2, 2);
 		style.ItemSpacing = ImVec2(3, 3);
 		style.ItemInnerSpacing = ImVec2(3, 3);
-		style.WindowMinSize = ImVec2(w, mVDSettings->mPreviewFboHeight);
+		style.WindowMinSize = ImVec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight);
 		style.Alpha = 0.6f;
 		style.Colors[ImGuiCol_Text] = ImVec4(0.89f, 0.92f, 0.94f, 1.00f);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.05f, 0.05f, 0.05f, 1.00f);
