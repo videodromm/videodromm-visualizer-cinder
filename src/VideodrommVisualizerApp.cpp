@@ -30,9 +30,7 @@ void VideodrommVisualizerApp::prepare(Settings *settings) {
 	settings->setWindowSize(1024, 768);
 }
 void VideodrommVisualizerApp::setup() {
-	// maximize fps
-	disableFrameRate();
-	gl::enableVerticalSync(false);
+
 	// Log
 	mVDLog = VDLog::create();
 	CI_LOG_V("Controller");
@@ -64,6 +62,9 @@ void VideodrommVisualizerApp::setup() {
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
 
 	setFrameRate(mVDSession->getTargetFps());
+	// maximize fps
+	disableFrameRate();
+	gl::enableVerticalSync(false);
 	mFadeInDelay = true;
 	mIsResizing = true;
 	mVDUtils->getWindowsResolution();
