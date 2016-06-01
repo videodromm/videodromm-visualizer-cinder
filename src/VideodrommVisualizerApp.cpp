@@ -642,8 +642,8 @@ void VideodrommVisualizerApp::draw()
 	}
 	renderSceneToFbo();
 	gl::clear(Color::black());
-	gl::setMatricesWindow(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, false);
-
+	//gl::setMatricesWindow(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, false);
+	gl::setMatricesWindow(toPixels(getWindowSize()));
 	gl::draw(mRenderFbo->getColorTexture());
 	/* TODO check for single screen
 	if (mFadeInDelay) {
