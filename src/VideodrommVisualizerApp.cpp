@@ -368,7 +368,8 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	gl::ScopedViewport scpVp(ivec2(0), mRenderFbo->getSize());
 	// iterate over the warps and draw their content
 	for (auto &warp : mWarps) {
-		warp->draw(mMixes[0]->getFboTexture(mWarpFboIndex), mMixes[0]->getFboTexture(mWarpFboIndex)->getBounds());
+		//warp->draw(mMixes[0]->getFboTexture(mWarpFboIndex), mMixes[0]->getFboTexture(mWarpFboIndex)->getBounds());
+		warp->draw(mMixes[0]->getTexture(), mMixes[0]->getTexture()->getBounds());
 	}
 }
 
