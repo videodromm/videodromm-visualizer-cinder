@@ -204,7 +204,7 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			case KeyEvent::KEY_w:
 				// toggle warp edit mode
 				Warp::enableEditMode(!Warp::isEditModeEnabled());
-				break;
+				break; 
 			case KeyEvent::KEY_LEFT:
 				//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
 				//{
