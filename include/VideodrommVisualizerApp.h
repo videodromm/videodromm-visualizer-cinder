@@ -43,7 +43,6 @@ public:
 	void update();
 	void draw() override;
 
-	void saveThumb();
 	void fileDrop(FileDropEvent event) override;
 	void resizeWindow();
 
@@ -100,7 +99,6 @@ private:
 	int							margin;
 	int							inBetween;
 
-	float						f = 0.0f;
 	char						buf[64];
 
 	bool						mouseGlobal;
@@ -108,7 +106,6 @@ private:
 	gl::TextureRef				mImage;
 	WarpList					mWarps;
 	string						fileWarpsName;
-	//Area						mSrcArea;
 	fs::path					mWarpSettings;
 	// fbo
 	void						renderSceneToFbo();
@@ -117,7 +114,6 @@ private:
 	gl::FboRef					mUIFbo;
 	unsigned int				mWarpFboIndex;
 	bool						mFadeInDelay;
-	// timeline
-	Anim<float>					mSaveThumbTimer;
+
 	bool						removeUI;
 };
