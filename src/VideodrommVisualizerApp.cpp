@@ -45,7 +45,7 @@ void VideodrommVisualizerApp::setup() {
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Mix
-	mMixesFilepath = getAssetPath("") / "mixes.xml";
+	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
 		mMixes = VDMix::readSettings(mVDSettings, mVDAnimation, loadFile(mMixesFilepath));
@@ -152,6 +152,7 @@ void VideodrommVisualizerApp::resizeWindow() {
 
 	// tell the warps our window has been resized, so they properly scale up or down
 	Warp::handleResize(mWarps);
+
 	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
 	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
 }
@@ -169,6 +170,7 @@ void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseDown(mWarps, event)) {
 		// let your application perform its mouseDown handling here
+		mVDAnimation->controlValues[21] = event.getX()/getWindowWidth();
 	}
 }
 
@@ -282,7 +284,7 @@ void VideodrommVisualizerApp::update()
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
 	mVDAnimation->update();
 	mVDRouter->update();
-
+	mMixes[0]->update();
 	// check if a shader has been received from websockets
 	if (mVDSettings->mShaderToLoad != "") {
 		mMixes[0]->loadFboFragmentShader(mVDSettings->mShaderToLoad, 1);
@@ -317,6 +319,8 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 		//warp->draw(mMixes[0]->getFboTexture(mWarpFboIndex), mMixes[0]->getFboTexture(mWarpFboIndex)->getBounds());
 		warp->draw(mMixes[0]->getTexture(), mMixes[0]->getTexture()->getBounds());
 	}
+
+
 }
 
 // Render the UI into the FBO
@@ -439,11 +443,6 @@ void VideodrommVisualizerApp::draw()
 		style.Colors[ImGuiCol_TooltipBg] = ImVec4(0.65f, 0.25f, 0.25f, 1.00f);
 #pragma endregion style
 	}
-	renderSceneToFbo();
-	gl::clear(Color::black());
-	//gl::setMatricesWindow(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, false);
-	gl::setMatricesWindow(toPixels(getWindowSize()));
-	gl::draw(mRenderFbo->getColorTexture());
 	/* TODO check for single screen
 	if (mFadeInDelay) {
 	if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
@@ -453,7 +452,12 @@ void VideodrommVisualizerApp::draw()
 	setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
 	timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
 	}
-	}*/
+	}*/	
+	renderSceneToFbo();
+	gl::clear(Color::black());
+	gl::setMatricesWindow(toPixels(getWindowSize()));
+	gl::draw(mRenderFbo->getColorTexture());
+
 	//imgui
 	if (removeUI || Warp::isEditModeEnabled())
 	{
@@ -461,6 +465,9 @@ void VideodrommVisualizerApp::draw()
 	}
 	renderUIToFbo();
 	gl::draw(mUIFbo->getColorTexture());
+	gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
+	gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
+	gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));
 }
 
 void VideodrommVisualizerApp::updateWindowTitle()
