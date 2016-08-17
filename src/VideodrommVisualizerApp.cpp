@@ -103,8 +103,8 @@ void VideodrommVisualizerApp::setup() {
 	catch (const std::exception &e) {
 		console() << e.what() << std::endl;
 	}
-	//Warp::setSize(mWarps, ivec2(mVDSettings->mFboWidth, mVDSettings->mFboHeight));
-	Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));
+	//Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));
+	Warp::setSize(mWarps, ivec2(mVDSettings->mFboWidth, mVDSettings->mFboHeight)); // TO CHECK 
 	Warp::handleResize(mWarps);
 
 	// imgui
@@ -123,14 +123,19 @@ void VideodrommVisualizerApp::setup() {
 	yPosRow3 = yPosRow2 + h*1.4 + margin;
 
 	mouseGlobal = false;
-	removeUI = true;
+	if (mVDSettings->mStandalone) {
+		removeUI = true;
+	}
+	else {
+		removeUI = false;
+	}
 	static float f = 0.0f;
 	// mouse cursor
 	if (mVDSettings->mCursorVisible) {
-		hideCursor();
+		showCursor();
 	}
 	else {
-		showCursor();
+		hideCursor();
 	}
 
 }
@@ -170,7 +175,7 @@ void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 	// pass this mouse event to the warp editor first
 	if (!Warp::handleMouseDown(mWarps, event)) {
 		// let your application perform its mouseDown handling here
-		mVDAnimation->controlValues[21] = event.getX()/getWindowWidth();
+		mVDAnimation->controlValues[21] = event.getX() / getWindowWidth();
 	}
 }
 
@@ -337,7 +342,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 
 	// left
 	int t = 0;
-	int fboIndex = mMixes[0]->getLeftFboIndex(); 
+	int fboIndex = mMixes[0]->getLeftFboIndex();
 
 	ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiLargePreviewH));
 	ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
@@ -357,7 +362,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
 		ui::PopItemWidth();
 	}
-	ui::End(); 
+	ui::End();
 	//right
 	t = 0;
 	fboIndex = mMixes[0]->getRightFboIndex();
@@ -452,10 +457,10 @@ void VideodrommVisualizerApp::draw()
 	setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
 	timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
 	}
-	}*/	
+	}*/
 	renderSceneToFbo();
 	gl::clear(Color::black());
-	gl::setMatricesWindow(toPixels(getWindowSize()));
+	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
 	gl::draw(mRenderFbo->getColorTexture());
 
 	//imgui
