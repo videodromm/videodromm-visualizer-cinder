@@ -103,8 +103,8 @@ void VideodrommVisualizerApp::setup() {
 	catch (const std::exception &e) {
 		console() << e.what() << std::endl;
 	}
-	//Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));
-	Warp::setSize(mWarps, ivec2(mVDSettings->mFboWidth, mVDSettings->mFboHeight)); // TO CHECK 
+	//Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));// create small new warps too
+	Warp::setSize(mWarps, ivec2(mVDSettings->mFboWidth, mVDSettings->mFboHeight)); // create small new warps 
 	Warp::handleResize(mWarps);
 
 	// imgui
@@ -363,6 +363,18 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		ui::PopItemWidth();
 	}
 	ui::End();
+	t++;
+	ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiLargePreviewH));
+	ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+	ui::Begin("GLSLa", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+	{
+		ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+		ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+		ui::PopItemWidth();
+	}
+	ui::End();
+
+
 	//right
 	t = 0;
 	fboIndex = mMixes[0]->getRightFboIndex();
@@ -386,9 +398,24 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		ui::PopItemWidth();
 	}
 	ui::End();
+	t++;
+	ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiLargePreviewH));
+	ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiLargePreviewH + mVDSettings->uiMargin));
+	ui::Begin("GLSLb", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+	{
+		ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+		ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+		ui::PopItemWidth();
+	}
+	ui::End();
+
+
 	showVDUI((int)getAverageFps());
 
 	//gl::draw(mUIFbo->getColorTexture());
+	/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
+	gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
+	gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
 }
 void VideodrommVisualizerApp::draw()
 {
@@ -470,9 +497,7 @@ void VideodrommVisualizerApp::draw()
 	}
 	renderUIToFbo();
 	gl::draw(mUIFbo->getColorTexture());
-	gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
-	gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
-	gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));
+
 }
 
 void VideodrommVisualizerApp::updateWindowTitle()
