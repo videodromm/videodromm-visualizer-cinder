@@ -55,6 +55,7 @@ public:
 	void keyUp(KeyEvent event) override;
 
 	void updateWindowTitle();
+	void setUIVisibility(bool visible);
 private:
 	// Settings
 	VDSettingsRef				mVDSettings;
@@ -115,5 +116,5 @@ private:
 	unsigned int				mWarpFboIndex;
 	bool						mFadeInDelay;
 
-	bool						removeUI;
+	//bool						removeUI;
 };

@@ -124,20 +124,13 @@ void VideodrommVisualizerApp::setup() {
 
 	mouseGlobal = false;
 	if (mVDSettings->mStandalone) {
-		removeUI = true;
+		mVDSettings->mCursorVisible = false;
 	}
 	else {
-		removeUI = false;
+		mVDSettings->mCursorVisible = true;
 	}
-	static float f = 0.0f;
-	// mouse cursor
-	if (mVDSettings->mCursorVisible) {
-		showCursor();
-	}
-	else {
-		hideCursor();
-	}
-
+	// mouse cursor and ui
+	setUIVisibility(mVDSettings->mCursorVisible);
 }
 
 void VideodrommVisualizerApp::cleanup() {
@@ -244,20 +237,11 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			case KeyEvent::KEY_l:
 				mVDAnimation->load();
 				break;
-			case KeyEvent::KEY_c:
+
+			case KeyEvent::KEY_h:
 				// mouse cursor
 				mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
-				if (mVDSettings->mCursorVisible)
-				{
-					hideCursor();
-				}
-				else
-				{
-					showCursor();
-				}
-				break;
-			case KeyEvent::KEY_h:
-				removeUI = !removeUI;
+				setUIVisibility(mVDSettings->mCursorVisible);
 				break;
 			case KeyEvent::KEY_n:
 				mWarps.push_back(WarpPerspectiveBilinear::create());
@@ -283,6 +267,7 @@ void VideodrommVisualizerApp::keyUp(KeyEvent event)
 		}
 	}
 }
+
 void VideodrommVisualizerApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
@@ -308,7 +293,17 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 		mVDAnimation->controlValues[22] = 1.0f;
 	}
 }
-
+void VideodrommVisualizerApp::setUIVisibility(bool visible)
+{
+	if (visible)
+	{
+		showCursor();
+	}
+	else
+	{
+		hideCursor();
+	}
+}
 // Render the scene into the FBO
 void VideodrommVisualizerApp::renderSceneToFbo()
 {
@@ -491,7 +486,7 @@ void VideodrommVisualizerApp::draw()
 	gl::draw(mRenderFbo->getColorTexture());
 
 	//imgui
-	if (removeUI || Warp::isEditModeEnabled())
+	if (!mVDSettings->mCursorVisible || Warp::isEditModeEnabled())
 	{
 		return;
 	}
