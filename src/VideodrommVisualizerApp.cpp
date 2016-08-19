@@ -334,7 +334,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 	gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
 	gl::clear();
 	gl::color(Color::white());
-
+#pragma region chain
 	// left
 	int t = 0;
 	int fboIndex = mMixes[0]->getLeftFboIndex();
@@ -403,7 +403,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		ui::PopItemWidth();
 	}
 	ui::End();
-
+#pragma endregion chain
 
 	showVDUI((int)getAverageFps());
 
