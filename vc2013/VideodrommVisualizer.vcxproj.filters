@@ -79,6 +79,9 @@
     <Filter Include="Blocks\OSC\src">
       <UniqueIdentifier>{881EB7B4-89D6-4955-80EE-E3C42F051E65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{1461f857-98ef-4675-af56-1fb5e4eb7310}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -370,5 +373,10 @@
     <ResourceCompile Include="Resources.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Debug\VDSettings.xml">
+      <Filter>debug</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
