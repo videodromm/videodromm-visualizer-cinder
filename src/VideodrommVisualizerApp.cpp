@@ -68,8 +68,6 @@ void VideodrommVisualizerApp::setup() {
 	mFadeInDelay = true;
 	mIsResizing = true;
 	mVDUtils->getWindowsResolution();
-	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
-	setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
 
 	// render fbo
 	gl::Fbo::Format format;
@@ -470,16 +468,24 @@ void VideodrommVisualizerApp::draw()
 		style.Colors[ImGuiCol_TooltipBg] = ImVec4(0.65f, 0.25f, 0.25f, 1.00f);
 #pragma endregion style
 	}
-	/* TODO check for single screen
+	/* TODO check for single screen*/
 	if (mFadeInDelay) {
-	if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
-	mFadeInDelay = false;
-	int uiWidth = (int)mVDSettings->mMainWindowWidth / 2;
-	setWindowSize(mVDSettings->mRenderWidth + uiWidth, mVDSettings->mRenderHeight + 30);
-	setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
-	timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
+		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
+			mFadeInDelay = false;
+			if (mVDSettings->mDisplayCount > 1) {
+				int uiWidth = (int)mVDSettings->mMainWindowWidth / 2;
+				setWindowSize(mVDSettings->mRenderWidth + uiWidth, mVDSettings->mRenderHeight + 30);
+				setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
+
+			}
+			else {
+				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+				setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
+
+			}
+			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
+		}
 	}
-	}*/
 	renderSceneToFbo();
 	gl::clear(Color::black());
 	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
