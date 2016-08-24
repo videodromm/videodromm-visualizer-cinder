@@ -3,8 +3,6 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-// window manager
-//#include "WindowMngr.h"
 // UserInterface
 #include "CinderImGui.h"
 // Warping
@@ -76,9 +74,7 @@ private:
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
 	bool						mIsResizing;
-	//void						createRenderWindow();
-	//void						deleteRenderWindows();
-	//vector<WindowMngr>			allRenderWindows;
+
 	// imgui
 	float						color[4];
 	float						backcolor[4];
@@ -115,5 +111,4 @@ private:
 	unsigned int				mWarpFboIndex;
 	bool						mFadeInDelay;
 
-	//bool						removeUI;
 };

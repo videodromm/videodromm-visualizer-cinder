@@ -48,11 +48,11 @@ void VideodrommVisualizerApp::setup() {
 	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
-		mMixes = VDMix::readSettings(mVDSettings, mVDAnimation, loadFile(mMixesFilepath));
+		mMixes = VDMix::readSettings(mVDSettings, mVDAnimation, mVDRouter, loadFile(mMixesFilepath));
 	}
 	else {
 		// otherwise create a texture from scratch
-		mMixes.push_back(VDMix::create(mVDSettings, mVDAnimation));
+		mMixes.push_back(VDMix::create(mVDSettings, mVDAnimation, mVDRouter));
 	}
 	mMixes[0]->setLeftFboIndex(2);
 	mMixes[0]->setRightFboIndex(1);
