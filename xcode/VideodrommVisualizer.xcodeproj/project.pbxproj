@@ -26,6 +26,7 @@
 		30658C9330824162A1ACB94E /* VDUITempo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB56251617AB467799045F38 /* VDUITempo.cpp */; };
 		3114E93EC3BD4963ABCE1A23 /* VDTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84253EFDBFEA47E29281D117 /* VDTexture.cpp */; };
 		322087649E4343E9A2426DDF /* VDUITextures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1196F4848EE141658EDD6AB8 /* VDUITextures.cpp */; };
+		32DBD4291D7042D00097BD53 /* Osc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32DBD4271D7042D00097BD53 /* Osc.cpp */; };
 		32F9C9AAA7424ADDA5825ACD /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7946AF0434440EB787AC21 /* imgui_draw.cpp */; };
 		3329FF0B49ED49168A45F0E1 /* VDUIAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17EDEF27392B49728705D559 /* VDUIAudio.cpp */; };
 		43725D5D0B52437CAFABDD74 /* syphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5FB85A7BD4248E59A6C72F5 /* syphonClient.mm */; };
@@ -46,7 +47,6 @@
 		908FFE9C450A4CF6BB5A3C48 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A0092E18614A6AA2DCD2DD /* Syphon.framework */; };
 		94CC1462A669470D805DCC09 /* LiveParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6AA66C7D279A403294D87F8F /* LiveParam.cpp */; };
 		98691DA143674AFABF0E89B3 /* VDUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6520D42A302B407C900C8613 /* VDUI.cpp */; };
-		98FCC6F01EBE420E9D854A9C /* Osc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D78887F002C943C2BAB08705 /* Osc.cpp */; };
 		9A2B2A7D0A1C4633B4A36BDA /* CinderImGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 852DC21B9F5A4F298B72F1D2 /* CinderImGui.cpp */; };
 		9AFBFE19A29D47ECB3686794 /* VDUIMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0CF97DE9F18B4CEB836B7269 /* VDUIMidi.cpp */; };
 		A0B82FC267AC4901BBE8E930 /* WebSocketConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABA8301AAE53464F9D3FAFA3 /* WebSocketConnection.cpp */; };
@@ -108,6 +108,8 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2D8E59A6EAD445508E169C2B /* VDUIMouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDUIMouse.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDUIMouse.h"; sourceTree = "<group>"; };
+		32DBD4271D7042D00097BD53 /* Osc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Osc.cpp; path = ../../../Cinder/blocks/OSC/src/cinder/osc/Osc.cpp; sourceTree = "<group>"; };
+		32DBD4281D7042D00097BD53 /* Osc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Osc.h; path = ../../../Cinder/blocks/OSC/src/cinder/osc/Osc.h; sourceTree = "<group>"; };
 		3937A76AF9F64D14928270EE /* VDSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDSettings.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDSettings.h"; sourceTree = "<group>"; };
 		3D2E205A85DB46F5A2B710A7 /* WebSocketClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = WebSocketClient.cpp; path = "../../../Cinder/blocks/Cinder-WebSocketPP/src/WebSocketClient.cpp"; sourceTree = "<group>"; };
 		3F4CCAD04CED4074ABE81355 /* VDUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDUI.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDUI.h"; sourceTree = "<group>"; };
@@ -167,7 +169,6 @@
 		C68BF8A0A2A04EE280E4DCEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB1465D7171F4DF5B4AA6C7D /* VDShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = VDShader.cpp; path = "../../../Cinder/blocks/Cinder-Videodromm/src/VDShader.cpp"; sourceTree = "<group>"; };
 		D463F9B4B1EF45448626C07F /* VDUIColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDUIColor.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDUIColor.h"; sourceTree = "<group>"; };
-		D78887F002C943C2BAB08705 /* Osc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = Osc.cpp; path = ../../../Cinder/blocks/OSC/src/Osc.cpp; sourceTree = "<group>"; };
 		D90C18352B5E463EAFF64698 /* VDLog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = VDLog.cpp; path = "../../../Cinder/blocks/Cinder-Videodromm/src/VDLog.cpp"; sourceTree = "<group>"; };
 		D999CEEF8343413D80D5A3E0 /* imgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = imgui.h; path = "../../../Cinder/blocks/Cinder-ImGui/lib/imgui/imgui.h"; sourceTree = "<group>"; };
 		E00355AC6BAC4368B1B5A430 /* SyphonNameboundClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SyphonNameboundClient.h; path = "../../../Cinder/blocks/Cinder-Syphon/lib/SyphonNameboundClient.h"; sourceTree = "<group>"; };
@@ -180,7 +181,6 @@
 		E97718021777455FB1FA4986 /* VDUITempo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDUITempo.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDUITempo.h"; sourceTree = "<group>"; };
 		E9866716F61F436AA8966F20 /* Warp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = Warp.cpp; path = "../../../Cinder/blocks/Cinder-Warping/src/Warp.cpp"; sourceTree = "<group>"; };
 		ED4ADB5A27C94589B105BB17 /* VDRouter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = VDRouter.cpp; path = "../../../Cinder/blocks/Cinder-Videodromm/src/VDRouter.cpp"; sourceTree = "<group>"; };
-		EFC905E0C1744C6EB7A936F0 /* Osc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Osc.h; path = ../../../Cinder/blocks/OSC/src/Osc.h; sourceTree = "<group>"; };
 		F169788D32DA4871A9D22C87 /* WebSocketServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = WebSocketServer.cpp; path = "../../../Cinder/blocks/Cinder-WebSocketPP/src/WebSocketServer.cpp"; sourceTree = "<group>"; };
 		F30F73E533A849049106F7D4 /* VDRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VDRouter.h; path = "../../../Cinder/blocks/Cinder-Videodromm/include/VDRouter.h"; sourceTree = "<group>"; };
 		F3516AC557CE4393BD183EA8 /* syphonServerDirectory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = syphonServerDirectory.h; path = "../../../Cinder/blocks/Cinder-Syphon/src/syphonServerDirectory.h"; sourceTree = "<group>"; };
@@ -431,8 +431,8 @@
 		5A72944D879642DB9CD2FE97 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				D78887F002C943C2BAB08705 /* Osc.cpp */,
-				EFC905E0C1744C6EB7A936F0 /* Osc.h */,
+				32DBD4271D7042D00097BD53 /* Osc.cpp */,
+				32DBD4281D7042D00097BD53 /* Osc.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -602,6 +602,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32DBD4291D7042D00097BD53 /* Osc.cpp in Sources */,
 				509BE3B5631448D3A26E8C3A /* VideodrommVisualizerApp.cpp in Sources */,
 				9A2B2A7D0A1C4633B4A36BDA /* CinderImGui.cpp in Sources */,
 				80A47927D5D34A56B799CDB3 /* imgui.cpp in Sources */,
@@ -644,7 +645,6 @@
 				FC40042EC5BB43DBB4FE0847 /* WebSocketClient.cpp in Sources */,
 				A0B82FC267AC4901BBE8E930 /* WebSocketConnection.cpp in Sources */,
 				20E072D647094D429087F314 /* WebSocketServer.cpp in Sources */,
-				98FCC6F01EBE420E9D854A9C /* Osc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
