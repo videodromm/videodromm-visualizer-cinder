@@ -11,24 +11,39 @@ echo Cinder-MIDI2
 git clone https://github.com/brucelane/Cinder-MIDI2 ../../Cinder/blocks/Cinder-MIDI2
 echo Cinder-WebSocketPP
 git clone https://github.com/videodromm/Cinder-WebSocketPP ../../Cinder/blocks/Cinder-WebSocketPP
+pwd
 echo Pull changes
 git pull
+cd ..
 echo assets
-git clone https://github.com/videodromm/assets ..
+git clone https://github.com/videodromm/assets
+cd assets
+git pull
+cd ..
+
 echo videodromm-controller-cinder
-git clone https://github.com/videodromm/videodromm-controller-cinder ..
-cd ../videodromm-controller-cinder
+git clone https://github.com/videodromm/videodromm-controller-cinder
+cd videodromm-controller-cinder
+pwd
 git pull
+cd ..
+
 echo videodromm-livecoding-cinder
-git clone https://github.com/videodromm/videodromm-livecoding-cinder ..
-cd ../videodromm-livecoding-cinder
+git clone https://github.com/videodromm/videodromm-livecoding-cinder
+cd videodromm-livecoding-cinder
+pwd
 git pull
+cd ..
+
 echo videodromm-visualizer-cinder
-git clone https://github.com/videodromm/videodromm-visualizer-cinder ..
-cd ../videodromm-visualizer-cinder
+git clone https://github.com/videodromm/videodromm-visualizer-cinder
+cd videodromm-visualizer-cinder
+pwd
 git pull
+cd ..
+
 echo Required dependencies checked out
-cd ../../Cinder/blocks/Cinder-Hap2
+cd ../Cinder/blocks/Cinder-Hap2
 git pull
 cd ../Cinder-Videodromm
 git pull
