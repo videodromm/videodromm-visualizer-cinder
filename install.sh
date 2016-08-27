@@ -11,6 +11,8 @@ echo Cinder-MIDI2
 git clone https://github.com/brucelane/Cinder-MIDI2 ../../Cinder/blocks/Cinder-MIDI2
 echo Cinder-WebSocketPP
 git clone https://github.com/videodromm/Cinder-WebSocketPP ../../Cinder/blocks/Cinder-WebSocketPP
+echo Cinder-Spout
+git clone https://github.com/brucelane/Cinder-Spout ../../Cinder/blocks/Cinder-Spout
 pwd
 echo Pull changes
 git pull
@@ -47,4 +49,4 @@ cd ../Cinder/blocks/Cinder-Hap2
 git pull
 cd ../Cinder-Videodromm
 git pull
-pause
+
