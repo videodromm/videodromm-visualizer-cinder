@@ -59,13 +59,10 @@ void VideodrommVisualizerApp::setup() {
 	mVDAnimation->tapTempo();
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
-	CI_LOG_V("setup vdui end");
 	setFrameRate(mVDSession->getTargetFps());
 	// maximize fps
-	CI_LOG_V("setup fps");
 	disableFrameRate();
 	gl::enableVerticalSync(false);
-	CI_LOG_V("setup sync end");
 
 	mFadeInDelay = true;
 	mIsResizing = true;
