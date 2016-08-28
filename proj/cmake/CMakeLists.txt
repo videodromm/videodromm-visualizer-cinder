@@ -19,16 +19,43 @@ set( SRC_FILES
 	${BLOCKS_DIR}/Cinder-Warping/src/WarpBilinear.cpp
 	${BLOCKS_DIR}/Cinder-Warping/src/WarpPerspective.cpp
 	${BLOCKS_DIR}/Cinder-Warping/src/WarpPerspectiveBilinear.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/LiveParam.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDAnimation.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDConsole.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDFbo.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDLog.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDMix.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDRouter.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDSession.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDSettings.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDShader.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDTexture.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUI.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIAnimation.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIAudio.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIBlend.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIChannels.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIColor.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIFbos.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIMidi.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIMouse.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIOsc.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIShaders.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUITempo.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUITextures.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIWebsockets.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUtils.cpp
 )
 set(PROJECT_INCLUDE_FILES
     ${PROG_DIR}/include
 	${BLOCKS_DIR}/Cinder-ImGui/include
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui
 	${BLOCKS_DIR}/Cinder-Warping/include
+	${BLOCKS_DIR}/Cinder-Videodromm/include
 )
 ci_make_app(
 	SOURCES     ${SRC_FILES}
 	INCLUDES ${PROJECT_INCLUDE_FILES}
 	CINDER_PATH ${CINDER_PATH}
-	BLOCKS Cinder-ImGui Cinder-Warping
+	BLOCKS OSC
 )
