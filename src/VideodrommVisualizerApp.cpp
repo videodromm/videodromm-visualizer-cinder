@@ -33,7 +33,6 @@ void VideodrommVisualizerApp::setup() {
 
 	// Log
 	mVDLog = VDLog::create();
-	CI_LOG_V("Controller");
 	// Settings
 	mVDSettings = VDSettings::create();
 	// Session
@@ -58,16 +57,19 @@ void VideodrommVisualizerApp::setup() {
 	mMixes[0]->setLeftFboIndex(2);
 	mMixes[0]->setRightFboIndex(1);
 	mVDAnimation->tapTempo();
-	CI_LOG_V("setup mix end");
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
 	CI_LOG_V("setup vdui end");
 	setFrameRate(mVDSession->getTargetFps());
 	// maximize fps
+	CI_LOG_V("setup fps");
 	disableFrameRate();
 	gl::enableVerticalSync(false);
+	CI_LOG_V("setup sync end");
+
 	mFadeInDelay = true;
 	mIsResizing = true;
+	CI_LOG_V("setup res start");
 	mVDUtils->getWindowsResolution();
 	CI_LOG_V("setup res");
 	// render fbo
