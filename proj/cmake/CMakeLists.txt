@@ -7,7 +7,6 @@ get_filename_component( CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../../Cin
 get_filename_component( PROG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../" ABSOLUTE )
 
 include( "${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake" )
-include( "${PROG_DIR}/include/" )
 
 set( SRC_FILES
 	${PROG_DIR}/src/VideodrommVisualizerApp.cpp
