@@ -45,7 +45,7 @@ void VideodrommVisualizerApp::setup() {
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Mix
-		CI_LOG_V("setup mix start");
+	
 	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
@@ -61,7 +61,7 @@ void VideodrommVisualizerApp::setup() {
 	CI_LOG_V("setup mix end");
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
-
+	CI_LOG_V("setup vdui end");
 	setFrameRate(mVDSession->getTargetFps());
 	// maximize fps
 	disableFrameRate();
@@ -69,7 +69,7 @@ void VideodrommVisualizerApp::setup() {
 	mFadeInDelay = true;
 	mIsResizing = true;
 	mVDUtils->getWindowsResolution();
-
+	CI_LOG_V("setup res");
 	// render fbo
 	gl::Fbo::Format format;
 	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
@@ -83,6 +83,7 @@ void VideodrommVisualizerApp::setup() {
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	// initialize warps
+		CI_LOG_V("setup warp start");
 	mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
 	if (fs::exists(mWarpSettings)) {
 		// load warp settings from file if one exists
@@ -92,7 +93,7 @@ void VideodrommVisualizerApp::setup() {
 		// otherwise create a warp from scratch
 		mWarps.push_back(WarpPerspectiveBilinear::create());
 	}
-
+	CI_LOG_V("setup warp end");
 	// load image
 	try {
 		mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
