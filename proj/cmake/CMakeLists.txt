@@ -11,7 +11,7 @@ include( "${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake" )
 
 set( SRC_FILES
 	${PROG_DIR}/src/VideodrommVisualizerApp.cpp
-	${BLOCKS_DIR}/Cinder-ImGui/CinderImGui.cpp
+	${BLOCKS_DIR}/Cinder-ImGui/src/CinderImGui.cpp
 		${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui.cpp
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui_demo.cpp
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui_draw.cpp
