@@ -45,7 +45,7 @@ set( SRC_FILES
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUITextures.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIWebsockets.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUtils.cpp
-	${BLOCKS_DIR}/OSC/srv/cinder/osc/Osc.cpp
+	${BLOCKS_DIR}/OSC/src/cinder/osc/Osc.cpp
 )
 set(PROJECT_INCLUDE_FILES
     ${PROG_DIR}/include
@@ -53,7 +53,7 @@ set(PROJECT_INCLUDE_FILES
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui
 	${BLOCKS_DIR}/Cinder-Warping/include
 	${BLOCKS_DIR}/Cinder-Videodromm/include
-	${BLOCKS_DIR}/OSC/srv/cinder/osc
+	${BLOCKS_DIR}/OSC/src/cinder/osc
 )
 ci_make_app(
 	SOURCES     ${SRC_FILES}
