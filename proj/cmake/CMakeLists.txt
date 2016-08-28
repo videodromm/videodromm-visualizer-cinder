@@ -12,8 +12,11 @@ include( "${PROG_DIR}/include/" )
 set( SRC_FILES
 	${PROG_DIR}/src/VideodrommVisualizerApp.cpp
 )
-
+set(PROJECT_INCLUDE_FILES
+    ${PROG_DIR}/include/VideodrommVisualizerApp.h
+)
 ci_make_app(
 	SOURCES     ${SRC_FILES}
+	INCLUDES ${PROJECT_INCLUDE_FILES}
 	CINDER_PATH ${CINDER_PATH}
 )
