@@ -45,6 +45,7 @@ void VideodrommVisualizerApp::setup() {
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Mix
+		CI_LOG_V("setup mix start");
 	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
@@ -57,7 +58,7 @@ void VideodrommVisualizerApp::setup() {
 	mMixes[0]->setLeftFboIndex(2);
 	mMixes[0]->setRightFboIndex(1);
 	mVDAnimation->tapTempo();
-
+	CI_LOG_V("setup mix end");
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
 
@@ -129,6 +130,7 @@ void VideodrommVisualizerApp::setup() {
 	}
 	// mouse cursor and ui
 	setUIVisibility(mVDSettings->mCursorVisible);
+		CI_LOG_V("setup end");
 }
 
 void VideodrommVisualizerApp::cleanup() {
@@ -142,6 +144,7 @@ void VideodrommVisualizerApp::cleanup() {
 }
 
 void VideodrommVisualizerApp::resizeWindow() {
+	CI_LOG_V("resizeWindow");
 	mIsResizing = true;
 	// disconnect ui window and io events callbacks
 	ui::disconnectWindow(getWindow());
