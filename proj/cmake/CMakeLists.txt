@@ -12,18 +12,23 @@ include( "${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake" )
 set( SRC_FILES
 	${PROG_DIR}/src/VideodrommVisualizerApp.cpp
 	${BLOCKS_DIR}/Cinder-ImGui/src/CinderImGui.cpp
-		${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui.cpp
+	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui.cpp
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui_demo.cpp
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui/imgui_draw.cpp
+	${BLOCKS_DIR}/Cinder-Warping/src/Warp.cpp
+	${BLOCKS_DIR}/Cinder-Warping/src/WarpBilinear.cpp
+	${BLOCKS_DIR}/Cinder-Warping/src/WarpPerspective.cpp
+	${BLOCKS_DIR}/Cinder-Warping/src/WarpPerspectiveBilinear.cpp
 )
 set(PROJECT_INCLUDE_FILES
     ${PROG_DIR}/include
 	${BLOCKS_DIR}/Cinder-ImGui/include
 	${BLOCKS_DIR}/Cinder-ImGui/lib/imgui
+	${BLOCKS_DIR}/Cinder-Warping/include
 )
 ci_make_app(
 	SOURCES     ${SRC_FILES}
 	INCLUDES ${PROJECT_INCLUDE_FILES}
 	CINDER_PATH ${CINDER_PATH}
-	BLOCKS Cinder-ImGui
+	BLOCKS Cinder-ImGui Cinder-Warping
 )
