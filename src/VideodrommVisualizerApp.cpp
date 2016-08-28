@@ -66,9 +66,10 @@ void VideodrommVisualizerApp::setup() {
 
 	mFadeInDelay = true;
 	mIsResizing = true;
-	CI_LOG_V("setup res start");
+	#if (defined( CINDER_MSW )|| defined( CINDER_MAC ))
 	mVDUtils->getWindowsResolution();
-	CI_LOG_V("setup res");
+	#endif
+	
 	// render fbo
 	gl::Fbo::Format format;
 	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
@@ -82,7 +83,6 @@ void VideodrommVisualizerApp::setup() {
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
 	// initialize warps
-		CI_LOG_V("setup warp start");
 	mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
 	if (fs::exists(mWarpSettings)) {
 		// load warp settings from file if one exists
@@ -92,7 +92,6 @@ void VideodrommVisualizerApp::setup() {
 		// otherwise create a warp from scratch
 		mWarps.push_back(WarpPerspectiveBilinear::create());
 	}
-	CI_LOG_V("setup warp end");
 	// load image
 	try {
 		mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
@@ -130,7 +129,6 @@ void VideodrommVisualizerApp::setup() {
 	}
 	// mouse cursor and ui
 	setUIVisibility(mVDSettings->mCursorVisible);
-		CI_LOG_V("setup end");
 }
 
 void VideodrommVisualizerApp::cleanup() {
