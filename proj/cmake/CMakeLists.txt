@@ -12,7 +12,7 @@ set( SRC_FILES
 	${PROG_DIR}/src/VideodrommVisualizerApp.cpp
 )
 set(PROJECT_INCLUDE_FILES
-    ${PROG_DIR}/include/VideodrommVisualizerApp.h
+    ${PROG_DIR}/include
 )
 ci_make_app(
 	SOURCES     ${SRC_FILES}
