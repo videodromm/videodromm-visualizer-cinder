@@ -44,7 +44,7 @@ void VideodrommVisualizerApp::setup() {
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Mix
-	
+
 	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
@@ -66,10 +66,10 @@ void VideodrommVisualizerApp::setup() {
 
 	mFadeInDelay = true;
 	mIsResizing = true;
-	#if (defined( CINDER_MSW )|| defined( CINDER_MAC ))
+#if (defined( CINDER_MSW )|| defined( CINDER_MAC ))
 	mVDUtils->getWindowsResolution();
-	#endif
-	
+#endif
+
 	// render fbo
 	gl::Fbo::Format format;
 	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
