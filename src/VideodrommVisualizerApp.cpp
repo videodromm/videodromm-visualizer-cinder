@@ -1,7 +1,7 @@
 #include "VideodrommVisualizerApp.h"
 /*
 TODO
-- 0204 blendmodes preview
+- 20160831 imgui quits on Mac when resize
 - 0204 thread for loading image sequence
 - 2802 list of shaders show/active on mouseover
 - 2802 imgui contextual window depending on mouseover
