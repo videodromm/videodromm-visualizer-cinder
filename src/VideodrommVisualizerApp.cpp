@@ -400,14 +400,13 @@ void VideodrommVisualizerApp::renderUIToFbo()
 		}
 		ui::End();
 #pragma endregion chain
-
-
 		//gl::draw(mUIFbo->getColorTexture());
 		/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
 		gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
 		gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
 	}
-	showVDUI((int)getAverageFps());
+	mVDUI->Run("UI", (int)getAverageFps());
+
 }
 void VideodrommVisualizerApp::draw()
 {
@@ -449,10 +448,7 @@ void VideodrommVisualizerApp::updateWindowTitle()
 {
 	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " Videodromm");
 }
-// UI
-void VideodrommVisualizerApp::showVDUI(unsigned int fps) {
-	mVDUI->Run("UI", fps);
-}
+
 // If you're deploying to iOS, set the Render antialiasing to 0 for a significant
 // performance improvement. This value defaults to 4 (AA_MSAA_4) on iOS and 16 (AA_MSAA_16)
 // on the Desktop.
