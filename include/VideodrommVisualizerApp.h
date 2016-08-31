@@ -42,7 +42,7 @@ public:
 	void draw() override;
 
 	void fileDrop(FileDropEvent event) override;
-	void resizeWindow();
+	void resize() override;
 
 	void mouseMove(MouseEvent event) override;
 	void mouseDown(MouseEvent event) override;
@@ -73,7 +73,6 @@ private:
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
-	bool						mIsResizing;
 
 	// imgui
 	float						color[4];
