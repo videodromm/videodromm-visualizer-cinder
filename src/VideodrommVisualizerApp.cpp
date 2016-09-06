@@ -282,7 +282,9 @@ void VideodrommVisualizerApp::update()
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
 	int index = (int)(event.getX() / (mVDSettings->uiElementWidth + mVDSettings->uiMargin));// +1;
-	boost::filesystem::path mPath = event.getFile(event.getNumFiles() - 1);
+	//ci::fs::exists(path)
+	//ci::fs::path
+	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
 	string mFile = mPath.string();
 	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
 		// load success
