@@ -45,8 +45,12 @@ git pull
 cd ..
 
 echo Required dependencies checked out
-cd ../Cinder/blocks/Cinder-Hap2
+cd ../Cinder/blocks/Cinder-Videodromm
 git pull
-cd ../Cinder-Videodromm
+cd ../Cinder-Hap2
+git pull
+cd ../Cinder-WebSocketPP
+git pull
+cd ../Cinder-Spout
 git pull
 
