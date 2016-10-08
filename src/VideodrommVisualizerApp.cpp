@@ -271,6 +271,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	//ci::fs::path
 	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
 	string mFile = mPath.string();
+	CI_LOG_V("file dropped: " + mFile);
 	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
 		// load success
 		// reset zoom
