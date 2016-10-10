@@ -91,6 +91,8 @@ void VideodrommVisualizerApp::setup() {
 	else {
 		// otherwise create a warp from scratch
 		mWarps.push_back(WarpPerspectiveBilinear::create());
+		mMixes[0]->createWarp(0);
+
 	}
 	// load image
 	try {
@@ -226,6 +228,7 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 				setUIVisibility(mVDSettings->mCursorVisible);
 				break;
 			case KeyEvent::KEY_n:
+				mMixes[0]->createWarp(mWarps.size());
 				mWarps.push_back(WarpPerspectiveBilinear::create());
 				break;
 			case KeyEvent::KEY_a:
@@ -299,9 +302,11 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 	// setup the viewport to match the dimensions of the FBO
 	gl::ScopedViewport scpVp(ivec2(0), mRenderFbo->getSize());
 	// iterate over the warps and draw their content
+	int i = 0;
 	for (auto &warp : mWarps) {
 		//warp->draw(mMixes[0]->getFboTexture(mWarpFboIndex), mMixes[0]->getFboTexture(mWarpFboIndex)->getBounds());
-		warp->draw(mMixes[0]->getTexture(), mMixes[0]->getTexture()->getBounds());
+		warp->draw(mMixes[0]->getWarpTexture(i), mMixes[0]->getWarpTexture(i)->getBounds());
+		i++;
 	}
 }
 

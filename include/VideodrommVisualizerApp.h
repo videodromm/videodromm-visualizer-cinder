@@ -5,8 +5,6 @@
 
 // UserInterface
 #include "CinderImGui.h"
-// Warping
-#include "Warp.h"
 // Settings
 #include "VDSettings.h"
 // Session
@@ -23,6 +21,8 @@
 #include "VDMix.h"
 // UI
 #include "VDUI.h"
+// Warping
+#include "Warp.h"
 
 using namespace ci;
 using namespace ci::app;
