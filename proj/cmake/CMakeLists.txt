@@ -43,6 +43,7 @@ set( SRC_FILES
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIShaders.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUITempo.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUITextures.cpp
+	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIWarps.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUIWebsockets.cpp
 	${BLOCKS_DIR}/Cinder-Videodromm/src/VDUtils.cpp
 	${BLOCKS_DIR}/OSC/src/cinder/osc/Osc.cpp
