@@ -1,6 +1,6 @@
 #include "VideodrommVisualizerApp.h"
 /*
-TODO
+TODO 
 - 20160831 imgui quits on Mac when resize
 - 0204 thread for loading image sequence
 - 2802 list of shaders show/active on mouseover
@@ -274,7 +274,6 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	//ci::fs::path
 	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
 	string mFile = mPath.string();
-	CI_LOG_V("file dropped: " + mFile);
 	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
 		// load success
 		// reset zoom
@@ -403,7 +402,7 @@ void VideodrommVisualizerApp::renderUIToFbo()
 }
 void VideodrommVisualizerApp::draw()
 {
-
+	
 	/* TODO check for single screen*/
 	if (mFadeInDelay) {
 		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
@@ -415,7 +414,7 @@ void VideodrommVisualizerApp::draw()
 
 			}
 			else {
-				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight); 
 				setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
 
 			}
