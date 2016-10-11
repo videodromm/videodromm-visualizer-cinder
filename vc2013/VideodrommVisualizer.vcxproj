@@ -117,9 +117,12 @@ xcopy /y "..\..\..\Cinder\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</C
     <ResourceCompile Include="Resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="..\..\assets\mixes.xml" />
     <Xml Include="Debug\VDSettings.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="..\..\assets\0.glsl" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUIWarps.h" />
     <ClInclude Include="..\include\Resources.h" />

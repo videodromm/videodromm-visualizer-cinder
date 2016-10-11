@@ -1,6 +1,6 @@
 #include "VideodrommVisualizerApp.h"
 /*
-TODO 
+TODO
 - 20160831 imgui quits on Mac when resize
 - 0204 thread for loading image sequence
 - 2802 list of shaders show/active on mouseover
@@ -313,96 +313,99 @@ void VideodrommVisualizerApp::renderSceneToFbo()
 // Render the UI into the FBO
 void VideodrommVisualizerApp::renderUIToFbo()
 {
-	if (mVDUI->isReady()) {
-		// this will restore the old framebuffer binding when we leave this function
-		// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
-		// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
-		gl::ScopedFramebuffer fbScp(mUIFbo);
-		// setup the viewport to match the dimensions of the FBO
-		gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
-		gl::clear();
-		gl::color(Color::white());
+	//if (getElapsedFrames() % 300 == 0) {
+
+		if (mVDUI->isReady()) {
+			// this will restore the old framebuffer binding when we leave this function
+			// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
+			// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
+			gl::ScopedFramebuffer fbScp(mUIFbo);
+			// setup the viewport to match the dimensions of the FBO
+			gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
+			gl::clear();
+			gl::color(Color::white());
 #pragma region chain
-		// left
-		int t = 0;
-		int fboIndex = mMixes[0]->getLeftFboIndex();
+			// left
+			int t = 0;
+			int fboIndex = mMixes[0]->getLeftFboIndex();
 
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin("it a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin("f a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+			ui::Begin("it a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
+			t++;
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+			ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
+			t++;
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+			ui::Begin("f a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
 
 
-		//right
-		t = 0;
-		fboIndex = mMixes[0]->getRightFboIndex();
+			//right
+			t = 0;
+			fboIndex = mMixes[0]->getRightFboIndex();
 
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin("it b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin("f b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+			ui::Begin("it b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
+			t++;
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+			ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
+			t++;
+			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+			ui::Begin("f b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+			{
+				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+				ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+				ui::PopItemWidth();
+			}
+			ui::End();
 #pragma endregion chain
-		//gl::draw(mUIFbo->getColorTexture());
-		/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
-		gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
-		gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
-	}
-	mVDUI->Run("UI", (int)getAverageFps());
+			//gl::draw(mUIFbo->getColorTexture());
+			/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
+			gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
+			gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
+		}
+	//}
+		mVDUI->Run("UI", (int)getAverageFps());
 
 }
 void VideodrommVisualizerApp::draw()
 {
-	
+
 	/* TODO check for single screen*/
 	if (mFadeInDelay) {
 		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
@@ -414,7 +417,7 @@ void VideodrommVisualizerApp::draw()
 
 			}
 			else {
-				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight); 
+				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
 				setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
 
 			}

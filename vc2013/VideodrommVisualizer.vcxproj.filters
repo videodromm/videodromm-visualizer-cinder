@@ -88,6 +88,9 @@
     <Filter Include="debug">
       <UniqueIdentifier>{1461f857-98ef-4675-af56-1fb5e4eb7310}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{8d0f0f81-43cd-4e0b-8bd5-7788bc655355}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -390,5 +393,13 @@
     <Xml Include="Debug\VDSettings.xml">
       <Filter>debug</Filter>
     </Xml>
+    <Xml Include="..\..\assets\mixes.xml">
+      <Filter>assets</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\assets\0.glsl">
+      <Filter>assets</Filter>
+    </None>
   </ItemGroup>
 </Project>
