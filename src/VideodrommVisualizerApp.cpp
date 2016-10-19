@@ -1,6 +1,8 @@
 #include "VideodrommVisualizerApp.h"
 /*
 TODO
+- 20161019 warps.xml fix values beyond 1.0
+- 20161019 warps freeze
 - 20160831 imgui quits on Mac when resize
 - 0204 thread for loading image sequence
 - 2802 list of shaders show/active on mouseover
@@ -174,69 +176,83 @@ void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-	// pass this key event to the warp editor first
-	if (!Warp::handleKeyDown(mWarps, event)) {
-		// warp editor did not handle the key, so handle it here
-		if (!mVDAnimation->handleKeyDown(event)) {
-			// Animation did not handle the key, so handle it here
+#if defined( CINDER_COCOA )
+	bool isModDown = event.isMetaDown();
+#else // windows
+	bool isModDown = event.isControlDown();
+#endif
 
-			switch (event.getCode()) {
-			case KeyEvent::KEY_ESCAPE:
-				// quit the application
-				quit();
-				break;
-			case KeyEvent::KEY_w:
-				// toggle warp edit mode
-				Warp::enableEditMode(!Warp::isEditModeEnabled());
-				break;
-			case KeyEvent::KEY_LEFT:
-				//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-				//{
-				//	(mVDTextures->getInputTexture(i)->pauseSequence();
-				//	mVDSettings->iBeat--;
-				//	// Seek to a new position in the sequence
-				//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-				//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(--mImageSequencePosition);
-				//}
-				break;
-			case KeyEvent::KEY_RIGHT:
-				//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-				//{
-				//	(mVDTextures->getInputTexture(i)->pauseSequence();
-				//	mVDSettings->iBeat++;
-				//	// Seek to a new position in the sequence
-				//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-				//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
-				//}
-				break;
-			case KeyEvent::KEY_0:
-				mWarpFboIndex = 0;
-				break;
-			case KeyEvent::KEY_1:
-				mWarpFboIndex = 1;
-				break;
-			case KeyEvent::KEY_2:
-				mWarpFboIndex = 2;
-				break;
-			case KeyEvent::KEY_l:
-				mVDAnimation->load();
-				break;
+	if (isModDown) {
+		switch (event.getCode()) {
+		case KeyEvent::KEY_s:
+			fileWarpsName = "warps" + toString(getElapsedFrames()) + ".xml";
+			mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / fileWarpsName;
+			Warp::writeSettings(mWarps, writeFile(mWarpSettings));
+			mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
+			break;
+		}
+	}
+	else {
 
-			case KeyEvent::KEY_h:
-				// mouse cursor
-				mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
-				setUIVisibility(mVDSettings->mCursorVisible);
-				break;
-			case KeyEvent::KEY_n:
-				mMixes[0]->createWarp(mWarps.size());
-				mWarps.push_back(WarpPerspectiveBilinear::create());
-				break;
-			case KeyEvent::KEY_a:
-				fileWarpsName = "warps" + toString(getElapsedFrames()) + ".xml";
-				mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / fileWarpsName;
-				Warp::writeSettings(mWarps, writeFile(mWarpSettings));
-				mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
-				break;
+		// pass this key event to the warp editor first
+		if (!Warp::handleKeyDown(mWarps, event)) {
+			// warp editor did not handle the key, so handle it here
+			if (!mVDAnimation->handleKeyDown(event)) {
+				// Animation did not handle the key, so handle it here
+
+				switch (event.getCode()) {
+				case KeyEvent::KEY_ESCAPE:
+					// quit the application
+					quit();
+					break;
+				case KeyEvent::KEY_w:
+					// toggle warp edit mode
+					Warp::enableEditMode(!Warp::isEditModeEnabled());
+					break;
+				case KeyEvent::KEY_LEFT:
+					//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
+					//{
+					//	(mVDTextures->getInputTexture(i)->pauseSequence();
+					//	mVDSettings->iBeat--;
+					//	// Seek to a new position in the sequence
+					//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
+					//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(--mImageSequencePosition);
+					//}
+					break;
+				case KeyEvent::KEY_RIGHT:
+					//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
+					//{
+					//	(mVDTextures->getInputTexture(i)->pauseSequence();
+					//	mVDSettings->iBeat++;
+					//	// Seek to a new position in the sequence
+					//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
+					//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
+					//}
+					break;
+				case KeyEvent::KEY_0:
+					mWarpFboIndex = 0;
+					break;
+				case KeyEvent::KEY_1:
+					mWarpFboIndex = 1;
+					break;
+				case KeyEvent::KEY_2:
+					mWarpFboIndex = 2;
+					break;
+				case KeyEvent::KEY_l:
+					mVDAnimation->load();
+					break;
+
+				case KeyEvent::KEY_h:
+					// mouse cursor
+					mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
+					setUIVisibility(mVDSettings->mCursorVisible);
+					break;
+				case KeyEvent::KEY_n:
+					mMixes[0]->createWarp(mWarps.size());
+					mWarps.push_back(WarpPerspectiveBilinear::create());
+					break;
+
+				}
 			}
 		}
 	}
@@ -315,92 +331,92 @@ void VideodrommVisualizerApp::renderUIToFbo()
 {
 	//if (getElapsedFrames() % 300 == 0) {
 
-		if (mVDUI->isReady()) {
-			// this will restore the old framebuffer binding when we leave this function
-			// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
-			// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
-			gl::ScopedFramebuffer fbScp(mUIFbo);
-			// setup the viewport to match the dimensions of the FBO
-			gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
-			gl::clear();
-			gl::color(Color::white());
+	if (mVDUI->isReady()) {
+		// this will restore the old framebuffer binding when we leave this function
+		// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
+		// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
+		gl::ScopedFramebuffer fbScp(mUIFbo);
+		// setup the viewport to match the dimensions of the FBO
+		gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
+		gl::clear();
+		gl::color(Color::white());
 #pragma region chain
-			// left
-			int t = 0;
-			int fboIndex = mMixes[0]->getLeftFboIndex();
+		// left
+		int t = 0;
+		int fboIndex = mMixes[0]->getLeftFboIndex();
 
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-			ui::Begin("it a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-			t++;
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-			ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-			t++;
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-			ui::Begin("f a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-
-
-			//right
-			t = 0;
-			fboIndex = mMixes[0]->getRightFboIndex();
-
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-			ui::Begin("it b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-			t++;
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-			ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-			t++;
-			ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-			ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-			ui::Begin("f b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-			{
-				ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-				ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-				ui::PopItemWidth();
-			}
-			ui::End();
-#pragma endregion chain
-			//gl::draw(mUIFbo->getColorTexture());
-			/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
-			gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
-			gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+		ui::Begin("it a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
 		}
+		ui::End();
+		t++;
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
+		}
+		ui::End();
+		t++;
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
+		ui::Begin("f a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
+		}
+		ui::End();
+
+
+		//right
+		t = 0;
+		fboIndex = mMixes[0]->getRightFboIndex();
+
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+		ui::Begin("it b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
+		}
+		ui::End();
+		t++;
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
+		}
+		ui::End();
+		t++;
+		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
+		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
+		ui::Begin("f b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+		{
+			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
+			ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
+			ui::PopItemWidth();
+		}
+		ui::End();
+#pragma endregion chain
+		//gl::draw(mUIFbo->getColorTexture());
+		/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
+		gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
+		gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
+	}
 	//}
-		mVDUI->Run("UI", (int)getAverageFps());
+	mVDUI->Run("UI", (int)getAverageFps());
 
 }
 void VideodrommVisualizerApp::draw()
