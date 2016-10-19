@@ -72,11 +72,8 @@ void VideodrommVisualizerApp::setup() {
 	mVDUtils->getWindowsResolution();
 #endif
 
-	// render fbo
 	gl::Fbo::Format format;
 	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
-	mRenderFbo = gl::Fbo::create(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, format.colorTexture());
-	mWarpFboIndex = 1;
 	// UI fbo
 	//mUIFbo = gl::Fbo::create(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, format.colorTexture());
 	mUIFbo = gl::Fbo::create(1000, 800, format.colorTexture());
@@ -111,16 +108,16 @@ void VideodrommVisualizerApp::resize() {
 
 void VideodrommVisualizerApp::mouseMove(MouseEvent event)
 {
-	// pass this mouse event to the warp editor first
-	if (!Warp::handleMouseMove(mWarps, event)) {
+	// pass this event to Mix handler
+	if (!mMixes[0]->handleMouseMove(event)) {
 		// let your application perform its mouseMove handling here
 	}
 }
 
 void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 {
-	// pass this mouse event to the warp editor first
-	if (!Warp::handleMouseDown(mWarps, event)) {
+	// pass this event to Mix handler
+	if (!mMixes[0]->handleMouseDown(event)) {
 		// let your application perform its mouseDown handling here
 		mVDAnimation->controlValues[21] = event.getX() / getWindowWidth();
 	}
@@ -128,35 +125,31 @@ void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 
 void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
 {
-	// pass this mouse event to the warp editor first
-	if (!Warp::handleMouseDrag(mWarps, event)) {
+	// pass this event to Mix handler
+	if (!mMixes[0]->handleMouseDrag(event)) {
 		// let your application perform its mouseDrag handling here
 	}
 }
 
 void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 {
-	// pass this mouse event to the warp editor first
-	if (!Warp::handleMouseUp(mWarps, event)) {
+	// pass this event to Mix handler
+	if (!mMixes[0]->handleMouseUp(event)) {
 		// let your application perform its mouseUp handling here
 	}
 }
 
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-	// warp editor did not handle the key, so handle it here
+	// pass this event to Mix handler
 	if (!mVDAnimation->handleKeyDown(event)) {
 		// Animation did not handle the key, so handle it here
-
 		switch (event.getCode()) {
 		case KeyEvent::KEY_ESCAPE:
 			// quit the application
 			quit();
 			break;
-		case KeyEvent::KEY_w:
-			// toggle warp edit mode
-			Warp::enableEditMode(!Warp::isEditModeEnabled());
-			break;
+
 		case KeyEvent::KEY_LEFT:
 			//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
 			//{
@@ -177,15 +170,6 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
 			//}
 			break;
-		case KeyEvent::KEY_0:
-			mWarpFboIndex = 0;
-			break;
-		case KeyEvent::KEY_1:
-			mWarpFboIndex = 1;
-			break;
-		case KeyEvent::KEY_2:
-			mWarpFboIndex = 2;
-			break;
 		case KeyEvent::KEY_l:
 			mVDAnimation->load();
 			break;
@@ -195,21 +179,14 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
 			setUIVisibility(mVDSettings->mCursorVisible);
 			break;
-		case KeyEvent::KEY_n:
-			mMixes[0]->createWarp(mWarps.size());
-			mWarps.push_back(WarpPerspectiveBilinear::create());
-			Warp::handleResize(mWarps);
-			break;
 
 		}
 	}
 }
 
-}
-
 void VideodrommVisualizerApp::keyUp(KeyEvent event)
 {
-	// pass this key event to Mix handler
+	// pass this event to Mix handler
 	if (!mMixes[0]->handleKeyUp(event)) {
 		// let your application perform its keyUp handling here
 
@@ -254,24 +231,7 @@ void VideodrommVisualizerApp::setUIVisibility(bool visible)
 		hideCursor();
 	}
 }
-// Render the scene into the FBO
-void VideodrommVisualizerApp::renderSceneToFbo()
-{
-	// this will restore the old framebuffer binding when we leave this function
-	// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
-	// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
-	gl::ScopedFramebuffer fbScp(mRenderFbo);
-	gl::clear(Color::black());
-	// setup the viewport to match the dimensions of the FBO
-	gl::ScopedViewport scpVp(ivec2(0), mRenderFbo->getSize());
-	// iterate over the warps and draw their content
-	int i = 0;
-	for (auto &warp : mWarps) {
-		//warp->draw(mMixes[0]->getFboTexture(mWarpFboIndex), mMixes[0]->getFboTexture(mWarpFboIndex)->getBounds());
-		warp->draw(mMixes[0]->getWarpTexture(i), mMixes[0]->getWarpTexture(i)->getBounds());
-		i++;
-	}
-}
+
 
 // Render the UI into the FBO
 void VideodrommVisualizerApp::renderUIToFbo()
@@ -387,10 +347,10 @@ void VideodrommVisualizerApp::draw()
 			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
 		}
 	}
-	renderSceneToFbo();
 	gl::clear(Color::black());
 	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
-	gl::draw(mRenderFbo->getColorTexture());
+	
+	gl::draw(mMixes[0]->getRenderTexture());
 
 	//imgui
 	if (!mVDSettings->mCursorVisible || Warp::isEditModeEnabled())

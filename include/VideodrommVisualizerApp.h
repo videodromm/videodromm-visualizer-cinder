@@ -72,11 +72,9 @@ private:
 	fs::path					mMixesFilepath;
 
 	// fbo
-	void						renderSceneToFbo();
-	gl::FboRef					mRenderFbo;
 	void						renderUIToFbo();
 	gl::FboRef					mUIFbo;
-	unsigned int				mWarpFboIndex;
+	
 	bool						mFadeInDelay;
 
 };
