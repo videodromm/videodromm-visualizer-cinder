@@ -250,6 +250,7 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 				case KeyEvent::KEY_n:
 					mMixes[0]->createWarp(mWarps.size());
 					mWarps.push_back(WarpPerspectiveBilinear::create());
+					Warp::handleResize(mWarps);
 					break;
 
 				}
