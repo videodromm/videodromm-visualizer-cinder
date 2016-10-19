@@ -21,12 +21,9 @@
 #include "VDMix.h"
 // UI
 #include "VDUI.h"
-// Warping
-#include "Warp.h"
 
 using namespace ci;
 using namespace ci::app;
-using namespace ph::warping;
 using namespace VideoDromm;
 
 #define IM_ARRAYSIZE(_ARR)			((int)(sizeof(_ARR)/sizeof(*_ARR)))
@@ -73,11 +70,7 @@ private:
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
-	// warping
-	gl::TextureRef				mImage;
-	WarpList					mWarps;
-	string						fileWarpsName;
-	fs::path					mWarpSettings;
+
 	// fbo
 	void						renderSceneToFbo();
 	gl::FboRef					mRenderFbo;

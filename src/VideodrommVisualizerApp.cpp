@@ -81,35 +81,6 @@ void VideodrommVisualizerApp::setup() {
 	//mUIFbo = gl::Fbo::create(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, format.colorTexture());
 	mUIFbo = gl::Fbo::create(1000, 800, format.colorTexture());
 
-	// warping
-	gl::enableDepthRead();
-	gl::enableDepthWrite();
-	// initialize warps
-	mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
-	if (fs::exists(mWarpSettings)) {
-		// load warp settings from file if one exists
-		mWarps = Warp::readSettings(loadFile(mWarpSettings));
-	}
-	else {
-		// otherwise create a warp from scratch
-		mWarps.push_back(WarpPerspectiveBilinear::create());
-		mMixes[0]->createWarp(0);
-
-	}
-	// load image
-	try {
-		mImage = gl::Texture::create(loadImage(loadAsset("help.jpg")),
-			gl::Texture2d::Format().loadTopDown().mipmap(true).minFilter(GL_LINEAR_MIPMAP_LINEAR));
-
-	}
-	catch (const std::exception &e) {
-		console() << e.what() << std::endl;
-	}
-	//Warp::setSize(mWarps, ivec2(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight));// create small new warps too
-	Warp::setSize(mWarps, ivec2(mVDSettings->mFboWidth, mVDSettings->mFboHeight)); // create small new warps 
-	Warp::handleResize(mWarps);
-
-
 	if (mVDSettings->mStandalone) {
 		mVDSettings->mCursorVisible = false;
 	}
@@ -123,8 +94,7 @@ void VideodrommVisualizerApp::setup() {
 void VideodrommVisualizerApp::cleanup() {
 	CI_LOG_V("shutdown");
 	ui::Shutdown();
-	// save warp settings
-	Warp::writeSettings(mWarps, writeFile(mWarpSettings));
+	mMixes[0]->save();
 	mVDSettings->save();
 	mVDSession->save();
 	quit();
@@ -133,9 +103,7 @@ void VideodrommVisualizerApp::cleanup() {
 void VideodrommVisualizerApp::resize() {
 	CI_LOG_V("resizeWindow");
 	mVDUI->resize();
-
-	// tell the warps our window has been resized, so they properly scale up or down
-	Warp::handleResize(mWarps);
+	mMixes[0]->resize();
 
 	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
 	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
@@ -176,97 +144,75 @@ void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-#if defined( CINDER_COCOA )
-	bool isModDown = event.isMetaDown();
-#else // windows
-	bool isModDown = event.isControlDown();
-#endif
+	// warp editor did not handle the key, so handle it here
+	if (!mVDAnimation->handleKeyDown(event)) {
+		// Animation did not handle the key, so handle it here
 
-	if (isModDown) {
 		switch (event.getCode()) {
-		case KeyEvent::KEY_s:
-			fileWarpsName = "warps" + toString(getElapsedFrames()) + ".xml";
-			mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / fileWarpsName;
-			Warp::writeSettings(mWarps, writeFile(mWarpSettings));
-			mWarpSettings = getAssetPath("") / mVDSettings->mAssetsPath / "warps.xml";
+		case KeyEvent::KEY_ESCAPE:
+			// quit the application
+			quit();
 			break;
-		}
-	}
-	else {
+		case KeyEvent::KEY_w:
+			// toggle warp edit mode
+			Warp::enableEditMode(!Warp::isEditModeEnabled());
+			break;
+		case KeyEvent::KEY_LEFT:
+			//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
+			//{
+			//	(mVDTextures->getInputTexture(i)->pauseSequence();
+			//	mVDSettings->iBeat--;
+			//	// Seek to a new position in the sequence
+			//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
+			//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(--mImageSequencePosition);
+			//}
+			break;
+		case KeyEvent::KEY_RIGHT:
+			//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
+			//{
+			//	(mVDTextures->getInputTexture(i)->pauseSequence();
+			//	mVDSettings->iBeat++;
+			//	// Seek to a new position in the sequence
+			//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
+			//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
+			//}
+			break;
+		case KeyEvent::KEY_0:
+			mWarpFboIndex = 0;
+			break;
+		case KeyEvent::KEY_1:
+			mWarpFboIndex = 1;
+			break;
+		case KeyEvent::KEY_2:
+			mWarpFboIndex = 2;
+			break;
+		case KeyEvent::KEY_l:
+			mVDAnimation->load();
+			break;
 
-		// pass this key event to the warp editor first
-		if (!Warp::handleKeyDown(mWarps, event)) {
-			// warp editor did not handle the key, so handle it here
-			if (!mVDAnimation->handleKeyDown(event)) {
-				// Animation did not handle the key, so handle it here
+		case KeyEvent::KEY_h:
+			// mouse cursor
+			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
+			setUIVisibility(mVDSettings->mCursorVisible);
+			break;
+		case KeyEvent::KEY_n:
+			mMixes[0]->createWarp(mWarps.size());
+			mWarps.push_back(WarpPerspectiveBilinear::create());
+			Warp::handleResize(mWarps);
+			break;
 
-				switch (event.getCode()) {
-				case KeyEvent::KEY_ESCAPE:
-					// quit the application
-					quit();
-					break;
-				case KeyEvent::KEY_w:
-					// toggle warp edit mode
-					Warp::enableEditMode(!Warp::isEditModeEnabled());
-					break;
-				case KeyEvent::KEY_LEFT:
-					//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-					//{
-					//	(mVDTextures->getInputTexture(i)->pauseSequence();
-					//	mVDSettings->iBeat--;
-					//	// Seek to a new position in the sequence
-					//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-					//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(--mImageSequencePosition);
-					//}
-					break;
-				case KeyEvent::KEY_RIGHT:
-					//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-					//{
-					//	(mVDTextures->getInputTexture(i)->pauseSequence();
-					//	mVDSettings->iBeat++;
-					//	// Seek to a new position in the sequence
-					//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-					//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
-					//}
-					break;
-				case KeyEvent::KEY_0:
-					mWarpFboIndex = 0;
-					break;
-				case KeyEvent::KEY_1:
-					mWarpFboIndex = 1;
-					break;
-				case KeyEvent::KEY_2:
-					mWarpFboIndex = 2;
-					break;
-				case KeyEvent::KEY_l:
-					mVDAnimation->load();
-					break;
-
-				case KeyEvent::KEY_h:
-					// mouse cursor
-					mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
-					setUIVisibility(mVDSettings->mCursorVisible);
-					break;
-				case KeyEvent::KEY_n:
-					mMixes[0]->createWarp(mWarps.size());
-					mWarps.push_back(WarpPerspectiveBilinear::create());
-					Warp::handleResize(mWarps);
-					break;
-
-				}
-			}
 		}
 	}
 }
 
+}
+
 void VideodrommVisualizerApp::keyUp(KeyEvent event)
 {
-	// pass this key event to the warp editor first
-	if (!Warp::handleKeyUp(mWarps, event)) {
+	// pass this key event to Mix handler
+	if (!mMixes[0]->handleKeyUp(event)) {
 		// let your application perform its keyUp handling here
-		if (!mVDAnimation->handleKeyUp(event)) {
-			// Animation did not handle the key, so handle it here
-		}
+
 	}
 }
 
