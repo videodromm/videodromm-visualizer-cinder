@@ -142,7 +142,7 @@ void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
 	// pass this event to Mix handler
-	if (!mVDAnimation->handleKeyDown(event)) {
+	if (!mMixes[0]->handleKeyDown(event)) {
 		// Animation did not handle the key, so handle it here
 		switch (event.getCode()) {
 		case KeyEvent::KEY_ESCAPE:
