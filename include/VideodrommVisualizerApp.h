@@ -1,4 +1,3 @@
-
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
@@ -24,32 +23,24 @@
 
 using namespace ci;
 using namespace ci::app;
+using namespace std;
 using namespace VideoDromm;
 
 #define IM_ARRAYSIZE(_ARR)			((int)(sizeof(_ARR)/sizeof(*_ARR)))
 
-class VideodrommVisualizerApp : public App
-{
+class VideodrommVisualizerApp : public App {
+
 public:
 	static void prepare(Settings *settings);
 
 	void setup() override;
-	void cleanup() override;
-	void update();
-	void draw() override;
-
-	void fileDrop(FileDropEvent event) override;
-	void resize() override;
-
-	void mouseMove(MouseEvent event) override;
 	void mouseDown(MouseEvent event) override;
-	void mouseDrag(MouseEvent event) override;
-	void mouseUp(MouseEvent event) override;
-
 	void keyDown(KeyEvent event) override;
 	void keyUp(KeyEvent event) override;
-
-	void updateWindowTitle();
+	void fileDrop(FileDropEvent event) override;
+	void update() override;
+	void draw() override;
+	void cleanup() override;
 	void setUIVisibility(bool visible);
 private:
 	// Settings
@@ -66,15 +57,39 @@ private:
 	VDAnimationRef				mVDAnimation;
 	// UI
 	VDUIRef						mVDUI;
-	//void						showVDUI(unsigned int fps);
+
 	// Mix
 	VDMixList					mMixes;
 	fs::path					mMixesFilepath;
+	// handle resizing for imgui
+	void						resizeWindow();
+	bool						mIsResizing;
+	void						updateWindowTitle();
+	// imgui
+	float						color[4];
+	float						backcolor[4];
+	int							playheadPositions[12];
+	int							speeds[12];
 
+	float						f = 0.0f;
+	char						buf[64];
+	unsigned int				i, j;
+
+	bool						mouseGlobal;
+	//bool						removeUI;
+	// shader
+	//gl::GlslProgRef				aShader;
+	// boolean to update the editor text
+	//bool						mShaderTextToLoad; 
+
+	//! default vertex shader
+	//std::string					mPassthruVextexShaderString;
+	//! default fragment shader
+	//std::string					mFboTextureFragmentShaderString;
+	string						mError;
 	// fbo
-	void						renderUIToFbo();
-	gl::FboRef					mUIFbo;
-	
-	bool						mFadeInDelay;
-
+	gl::FboRef					mFbo;
+	bool						mIsShutDown;
+	Anim<float>					mRenderWindowTimer;
+	void						positionRenderWindow();
 };

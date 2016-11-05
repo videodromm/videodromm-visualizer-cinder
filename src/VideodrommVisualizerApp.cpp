@@ -1,40 +1,16 @@
 #include "VideodrommVisualizerApp.h"
-/*
-TODO
-- 20161019 warps.xml fix values beyond 1.0
-- 20161019 warps freeze
-- 20160831 imgui quits on Mac when resize
-- 0204 thread for loading image sequence
-- 2802 list of shaders show/active on mouseover
-- 2802 imgui contextual window depending on mouseover
-- 2802 imgui vertical : textures
-- warp select mix fbo texture
-- flip horiz
-- check flip H and V (spout also)
-- sort fbo names and indexes (warps only 4 or 5 inputs)
-- spout texture 10 create shader 10.glsl(ThemeFromBrazil) iChannel0
-- warpwrapper handle texture mode 0 for spout (without fbo)
-- put sliderInt instead of popups //warps next
-- proper slitscan h and v //wip
-- proper rotation
 
-tempo 142
-bpm = (60 * fps) / fpb
-
-where bpm = beats per min
-fps = frames per second
-fpb = frames per beat
-
-fpb = 4, bpm = 142
-fps = 142 / 60 * 4 = 9.46
-*/
-void VideodrommVisualizerApp::prepare(Settings *settings) {
+void VideodrommVisualizerApp::prepare(Settings *settings)
+{
 	settings->setWindowSize(1024, 768);
+	settings->setBorderless();
+	settings->setWindowPos(0, 0);
 }
-void VideodrommVisualizerApp::setup() {
-
-	// Log
-	mVDLog = VDLog::create();
+void VideodrommVisualizerApp::setup()
+{
+	// maximize fps
+	disableFrameRate();
+	gl::enableVerticalSync(false);
 	// Settings
 	mVDSettings = VDSettings::create();
 	// Session
@@ -46,7 +22,6 @@ void VideodrommVisualizerApp::setup() {
 	// Message router
 	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
 	// Mix
-
 	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
 	if (fs::exists(mMixesFilepath)) {
 		// load textures from file if one exists
@@ -56,170 +31,40 @@ void VideodrommVisualizerApp::setup() {
 		// otherwise create a texture from scratch
 		mMixes.push_back(VDMix::create(mVDSettings, mVDAnimation, mVDRouter));
 	}
-	mMixes[0]->setLeftFboIndex(2);
-	mMixes[0]->setRightFboIndex(1);
+	mMixes[0]->setLeftFboIndex(3);
+	mMixes[0]->setRightFboIndex(4);
 	mVDAnimation->tapTempo();
+
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
-	setFrameRate(mVDSession->getTargetFps());
-	// maximize fps
-	disableFrameRate();
-	gl::enableVerticalSync(false);
 
-	mFadeInDelay = true;
+	mouseGlobal = false;
 
-#if (defined( CINDER_MSW )|| defined( CINDER_MAC ))
-	mVDUtils->getWindowsResolution();
-#endif
-
-	gl::Fbo::Format format;
-	//format.setSamples( 4 ); // uncomment this to enable 4x antialiasing
-	// UI fbo
-	//mUIFbo = gl::Fbo::create(mVDSettings->mMainWindowWidth, mVDSettings->mMainWindowHeight, format.colorTexture());
-	mUIFbo = gl::Fbo::create(1000, 800, format.colorTexture());
-
-	if (mVDSettings->mStandalone) {
-		mVDSettings->mCursorVisible = false;
-	}
-	else {
-		mVDSettings->mCursorVisible = true;
-	}
-	// mouse cursor and ui
+	static float f = 0.0f;
+	// mouse cursor and UI
+	mVDSettings->mStandalone = true;
+	mVDSettings->mCursorVisible = false;
 	setUIVisibility(mVDSettings->mCursorVisible);
+	// render fbo
+	gl::Fbo::Format fboFormat;
+	mFbo = gl::Fbo::create(mVDSettings->mFboWidth, mVDSettings->mFboHeight, fboFormat.colorTexture());
+	// windows
+	mIsShutDown = false;
+	mIsResizing = true;
+	mVDUtils->getWindowsResolution();
+	mRenderWindowTimer = 0.0f;
+	timeline().apply(&mRenderWindowTimer, 1.0f, 2.0f).finishFn([&] { positionRenderWindow(); });
+
 }
-
-void VideodrommVisualizerApp::cleanup() {
-	CI_LOG_V("shutdown");
-	ui::Shutdown();
-	mMixes[0]->save();
-	mVDSettings->save();
-	mVDSession->save();
-	quit();
-}
-
-void VideodrommVisualizerApp::resize() {
-	CI_LOG_V("resizeWindow");
-	mVDUI->resize();
-	mMixes[0]->resize();
-
+void VideodrommVisualizerApp::positionRenderWindow() {
 	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
 	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
+	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);//20141214 was 0
+	setWindowPos(mVDSettings->mRenderX, mVDSettings->mRenderY);
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+
 }
 
-void VideodrommVisualizerApp::mouseMove(MouseEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleMouseMove(event)) {
-		// let your application perform its mouseMove handling here
-	}
-}
-
-void VideodrommVisualizerApp::mouseDown(MouseEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleMouseDown(event)) {
-		// let your application perform its mouseDown handling here
-		mVDAnimation->controlValues[21] = event.getX() / getWindowWidth();
-	}
-}
-
-void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleMouseDrag(event)) {
-		// let your application perform its mouseDrag handling here
-	}
-}
-
-void VideodrommVisualizerApp::mouseUp(MouseEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleMouseUp(event)) {
-		// let your application perform its mouseUp handling here
-	}
-}
-
-void VideodrommVisualizerApp::keyDown(KeyEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleKeyDown(event)) {
-		// Animation did not handle the key, so handle it here
-		switch (event.getCode()) {
-		case KeyEvent::KEY_ESCAPE:
-			// quit the application
-			quit();
-			break;
-
-		case KeyEvent::KEY_LEFT:
-			//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-			//{
-			//	(mVDTextures->getInputTexture(i)->pauseSequence();
-			//	mVDSettings->iBeat--;
-			//	// Seek to a new position in the sequence
-			//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-			//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(--mImageSequencePosition);
-			//}
-			break;
-		case KeyEvent::KEY_RIGHT:
-			//for (unsigned int i = 0; i < mVDImageSequences.size(); i++)
-			//{
-			//	(mVDTextures->getInputTexture(i)->pauseSequence();
-			//	mVDSettings->iBeat++;
-			//	// Seek to a new position in the sequence
-			//	mImageSequencePosition = (mVDTextures->getInputTexture(i)->getPlayheadPosition();
-			//	(mVDTextures->getInputTexture(i)->setPlayheadPosition(++mImageSequencePosition);
-			//}
-			break;
-		case KeyEvent::KEY_l:
-			mVDAnimation->load();
-			break;
-
-		case KeyEvent::KEY_h:
-			// mouse cursor
-			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
-			setUIVisibility(mVDSettings->mCursorVisible);
-			break;
-
-		}
-	}
-}
-
-void VideodrommVisualizerApp::keyUp(KeyEvent event)
-{
-	// pass this event to Mix handler
-	if (!mMixes[0]->handleKeyUp(event)) {
-		// let your application perform its keyUp handling here
-
-	}
-}
-
-void VideodrommVisualizerApp::update()
-{
-	mVDSettings->iFps = getAverageFps();
-	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-	mVDAnimation->update();
-	mVDRouter->update();
-	mMixes[0]->update();
-	// check if a shader has been received from websockets
-	if (mVDSettings->mShaderToLoad != "") {
-		mMixes[0]->loadFboFragmentShader(mVDSettings->mShaderToLoad, 1);
-	}
-
-	updateWindowTitle();
-}
-void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
-{
-	int index = (int)(event.getX() / (mVDSettings->uiElementWidth + mVDSettings->uiMargin));// +1;
-	//ci::fs::exists(path)
-	//ci::fs::path
-	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
-	string mFile = mPath.string();
-	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
-		// load success
-		// reset zoom
-		mVDAnimation->controlValues[22] = 1.0f;
-	}
-}
 void VideodrommVisualizerApp::setUIVisibility(bool visible)
 {
 	if (visible)
@@ -231,147 +76,96 @@ void VideodrommVisualizerApp::setUIVisibility(bool visible)
 		hideCursor();
 	}
 }
-
-
-// Render the UI into the FBO
-void VideodrommVisualizerApp::renderUIToFbo()
+void VideodrommVisualizerApp::update()
 {
-	//if (getElapsedFrames() % 300 == 0) {
+	mVDSettings->iFps = getAverageFps();
+	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	mMixes[0]->update();
+	mVDAnimation->update();
+	mVDRouter->update();
 
-	if (mVDUI->isReady()) {
-		// this will restore the old framebuffer binding when we leave this function
-		// on non-OpenGL ES platforms, you can just call mFbo->unbindFramebuffer() at the end of the function
-		// but this will restore the "screen" FBO on OpenGL ES, and does the right thing on both platforms
-		gl::ScopedFramebuffer fbScp(mUIFbo);
-		// setup the viewport to match the dimensions of the FBO
-		gl::ScopedViewport scpVp(ivec2(0), ivec2(mVDSettings->mFboWidth * mVDSettings->mUIZoom, mVDSettings->mFboHeight * mVDSettings->mUIZoom));
-		gl::clear();
-		gl::color(Color::white());
-#pragma region chain
-		// left
-		int t = 0;
-		int fboIndex = mMixes[0]->getLeftFboIndex();
-
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin("it a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2));
-		ui::Begin("f a", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getTexture(1)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-
-
-		//right
-		t = 0;
-		fboIndex = mMixes[0]->getRightFboIndex();
-
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin("it b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getInputTexture(mMixes[0]->getFboInputTextureIndex(fboIndex))->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin(mMixes[0]->getFboLabel(fboIndex).c_str(), NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getFboTexture(fboIndex)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-		t++;
-		ui::SetNextWindowSize(ImVec2(mVDSettings->uiLargePreviewW, mVDSettings->uiPreviewH));
-		ui::SetNextWindowPos(ImVec2((t * (mVDSettings->uiLargePreviewW + mVDSettings->uiMargin)) + mVDSettings->uiMargin + mVDSettings->uiLargeW, mVDSettings->uiYPosRow2 + mVDSettings->uiPreviewH + mVDSettings->uiMargin));
-		ui::Begin("f b", NULL, ImVec2(0, 0), ui::GetStyle().Alpha, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-		{
-			ui::PushItemWidth(mVDSettings->mPreviewFboWidth);
-			ui::Image((void*)mMixes[0]->getTexture(2)->getId(), ivec2(mVDSettings->mPreviewFboWidth, mVDSettings->mPreviewFboHeight));
-			ui::PopItemWidth();
-		}
-		ui::End();
-#pragma endregion chain
-		//gl::draw(mUIFbo->getColorTexture());
-		/*gl::draw(mMixes[0]->getTexture(), Rectf(384, 128, 512, 256));
-		gl::draw(mMixes[0]->getTexture(1), Rectf(512, 128, 640, 256));
-		gl::draw(mMixes[0]->getTexture(2), Rectf(640, 128, 768, 256));*/
-	}
-	//}
-	mVDUI->Run("UI", (int)getAverageFps());
-
+	updateWindowTitle();
 }
-void VideodrommVisualizerApp::draw()
-{
-
-	/* TODO check for single screen*/
-	if (mFadeInDelay) {
-		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
-			mFadeInDelay = false;
-			if (mVDSettings->mDisplayCount > 1) {
-				int uiWidth = (int)mVDSettings->mMainWindowWidth / 2;
-				setWindowSize(mVDSettings->mRenderWidth + uiWidth, mVDSettings->mRenderHeight + 30);
-				setWindowPos(ivec2(mVDSettings->mRenderX - uiWidth, 0));
-
-			}
-			else {
-				setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
-				setWindowPos(ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY));
-
-			}
-			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
-		}
-	}
-	gl::clear(Color::black());
-	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
-	
-	gl::draw(mMixes[0]->getRenderTexture());
-
-	//imgui
-	if (!mVDSettings->mCursorVisible || Warp::isEditModeEnabled())
-	{
-		return;
-	}
-	renderUIToFbo();
-	gl::draw(mUIFbo->getColorTexture());
-
-}
-
 void VideodrommVisualizerApp::updateWindowTitle()
 {
-	getWindow()->setTitle("(" + mVDSettings->sFps + " fps) " + toString(mVDSettings->iBeat) + " Videodromm");
+	//mMainWindow->setTitle(mVDSettings->sFps + " fps Live Coding");
+}
+void VideodrommVisualizerApp::cleanup()
+{
+	if (!mIsShutDown)
+	{
+		mIsShutDown = true;
+		CI_LOG_V("shutdown");
+		ui::disconnectWindow(getWindow());
+		ui::Shutdown();
+		// save settings
+		mVDSettings->save();
+		mVDSession->save();
+		mVDRouter->wsDisconnect();
+		quit();
+	}
+}
+void VideodrommVisualizerApp::mouseDown(MouseEvent event)
+{
+
+}
+void VideodrommVisualizerApp::keyDown(KeyEvent event)
+{
+
+	if (!mVDAnimation->handleKeyDown(event)) {
+		// Animation did not handle the key, so handle it here
+		switch (event.getCode()) {
+		case KeyEvent::KEY_ESCAPE:
+			// quit the application
+			quit();
+			break;
+		case KeyEvent::KEY_l:
+			mVDAnimation->load();
+			break;
+		case KeyEvent::KEY_h:
+			// mouse cursor
+			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
+			setUIVisibility(mVDSettings->mCursorVisible);
+			break;
+		}
+	}
 }
 
-// If you're deploying to iOS, set the Render antialiasing to 0 for a significant
-// performance improvement. This value defaults to 4 (AA_MSAA_4) on iOS and 16 (AA_MSAA_16)
-// on the Desktop.
-#if defined( CINDER_COCOA_TOUCH )
-CINDER_APP(VideodrommVisualizerApp, RendererGl(RendererGl::AA_NONE))
-#else
-CINDER_APP(VideodrommVisualizerApp, RendererGl(RendererGl::Options().msaa(8)), &VideodrommVisualizerApp::prepare)
-#endif
+void VideodrommVisualizerApp::keyUp(KeyEvent event)
+{
+	if (!mVDAnimation->handleKeyUp(event)) {
+		// Animation did not handle the key, so handle it here
+	}
+}
+void VideodrommVisualizerApp::resizeWindow()
+{
+	mVDUI->resize();
+}
+void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
+{
+	int index = (int)(event.getX() / (mVDSettings->uiElementWidth + mVDSettings->uiMargin));// +1;
+	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
+	string mFile = mPath.string();
+	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
+		// load success, reset zoom
+		mVDAnimation->controlValues[22] = 1.0f;
+	}
+}
+
+void VideodrommVisualizerApp::draw()
+{
+	gl::clear(Color::black());
+	//gl::setMatricesWindow(toPixels(getWindowSize()));
+	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
+	gl::draw(mMixes[0]->getTexture(), getWindowBounds());
+	getWindow()->setTitle(mVDSettings->sFps + " fps Videodromm visualizer");
+	// imgui
+	if (!mVDSettings->mCursorVisible) return;
+
+	mVDUI->Run("UI", (int)getAverageFps());
+	if (mVDUI->isReady()) {
+	}
+}
+
+CINDER_APP(VideodrommVisualizerApp, RendererGl, &VideodrommVisualizerApp::prepare)
+
