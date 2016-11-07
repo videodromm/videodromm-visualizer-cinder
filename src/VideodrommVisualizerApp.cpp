@@ -31,8 +31,6 @@ void VideodrommVisualizerApp::setup()
 		// otherwise create a texture from scratch
 		mMixes.push_back(VDMix::create(mVDSettings, mVDAnimation, mVDRouter));
 	}
-	mMixes[0]->setLeftFboIndex(3);
-	mMixes[0]->setRightFboIndex(4);
 	mVDAnimation->tapTempo();
 
 	// UI
