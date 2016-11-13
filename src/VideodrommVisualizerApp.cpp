@@ -155,7 +155,7 @@ void VideodrommVisualizerApp::draw()
 	gl::clear(Color::black());
 	//gl::setMatricesWindow(toPixels(getWindowSize()),false);
 	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
-	gl::draw(mMixes[0]->getTexture(), getWindowBounds());
+	gl::draw(mMixes[0]->getMixTexture(), getWindowBounds());
 	getWindow()->setTitle(mVDSettings->sFps + " fps Videodromm visualizer");
 	// imgui
 	if (!mVDSettings->mCursorVisible) return;
