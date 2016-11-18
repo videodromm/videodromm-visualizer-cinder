@@ -97,31 +97,51 @@ void VideodrommVisualizerApp::cleanup()
 		ui::disconnectWindow(getWindow());
 		ui::Shutdown();
 		// save settings
+		mMixes[0]->save();
 		mVDSettings->save();
 		mVDSession->save();
-		mVDRouter->wsDisconnect();
 		quit();
 	}
 }
+
+void VideodrommVisualizerApp::mouseMove(MouseEvent event)
+{
+	if (!mMixes[0]->handleMouseMove(event)) {
+		// let your application perform its mouseMove handling here
+	}
+}
+
 void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 {
-
+	if (!mMixes[0]->handleMouseDown(event)) {
+		// let your application perform its mouseDown handling here
+	}
 }
+
+void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
+{
+	if (!mMixes[0]->handleMouseDrag(event)) {
+		// let your application perform its mouseDrag handling here
+	}
+}
+
+void VideodrommVisualizerApp::mouseUp(MouseEvent event)
+{
+	if (!mMixes[0]->handleMouseUp(event)) {
+		// let your application perform its mouseUp handling here
+	}
+}
+
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-
-	if (!mVDAnimation->handleKeyDown(event)) {
-		// Animation did not handle the key, so handle it here
+	if (!mMixes[0]->handleKeyDown(event)) {
 		switch (event.getCode()) {
 		case KeyEvent::KEY_ESCAPE:
 			// quit the application
 			quit();
 			break;
-		case KeyEvent::KEY_l:
-			mVDAnimation->load();
-			break;
 		case KeyEvent::KEY_h:
-			// mouse cursor
+			// mouse cursor and ui visibility
 			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
 			setUIVisibility(mVDSettings->mCursorVisible);
 			break;
@@ -131,13 +151,13 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 
 void VideodrommVisualizerApp::keyUp(KeyEvent event)
 {
-	if (!mVDAnimation->handleKeyUp(event)) {
-		// Animation did not handle the key, so handle it here
+	if (!mMixes[0]->handleKeyUp(event)) {
 	}
 }
 void VideodrommVisualizerApp::resizeWindow()
 {
 	mVDUI->resize();
+	mMixes[0]->resize();
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
@@ -145,8 +165,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
 	string mFile = mPath.string();
 	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
-		// load success, reset zoom
-		mVDAnimation->controlValues[22] = 1.0f;
+
 	}
 }
 
