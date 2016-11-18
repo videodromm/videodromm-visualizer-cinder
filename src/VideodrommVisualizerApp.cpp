@@ -16,7 +16,7 @@ void VideodrommVisualizerApp::setup()
 	// Session
 	mVDSession = VDSession::create(mVDSettings);
 	// Utils
-	mVDUtils = VDUtils::create(mVDSettings);
+	//mVDUtils = VDUtils::create(mVDSettings);
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
 	// Message router
@@ -49,7 +49,7 @@ void VideodrommVisualizerApp::setup()
 	// windows
 	mIsShutDown = false;
 	mIsResizing = true;
-	mVDUtils->getWindowsResolution();
+	mVDSession->getWindowsResolution();
 	mRenderWindowTimer = 0.0f;
 	timeline().apply(&mRenderWindowTimer, 1.0f, 2.0f).finishFn([&] { positionRenderWindow(); });
 
