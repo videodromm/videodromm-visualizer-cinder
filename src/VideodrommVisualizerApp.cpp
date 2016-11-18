@@ -15,41 +15,24 @@ void VideodrommVisualizerApp::setup()
 	mVDSettings = VDSettings::create();
 	// Session
 	mVDSession = VDSession::create(mVDSettings);
-	// Utils
-	//mVDUtils = VDUtils::create(mVDSettings);
-	// Animation
-	mVDAnimation = VDAnimation::create(mVDSettings, mVDSession);
-	// Message router
-	mVDRouter = VDRouter::create(mVDSettings, mVDAnimation, mVDSession);
-	// Mix
-	mMixesFilepath = getAssetPath("") / mVDSettings->mAssetsPath / "mixes.xml";
-	if (fs::exists(mMixesFilepath)) {
-		// load textures from file if one exists
-		mMixes = VDMix::readSettings(mVDSettings, mVDAnimation, mVDRouter, loadFile(mMixesFilepath));
-	}
-	else {
-		// otherwise create a texture from scratch
-		mMixes.push_back(VDMix::create(mVDSettings, mVDAnimation, mVDRouter));
-	}
-	mVDAnimation->tapTempo();
 
 	// UI
-	mVDUI = VDUI::create(mVDSettings, mMixes[0], mVDRouter, mVDAnimation, mVDSession);
+	mVDSettings->mStandalone = true;
+	mVDSettings->mCursorVisible = false;
+	setUIVisibility(mVDSettings->mCursorVisible);
+	mVDSession->getWindowsResolution();
+	mVDUI = VDUI::create(mVDSettings, mVDSession);
 
 	mouseGlobal = false;
 
 	static float f = 0.0f;
 	// mouse cursor and UI
-	mVDSettings->mStandalone = true;
-	mVDSettings->mCursorVisible = false;
-	setUIVisibility(mVDSettings->mCursorVisible);
 	// render fbo
 	gl::Fbo::Format fboFormat;
 	mFbo = gl::Fbo::create(mVDSettings->mFboWidth, mVDSettings->mFboHeight, fboFormat.colorTexture());
 	// windows
 	mIsShutDown = false;
 	mIsResizing = true;
-	mVDSession->getWindowsResolution();
 	mRenderWindowTimer = 0.0f;
 	timeline().apply(&mRenderWindowTimer, 1.0f, 2.0f).finishFn([&] { positionRenderWindow(); });
 
@@ -78,16 +61,9 @@ void VideodrommVisualizerApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-	mMixes[0]->update();
-	mVDAnimation->update();
-	mVDRouter->update();
 
-	updateWindowTitle();
 }
-void VideodrommVisualizerApp::updateWindowTitle()
-{
-	//mMainWindow->setTitle(mVDSettings->sFps + " fps Live Coding");
-}
+
 void VideodrommVisualizerApp::cleanup()
 {
 	if (!mIsShutDown)
@@ -97,7 +73,6 @@ void VideodrommVisualizerApp::cleanup()
 		ui::disconnectWindow(getWindow());
 		ui::Shutdown();
 		// save settings
-		mMixes[0]->save();
 		mVDSettings->save();
 		mVDSession->save();
 		quit();
@@ -106,35 +81,35 @@ void VideodrommVisualizerApp::cleanup()
 
 void VideodrommVisualizerApp::mouseMove(MouseEvent event)
 {
-	if (!mMixes[0]->handleMouseMove(event)) {
+	if (!mVDSession->handleMouseMove(event)) {
 		// let your application perform its mouseMove handling here
 	}
 }
 
 void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 {
-	if (!mMixes[0]->handleMouseDown(event)) {
+	if (!mVDSession->handleMouseDown(event)) {
 		// let your application perform its mouseDown handling here
 	}
 }
 
 void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
 {
-	if (!mMixes[0]->handleMouseDrag(event)) {
+	if (!mVDSession->handleMouseDrag(event)) {
 		// let your application perform its mouseDrag handling here
 	}
 }
 
 void VideodrommVisualizerApp::mouseUp(MouseEvent event)
 {
-	if (!mMixes[0]->handleMouseUp(event)) {
+	if (!mVDSession->handleMouseUp(event)) {
 		// let your application perform its mouseUp handling here
 	}
 }
 
 void VideodrommVisualizerApp::keyDown(KeyEvent event)
 {
-	if (!mMixes[0]->handleKeyDown(event)) {
+	if (!mVDSession->handleKeyDown(event)) {
 		switch (event.getCode()) {
 		case KeyEvent::KEY_ESCAPE:
 			// quit the application
@@ -151,13 +126,13 @@ void VideodrommVisualizerApp::keyDown(KeyEvent event)
 
 void VideodrommVisualizerApp::keyUp(KeyEvent event)
 {
-	if (!mMixes[0]->handleKeyUp(event)) {
+	if (!mVDSession->handleKeyUp(event)) {
 	}
 }
 void VideodrommVisualizerApp::resizeWindow()
 {
 	mVDUI->resize();
-	mMixes[0]->resize();
+	mVDSession->resize();
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {

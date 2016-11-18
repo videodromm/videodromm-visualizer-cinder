@@ -52,22 +52,11 @@ private:
 	VDSessionRef				mVDSession;
 	// Log
 	VDLogRef					mVDLog;
-	// Utils
-	//VDUtilsRef					mVDUtils;
-	// Message router
-	VDRouterRef					mVDRouter;
-	// Animation
-	VDAnimationRef				mVDAnimation;
 	// UI
 	VDUIRef						mVDUI;
-
-	// Mix
-	VDMixList					mMixes;
-	fs::path					mMixesFilepath;
 	// handle resizing for imgui
 	void						resizeWindow();
 	bool						mIsResizing;
-	void						updateWindowTitle();
 	// imgui
 	float						color[4];
 	float						backcolor[4];
