@@ -61,7 +61,7 @@ void VideodrommVisualizerApp::update()
 {
 	mVDSettings->iFps = getAverageFps();
 	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
-
+	mVDSession->update();
 }
 
 void VideodrommVisualizerApp::cleanup()
