@@ -139,7 +139,7 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 	int index = (int)(event.getX() / (mVDSettings->uiElementWidth + mVDSettings->uiMargin));// +1;
 	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
 	string mFile = mPath.string();
-	if (mMixes[0]->loadFileFromAbsolutePath(mFile, index) > -1) {
+	if (mVDSession->loadFileFromAbsolutePath(mFile, index) > -1) {
 
 	}
 }
@@ -149,7 +149,7 @@ void VideodrommVisualizerApp::draw()
 	gl::clear(Color::black());
 	//gl::setMatricesWindow(toPixels(getWindowSize()),false);
 	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
-	gl::draw(mMixes[0]->getMixTexture(), getWindowBounds());
+	gl::draw(mVDSession->getMixTexture(), getWindowBounds());
 	getWindow()->setTitle(mVDSettings->sFps + " fps Videodromm visualizer");
 	// imgui
 	if (!mVDSettings->mCursorVisible) return;
