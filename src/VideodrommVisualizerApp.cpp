@@ -136,12 +136,7 @@ void VideodrommVisualizerApp::resizeWindow()
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
-	int index = (int)(event.getX() / (mVDSettings->uiElementWidth + mVDSettings->uiMargin));// +1;
-	ci::fs::path mPath = event.getFile(event.getNumFiles() - 1);
-	string mFile = mPath.string();
-	if (mVDSession->loadFileFromAbsolutePath(mFile, index) > -1) {
-
-	}
+	mVDSession->fileDrop(event);
 }
 
 void VideodrommVisualizerApp::draw()
