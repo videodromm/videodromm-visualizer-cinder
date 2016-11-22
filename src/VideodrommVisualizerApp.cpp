@@ -24,8 +24,8 @@ void VideodrommVisualizerApp::setup()
 	mVDUI = VDUI::create(mVDSettings, mVDSession);
 
 	mouseGlobal = false;
-
-	static float f = 0.0f;
+	mFadeInDelay = true;
+	//static float f = 0.0f;
 	// mouse cursor and UI
 	// render fbo
 	gl::Fbo::Format fboFormat;
@@ -142,6 +142,14 @@ void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 void VideodrommVisualizerApp::draw()
 {
 	gl::clear(Color::black());
+	if (mFadeInDelay) {
+		mVDSettings->iAlpha = 0.0f;
+		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
+			mFadeInDelay = false;
+			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
+		}
+	}
+
 	//gl::setMatricesWindow(toPixels(getWindowSize()),false);
 	gl::setMatricesWindow(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight, false);
 	gl::draw(mVDSession->getMixTexture(), getWindowBounds());

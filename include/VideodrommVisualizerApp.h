@@ -67,4 +67,5 @@ private:
 	bool						mIsShutDown;
 	Anim<float>					mRenderWindowTimer;
 	void						positionRenderWindow();
+	bool						mFadeInDelay;
 };
