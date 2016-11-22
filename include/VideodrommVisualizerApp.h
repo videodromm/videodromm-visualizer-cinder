@@ -63,7 +63,6 @@ private:
 
 	string						mError;
 	// fbo
-	gl::FboRef					mFbo;
 	bool						mIsShutDown;
 	Anim<float>					mRenderWindowTimer;
 	void						positionRenderWindow();

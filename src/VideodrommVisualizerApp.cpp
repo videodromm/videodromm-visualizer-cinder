@@ -25,17 +25,11 @@ void VideodrommVisualizerApp::setup()
 
 	mouseGlobal = false;
 	mFadeInDelay = true;
-	//static float f = 0.0f;
-	// mouse cursor and UI
-	// render fbo
-	gl::Fbo::Format fboFormat;
-	mFbo = gl::Fbo::create(mVDSettings->mFboWidth, mVDSettings->mFboHeight, fboFormat.colorTexture());
 	// windows
 	mIsShutDown = false;
 	mIsResizing = true;
 	mRenderWindowTimer = 0.0f;
 	timeline().apply(&mRenderWindowTimer, 1.0f, 2.0f).finishFn([&] { positionRenderWindow(); });
-
 }
 void VideodrommVisualizerApp::positionRenderWindow() {
 	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
@@ -43,7 +37,6 @@ void VideodrommVisualizerApp::positionRenderWindow() {
 	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);//20141214 was 0
 	setWindowPos(mVDSettings->mRenderX, mVDSettings->mRenderY);
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
-
 }
 
 void VideodrommVisualizerApp::setUIVisibility(bool visible)
@@ -59,8 +52,7 @@ void VideodrommVisualizerApp::setUIVisibility(bool visible)
 }
 void VideodrommVisualizerApp::update()
 {
-	mVDSettings->iFps = getAverageFps();
-	mVDSettings->sFps = toString(floor(mVDSettings->iFps));
+	mVDSession->setControlValue(30, getAverageFps());
 	mVDSession->update();
 }
 
