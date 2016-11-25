@@ -47,6 +47,8 @@ cd ..
 echo Required dependencies checked out
 cd ../Cinder/blocks/Cinder-Videodromm
 git pull
+cd ../Cinder-Warping
+git pull
 cd ../Cinder-Hap2
 git pull
 cd ../Cinder-WebSocketPP
