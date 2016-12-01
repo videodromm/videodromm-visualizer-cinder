@@ -52,7 +52,7 @@ void VideodrommVisualizerApp::setUIVisibility(bool visible)
 }
 void VideodrommVisualizerApp::update()
 {
-	mVDSession->setControlValue(30, getAverageFps());
+	mVDSession->setControlValue(20, getAverageFps());
 	mVDSession->update();
 }
 
