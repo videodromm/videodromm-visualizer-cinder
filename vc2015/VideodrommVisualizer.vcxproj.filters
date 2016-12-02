@@ -88,6 +88,9 @@
     <Filter Include="debug">
       <UniqueIdentifier>{1461f857-98ef-4675-af56-1fb5e4eb7310}</UniqueIdentifier>
     </Filter>
+    <Filter Include="release">
+      <UniqueIdentifier>{a09fa77e-9461-4814-b89f-d6cd059101e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp">
@@ -395,6 +398,9 @@
   <ItemGroup>
     <Xml Include="Debug\VDSettings.xml">
       <Filter>debug</Filter>
+    </Xml>
+    <Xml Include="Release\VDSettings.xml">
+      <Filter>release</Filter>
     </Xml>
   </ItemGroup>
 </Project>
