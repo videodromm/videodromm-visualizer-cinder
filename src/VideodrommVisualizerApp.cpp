@@ -124,7 +124,6 @@ void VideodrommVisualizerApp::keyUp(KeyEvent event)
 void VideodrommVisualizerApp::resizeWindow()
 {
 	mVDUI->resize();
-	mVDSession->resize();
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
@@ -138,6 +137,8 @@ void VideodrommVisualizerApp::draw()
 		mVDSettings->iAlpha = 0.0f;
 		if (getElapsedFrames() > mVDSession->getFadeInDelay()) {
 			mFadeInDelay = false;
+			// warps resize at the end
+			mVDSession->resize();
 			timeline().apply(&mVDSettings->iAlpha, 0.0f, 1.0f, 1.5f, EaseInCubic());
 		}
 	}
