@@ -9,8 +9,8 @@ void VideodrommVisualizerApp::prepare(Settings *settings)
 void VideodrommVisualizerApp::setup()
 {
 	// maximize fps
-	disableFrameRate();
-	gl::enableVerticalSync(false);
+	//disableFrameRate();
+	//gl::enableVerticalSync(false);
 	// Settings
 	mVDSettings = VDSettings::create();
 	// Session
@@ -25,6 +25,7 @@ void VideodrommVisualizerApp::setup()
 
 	mouseGlobal = false;
 	mFadeInDelay = true;
+	setFrameRate(mVDSession->getTargetFps());
 	// windows
 	mIsShutDown = false;
 	mIsResizing = true;
