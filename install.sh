@@ -13,6 +13,8 @@ echo Cinder-WebSocketPP
 git clone https://github.com/videodromm/Cinder-WebSocketPP ../../Cinder/blocks/Cinder-WebSocketPP
 echo Cinder-Spout
 git clone https://github.com/brucelane/Cinder-Spout ../../Cinder/blocks/Cinder-Spout
+echo Cinder-Syphon
+git clone https://github.com/videodromm/Cinder-Syphon ../../Cinder/blocks/Cinder-Syphon
 pwd
 echo Pull changes
 git pull
