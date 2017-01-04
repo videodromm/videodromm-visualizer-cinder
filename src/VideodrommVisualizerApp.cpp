@@ -33,8 +33,8 @@ void VideodrommVisualizerApp::setup()
 	timeline().apply(&mRenderWindowTimer, 1.0f, 2.0f).finishFn([&] { positionRenderWindow(); });
 }
 void VideodrommVisualizerApp::positionRenderWindow() {
-	mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
-	mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
+	//mVDSettings->iResolution.x = mVDSettings->mRenderWidth;
+	//mVDSettings->iResolution.y = mVDSettings->mRenderHeight;
 	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);//20141214 was 0
 	setWindowPos(mVDSettings->mRenderX, mVDSettings->mRenderY);
 	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);

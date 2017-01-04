@@ -124,6 +124,7 @@ xcopy /y "..\..\..\Cinder\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUIRender.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUIWarps.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDWebsocket.h" />
     <ClInclude Include="..\include\Resources.h" />
@@ -175,6 +176,7 @@ xcopy /y "..\..\..\Cinder\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</C
     <ClInclude Include="..\include\VideodrommVisualizerApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUIRender.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUIWarps.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDWebsocket.cpp" />
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
