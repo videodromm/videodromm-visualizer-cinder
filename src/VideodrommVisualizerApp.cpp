@@ -53,7 +53,7 @@ void VideodrommVisualizerApp::setUIVisibility(bool visible)
 }
 void VideodrommVisualizerApp::update()
 {
-	mVDSession->setControlValue(mVDSettings->IFPS, getAverageFps());
+	mVDSession->setFloatUniformValueByIndex(mVDSettings->IFPS, getAverageFps());
 	mVDSession->update();
 }
 
