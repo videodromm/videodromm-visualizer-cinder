@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VideodrommVisualizer", "VideodrommVisualizer.vcxproj", "{D949A8CA-5F44-438C-A56C-3931139EFB0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D949A8CA-5F44-438C-A56C-3931139EFB0E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D949A8CA-5F44-438C-A56C-3931139EFB0E}.Debug|Win32.Build.0 = Debug|Win32
+		{D949A8CA-5F44-438C-A56C-3931139EFB0E}.Release|Win32.ActiveCfg = Release|Win32
+		{D949A8CA-5F44-438C-A56C-3931139EFB0E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
