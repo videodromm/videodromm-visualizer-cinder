@@ -129,6 +129,7 @@ xcopy /y "..\..\..\Cinder\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</C
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUITriangles.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDUIWarps.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Videodromm\include\VDWebsocket.h" />
+    <ClInclude Include="..\..\..\Cinder\samples\_audio\common\AudioDrawUtils.h" />
     <ClInclude Include="..\include\Resources.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.h" />
     <ClInclude Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.h" />
@@ -184,6 +185,7 @@ xcopy /y "..\..\..\Cinder\blocks\Cinder-Spout\lib\SpoutPanel.exe" "$(OutDir)"</C
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUITriangles.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDUIWarps.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Videodromm\src\VDWebsocket.cpp" />
+    <ClCompile Include="..\..\..\Cinder\samples\_audio\common\AudioDrawUtils.cpp" />
     <ClCompile Include="..\src\VideodrommVisualizerApp.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\MovieHap.cpp" />
     <ClCompile Include="..\..\..\Cinder\blocks\Cinder-Hap2\src\HapSupport.c" />
