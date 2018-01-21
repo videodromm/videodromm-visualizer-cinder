@@ -8,11 +8,11 @@
     "44FE852B3472F8970D936545FEF676B0F63BFC68" : 0,
     "6F870CFC07E775829654611D4B37DC68FEEA4E33" : 0,
     "2DEE13513E787DA04AD2C0CB3D93F067C441B880" : 0,
-    "B4F8B5CE476B140F328F17889ECB06C8A990A0A4" : 0,
-    "AD4B458D0D225ED63FAE0155615993B7D3ECE020" : 0,
+    "EC8FEE64B0EA0B4394CB59FE45599632E395D1C3" : 9223372036854775807,
     "093054882F237AE55595B5030489BF34E5DD31B9" : 0,
     "52FD9B222D44590413E66FA7FC6200829804D796" : 0,
     "B7B33D1F7038A24ED62E0EBDAE2FDB0D56210107" : 0,
+    "AD4B458D0D225ED63FAE0155615993B7D3ECE020" : 0,
     "0C95EEA8FF0C0E695973CB8EA4E7E70E385D606F" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7A2432EC-061D-4A29-A043-049AB896A823",
@@ -21,11 +21,11 @@
     "44FE852B3472F8970D936545FEF676B0F63BFC68" : "..\/Cinder\/blocks\/Cinder-WebSocketPP",
     "6F870CFC07E775829654611D4B37DC68FEEA4E33" : "..\/Cinder\/blocks\/Cinder-Hap2",
     "2DEE13513E787DA04AD2C0CB3D93F067C441B880" : "..\/Cinder\/blocks\/Cinder-ImGui",
-    "B4F8B5CE476B140F328F17889ECB06C8A990A0A4" : "..\/Cinder\/blocks\/Cinder-Syphon",
-    "AD4B458D0D225ED63FAE0155615993B7D3ECE020" : "..\/Cinder",
+    "EC8FEE64B0EA0B4394CB59FE45599632E395D1C3" : "..\/Cinder\/blocks\/Cinder-Syphon",
     "093054882F237AE55595B5030489BF34E5DD31B9" : "..\/Cinder\/blocks\/Cinder-MIDI2",
     "52FD9B222D44590413E66FA7FC6200829804D796" : "..\/Cinder\/blocks\/Cinder-Videodromm",
     "B7B33D1F7038A24ED62E0EBDAE2FDB0D56210107" : "..\/Cinder\/blocks\/Cinder-Warping",
+    "AD4B458D0D225ED63FAE0155615993B7D3ECE020" : "..\/Cinder",
     "0C95EEA8FF0C0E695973CB8EA4E7E70E385D606F" : "..\/Cinder\/blocks\/Cinder-ImGui\/lib\/imgui"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "VideodrommVisualizer",
@@ -68,11 +68,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AD4B458D0D225ED63FAE0155615993B7D3ECE020"
     },
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/naychrist\/Cinder-Syphon.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B4F8B5CE476B140F328F17889ECB06C8A990A0A4"
-    },
-    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/paulhoux\/Cinder-Warping.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B7B33D1F7038A24ED62E0EBDAE2FDB0D56210107"
@@ -81,6 +76,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/videodromm\/videodromm-visualizer-cinder",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E843FAD03A842055787BA0499FD76B5119A7E0E0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/naychrist\/Cinder-Syphon.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EC8FEE64B0EA0B4394CB59FE45599632E395D1C3"
     }
   ]
 }

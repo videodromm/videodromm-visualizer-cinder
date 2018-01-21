@@ -15,6 +15,8 @@ echo Cinder-Spout
 git clone https://github.com/brucelane/Cinder-Spout ../../Cinder/blocks/Cinder-Spout
 echo Cinder-Syphon
 git clone https://github.com/videodromm/Cinder-Syphon ../../Cinder/blocks/Cinder-Syphon
+echo Cinder-NDI
+git clone https://github.com/videodromm/Cinder-NDI ../../Cinder/blocks/Cinder-NDI
 pwd
 echo Pull changes
 git pull
