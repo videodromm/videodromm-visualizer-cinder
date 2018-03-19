@@ -18,6 +18,7 @@ using namespace VideoDromm;
 class VideodrommVisualizerApp : public App {
 
 public:
+	static void					prepare(Settings *settings);
 	void						setup() override;
 	void						mouseDown(MouseEvent event) override;
 	void						mouseDrag(MouseEvent event) override;

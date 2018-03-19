@@ -309,9 +309,15 @@ void VideodrommVisualizerApp::draw()
 	gl::draw(mFboA->getColorTexture(), Rectf(0, 128, 128, 256));
 	gl::draw(mFboMix->getColorTexture(), Rectf(128, 128, 256, 256));
 	gl::draw(mFboB->getColorTexture(), Rectf(384, 128, 512, 256));
+}
+
+void VideodrommVisualizerApp::prepare(Settings *settings)
+{
+	//settings->setWindowSize(40, 10);
+	settings->setBorderless();
 #ifdef _DEBUG
 	settings->setConsoleWindowEnabled();
 #else
-#endif  // _DEBUG}
-
-CINDER_APP(VideodrommVisualizerApp, RendererGl)
+#endif  // _DEBUG
+}
+CINDER_APP(VideodrommVisualizerApp, RendererGl, &VideodrommVisualizerApp::prepare)
