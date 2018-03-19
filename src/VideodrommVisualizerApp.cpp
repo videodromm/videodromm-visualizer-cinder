@@ -309,6 +309,9 @@ void VideodrommVisualizerApp::draw()
 	gl::draw(mFboA->getColorTexture(), Rectf(0, 128, 128, 256));
 	gl::draw(mFboMix->getColorTexture(), Rectf(128, 128, 256, 256));
 	gl::draw(mFboB->getColorTexture(), Rectf(384, 128, 512, 256));
-}
+#ifdef _DEBUG
+	settings->setConsoleWindowEnabled();
+#else
+#endif  // _DEBUG}
 
 CINDER_APP(VideodrommVisualizerApp, RendererGl)
