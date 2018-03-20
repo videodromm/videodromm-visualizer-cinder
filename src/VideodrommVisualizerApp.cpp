@@ -1,5 +1,16 @@
 #include "VideodrommVisualizerApp.h"
+/*
+TODO
+ add mixall.frag (mix 8 textures from fbo or not, with weights)
+ texture0 = audio in
+ create mVDSession->getShader(0 to 8) for midimix
+ shader 0 = spout receiver (videoplayer: add spout sender)
+ shader 1 = texture 1 (no fbo) jpg or imgseq
+ shader 2 = texture 2 (no fbo) jpg or imgseq
+ shader 3 = texture 3 (no fbo) movie gstreamer
+ shader 4 to 7 = user shader
 
+*/
 void VideodrommVisualizerApp::setup()
 {
 	// Settings
