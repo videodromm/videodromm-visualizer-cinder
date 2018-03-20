@@ -6,6 +6,16 @@ void VideodrommVisualizerApp::setup()
 	mVDSettings = VDSettings::create();
 	// Session
 	mVDSession = VDSession::create(mVDSettings);
+	mVDSettings->mStandalone = true;
+	mVDSettings->mCursorVisible = false;
+	setUIVisibility(mVDSettings->mCursorVisible);
+
+	// make window size the maximum
+	mVDSession->getWindowsResolution();
+	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);//20141214 was 0
+	setWindowPos(mVDSettings->mRenderX, mVDSettings->mRenderY);
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
+
 	// Animation
 	mVDAnimation = VDAnimation::create(mVDSettings);
 	// initialize
@@ -39,6 +49,17 @@ void VideodrommVisualizerApp::setup()
 	mGlslBlend = gl::GlslProg::create(loadAsset("passthru.vert"), loadAsset("mix.frag"));
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
+}
+void VideodrommVisualizerApp::setUIVisibility(bool visible)
+{
+	if (visible)
+	{
+		showCursor();
+	}
+	else
+	{
+		hideCursor();
+	}
 }
 void VideodrommVisualizerApp::fileDrop(FileDropEvent event)
 {
@@ -114,25 +135,56 @@ void VideodrommVisualizerApp::cleanup()
 
 	quit();
 }
+void VideodrommVisualizerApp::mouseMove(MouseEvent event)
+{
+	if (!mVDSession->handleMouseMove(event)) {
+		// let your application perform its mouseMove handling here
+	}
+}
 void VideodrommVisualizerApp::mouseDown(MouseEvent event)
 {
-	for (auto tex : mTexs)
-	{
-		tex->setXLeft(event.getX());
-		tex->setYTop(event.getY());
+	if (!mVDSession->handleMouseDown(event)) {
+		// let your application perform its mouseDown handling here
 	}
 }
 void VideodrommVisualizerApp::mouseDrag(MouseEvent event)
 {
-	for (auto tex : mTexs)
-	{
-		tex->setXRight(event.getX());
-		tex->setYBottom(event.getY());
+	if (!mVDSession->handleMouseDrag(event)) {
+		// let your application perform its mouseDrag handling here
+	}
+}
+void VideodrommVisualizerApp::mouseUp(MouseEvent event)
+{
+	if (!mVDSession->handleMouseUp(event)) {
+		// let your application perform its mouseUp handling here
+	}
+}
+void VideodrommVisualizerApp::keyDown(KeyEvent event)
+{
+	if (!mVDSession->handleKeyDown(event)) {
+		switch (event.getCode()) {
+		case KeyEvent::KEY_ESCAPE:
+			// quit the application
+			quit();
+			break;
+		case KeyEvent::KEY_h:
+			// mouse cursor
+			mVDSettings->mCursorVisible = !mVDSettings->mCursorVisible;
+			setUIVisibility(mVDSettings->mCursorVisible);
+			break;
+		}
 	}
 }
 
+void VideodrommVisualizerApp::keyUp(KeyEvent event)
+{
+	if (!mVDSession->handleKeyUp(event)) {
+	}
+}
 void VideodrommVisualizerApp::update()
 {
+	mVDSession->setFloatUniformValueByIndex(mVDSettings->IFPS, getAverageFps());
+	mVDSession->update();
 	mGlslA->uniform("iGlobalTime", (float)getElapsedSeconds());
 	mGlslA->uniform("iChannel0", 0);
 	mGlslB->uniform("iGlobalTime", (float)(getElapsedSeconds()/2));
@@ -309,6 +361,8 @@ void VideodrommVisualizerApp::draw()
 	gl::draw(mFboA->getColorTexture(), Rectf(0, 128, 128, 256));
 	gl::draw(mFboMix->getColorTexture(), Rectf(128, 128, 256, 256));
 	gl::draw(mFboB->getColorTexture(), Rectf(384, 128, 512, 256));
+	getWindow()->setTitle(mVDSettings->sFps + " fps Videodromm visualizer");
+
 }
 
 void VideodrommVisualizerApp::prepare(Settings *settings)
