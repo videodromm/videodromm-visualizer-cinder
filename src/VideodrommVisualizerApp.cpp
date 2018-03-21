@@ -10,6 +10,8 @@ TODO
  shader 3 = texture 3 (no fbo) movie gstreamer
  shader 4 to 7 = user shader
 
+ displacement sphere
+ beautiful chaos
 */
 void VideodrommVisualizerApp::setup()
 {
