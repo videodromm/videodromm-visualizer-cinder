@@ -9,7 +9,8 @@ TODO
  shader 2 = texture 2 (no fbo) jpg or imgseq
  shader 3 = texture 3 (no fbo) movie gstreamer
  shader 4 to 7 = user shader
-
+ midi: get currentvalue and start from there
+ integrate gstreamer
  displacement sphere
  beautiful chaos
 */
