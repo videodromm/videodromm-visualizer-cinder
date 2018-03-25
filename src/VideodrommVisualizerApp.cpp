@@ -1,6 +1,12 @@
 #include "VideodrommVisualizerApp.h"
 /*
 TODO
+ 0 video playback spout hap codec gst?
+ 1 post processing shader separated from mix shader
+ 2 video player spout test
+ 3 imgseq spout test
+ 4 midimix
+ 5 do like IFPS for all uniforms&
  add mixall.frag (mix 8 textures from fbo or not, with weights)
  texture0 = audio in
  create mVDSession->getShader(0 to 8) for midimix
