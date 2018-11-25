@@ -6,7 +6,9 @@ TODO
  2 video player spout test
  3 imgseq spout test
  4 midimix
- 5 do like IFPS for all uniforms&
+ 5 do like IFPS for all uniforms
+ 6 spout in don't show
+ 7 warp size fbo size lower only livecoding prj
  add mixall.frag (mix 8 textures from fbo or not, with weights)
  texture0 = audio in
  create mVDSession->getShader(0 to 8) for midimix
