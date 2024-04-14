@@ -79,11 +79,11 @@ private:
 };
 
 
-VDVisualizerApp::VDVisualizerApp() : mSpoutOut("VDRUI", app::getWindowSize())
+VDVisualizerApp::VDVisualizerApp() : mSpoutOut("VDVIZ", app::getWindowSize())
 {
 
 	// Settings
-	mVDSettings = VDSettings::create("VDRUI");
+	mVDSettings = VDSettings::create("VDVIZ");
 	// Uniform
 	mVDUniforms = VDUniforms::create();
 	// Params
@@ -107,6 +107,10 @@ VDVisualizerApp::VDVisualizerApp() : mSpoutOut("VDRUI", app::getWindowSize())
 		->setUniformValue(mVDUniforms->IMOUSEY, 0.5648f);
 
 	mFadeInDelay = true;
+	mVDSessionFacade->getWindowsResolution();
+	mVDSettings->mRenderPosXY = ivec2(mVDSettings->mRenderX, mVDSettings->mRenderY);//20141214 was 0
+	setWindowPos(mVDSettings->mRenderX, mVDSettings->mRenderY);
+	setWindowSize(mVDSettings->mRenderWidth, mVDSettings->mRenderHeight);
 	// UI
 	mVDUI = VDUI::create(mVDSettings, mVDSessionFacade, mVDUniforms);
 }
@@ -177,6 +181,7 @@ void VDVisualizerApp::keyDown(KeyEvent event)
 		case KeyEvent::KEY_l:
 			mVDSessionFacade->createWarp();
 			break;
+
 		}
 	}
 }
@@ -256,7 +261,7 @@ void VDVisualizerApp::draw()
 		if (mVDUI->isReady()) {
 		}
 	}
-	getWindow()->setTitle(toString((int)getAverageFps()) + " fps");
+	getWindow()->setTitle(toString((int)getAverageFps()) + " fps VDVIZ");
 }
 void prepareSettings(App::Settings *settings)
 {
